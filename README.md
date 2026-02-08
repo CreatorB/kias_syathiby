@@ -59,7 +59,7 @@ Follow these steps to run the project on your local machine:
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/CreatorB/kias.git
+git clone git@github.com:CreatorB/kias_syathiby.git
 cd kias
 ```
 
