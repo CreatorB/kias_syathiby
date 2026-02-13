@@ -55,7 +55,7 @@
 
                     <h2 class="title z-index-1 mb-2">Standar Kompetensi Lulusan</h2>
                     <p class="lead mb-3 text-black">
-                        Setelah menyelesaikan pendidikan Tajwid Al-Quran selama 1 Tahun di Lembaga Pendidikan Takhassus
+                        Setelah menyelesaikan pendidikan Tajwid Al-Quran selama 1 Tahun di KIAS
                         diharapkan para santri <b>memiliki kemampuan membaca dan menulis Al Quran dengan baik dan
                             benar.</b><br><br>
                         Setelah mengikuti proses pendidikan dengan benar maka para santri diharapkan memiliki

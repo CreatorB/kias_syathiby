@@ -2,9 +2,42 @@
 
 A web-based information system designed to manage the New Student Admission (PSB) process for **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**. 
 
-> **Note:** This project is a rebranding and evolution of the **Takhassus Al Barkah** system.
+> **Note:** This project is a rebranding and evolution of the **![Takhassus Al Barkah](https://github.com/alendiasetiawan/takhassus-albarkah)** system.
 
 This application includes features such as online registration, payment verification, student data management, and enrollment statistics.
+
+## 🎨 Color Palette
+
+### Gradient KIAS 1
+| Color | Hex Code |
+| :---: | :---: |
+| ![#f1f1f1](https://via.placeholder.com/20/f1f1f1/f1f1f1.png) Light Gray | `#f1f1f1` |
+| ![#359090](https://via.placeholder.com/20/359090/359090.png) Teal (Primary) | `#359090` |
+
+### Gradient KIAS 2
+| Color | Hex Code |
+| :---: | :---: |
+| ![#267084](https://via.placeholder.com/20/267084/267084.png) Dark Teal | `#267084` |
+| ![#3a9b94](https://via.placeholder.com/20/3a9b94/3a9b94.png) Medium Teal | `#3a9b94` |
+| ![#8dc794](https://via.placeholder.com/20/8dc794/8dc794.png) Light Green | `#8dc794` |
+
+### CSS Variables
+```css
+:root {
+  /* Primary Colors */
+  --kias-primary: #359090;
+  --kias-secondary: #267084;
+  --kias-accent: #3a9b94;
+  --kias-highlight: #8dc794;
+  --kias-light: #f1f1f1;
+
+  /* Gradients */
+  --kias-gradient-1: linear-gradient(135deg, #f1f1f1 0%, #359090 100%);
+  --kias-gradient-2: linear-gradient(135deg, #267084 0%, #3a9b94 50%, #8dc794 100%);
+}
+```
+
+---
 
 ## 🚀 Key Features
 

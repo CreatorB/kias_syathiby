@@ -13,7 +13,7 @@
     @if ($psb->status_psb == 'Tutup')
     <div class="col-12 mb-2">
         <div class="alert alert-danger" role="alert">
-            Mohon maaf, pendaftaran program Takhassus Al Barkah sudah TUTUP! Silahkan tunggu tahun depan, <em>Baarakallahu fiikum</em>
+            Mohon maaf, pendaftaran program KIAS sudah TUTUP! Silahkan tunggu tahun depan, <em>Baarakallahu fiikum</em>
         </div>
     </div>
     @else

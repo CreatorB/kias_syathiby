@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
     <meta name="description" content="Sistem Informasi Pendaftaran Santri Baru">
-    <meta name="author" content="Takhassus Al Barkah">
-    <title>{{ $title ?? 'Home' }} - Takhassus Al Barkah | Sistem Informasi Penerimaan Santri Baru</title>
+    <meta name="author" content="KIAS">
+    <title>{{ $title ?? 'Home' }} - KIAS | Sistem Informasi Penerimaan Santri Baru</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('landing/images/takhassus-icon.ico') }}">
     <link href="https://fonts.googleapis.com/css?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
         rel="stylesheet">

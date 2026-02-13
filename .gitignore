@@ -45,3 +45,4 @@ debug_*.php
 create_*.php
 check_*.php
 reset_*.php
+.claude

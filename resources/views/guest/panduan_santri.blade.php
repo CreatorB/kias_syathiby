@@ -7,7 +7,7 @@
       <div class="row align-items-center">
         <div class="col-lg-7 col-md-12">
           <h1 class="title"><span>P</span>anduan Santri</h1>
-          <p>Informasi penting bagi anda yang ingin menjadi santri Takhassus Al Barkah</p>
+          <p>Informasi penting bagi anda yang ingin menjadi santri KIAS</p>
         </div>
         <div class="col-lg-5 col-md-12 text-lg-end mt-3 mt-lg-0">
           <nav aria-label="breadcrumb" class="page-breadcrumb">
@@ -31,7 +31,7 @@
         <div class="team-description">
         <h2 class="title z-index-1 mb-2">Tujuan</h2>
         <p class="lead mb-3 text-black">
-            Panduan ini dibuat dengan tujuan memudahkan santri dalam mengikuti pembelajaran di Lembaga Pendidikan Takhassus Al Barkah
+            Panduan ini dibuat dengan tujuan memudahkan santri dalam mengikuti pembelajaran di KIAS
         </p>
 
         <h2 class="title z-index-1 mb-2">Santri</h2>
@@ -52,7 +52,7 @@
         <h2 class="title z-index-1 mb-2">Kehadiran</h2>
         <p class="lead mb-3 text-black">
             Peserta diwajibkan mengikuti perkuliahan tatap muka <b>minimal 60% kehadiran.</b><br>
-            Peserta dapat menginformasikan izin tidak mengikuti perkuliahan via wa/telepon ke admin takhassus.
+            Peserta dapat menginformasikan izin tidak mengikuti perkuliahan via wa/telepon ke admin KIAS.
         </p>
 
         <h2 class="title z-index-1 mb-2">Jam Belajar</h2>
@@ -96,8 +96,8 @@
 
         <h2 class="title z-index-1 mb-2">Lain - Lain</h2>
         <p class="lead mb-3 text-black">
-            Peserta/Santri Takhassus yang berkehendak menghadiahkan/menghibahkan barang berupa VCD, buku bacaan, Al-Quran atau barang lainnya berupa media/sarana untuk berdakwah; <br>
-            maka Santri Takhassus tidak diperkenankan membagikan barang tersebut langsung kepada santri takhassus tapi hendaklah menyampaikan barang-barang tersebut terlebih dahulu ke pihak management takhassus untuk diproses dan mendapatkan izin.
+            Peserta/Santri KIAS yang berkehendak menghadiahkan/menghibahkan barang berupa VCD, buku bacaan, Al-Quran atau barang lainnya berupa media/sarana untuk berdakwah; <br>
+            maka Santri KIAS tidak diperkenankan membagikan barang tersebut langsung kepada santri KIAS tapi hendaklah menyampaikan barang-barang tersebut terlebih dahulu ke pihak management KIAS untuk diproses dan mendapatkan izin.
         </p>
 
         </div>

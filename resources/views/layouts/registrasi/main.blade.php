@@ -15,7 +15,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>{{ $title }} | Lembaga Pendidikan Takhassus Al Barkah</title>
+    <title>{{ $title }} | KIAS (Kursus Ilmu bahasa Arab & Syar'i)</title>
 
     <meta name="description" content="" />
 
@@ -68,7 +68,7 @@
                 <span class="app-brand-logo demo">
                   <img src="{{ asset('landing/images/logo/'.$lembaga->logo) }}" alt="" width="32" height="22">
                 </span>
-                <span class="app-brand-text demo menu-text fw-bold">LPTA</span>
+                <span class="app-brand-text demo menu-text fw-bold">KIAS</span>
               </a>
 
               <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">

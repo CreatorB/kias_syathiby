@@ -7,14 +7,14 @@
       <div class="row align-items-center">
         <div class="col-lg-7 col-md-12">
           <h1 class="title"><span>P</span>rofil Lembaga</h1>
-          <p>Mengenal lebih dekat Lembaga Pendidikan Takhassus Al Barkah (LPTA)</p>
+          <p>Mengenal lebih dekat KIAS (Kursus Ilmu bahasa Arab & Syar'i)</p>
         </div>
         <div class="col-lg-5 col-md-12 text-lg-end mt-3 mt-lg-0">
           <nav aria-label="breadcrumb" class="page-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Home</a>
               </li>
-              <li class="breadcrumb-item active" aria-current="page">Profil Takhassus</li>
+              <li class="breadcrumb-item active" aria-current="page">Profil KIAS</li>
             </ol>
           </nav>
         </div>
@@ -67,10 +67,10 @@
 
         <h2 class="title z-index-1 mb-2">Kurikulum</h2>
         <p class="lead mb-3 text-black">
-            Lembaga Pendidikan Takhassus Al-Barkah mengimplementasikan kurikulum dengan menekankan kekhasan, yaitu: <br>
+            KIAS mengimplementasikan kurikulum dengan menekankan kekhasan, yaitu: <br>
             1. Merupakan kurikulum yang telah dikembangkan <br>
             2. Mempertimbangkan usia dan kemampuan peserta didik <br>
-            3. Kurikulum ini merupakan hasil studi Tim Pengembang Kurikulum Lembaga Pendidikan Takhassus Al-Barkah <br>
+            3. Kurikulum ini merupakan hasil studi Tim Pengembang Kurikulum KIAS <br>
         </p>
 
         <h2 class="title z-index-1 mb-2">Metode</h2>
@@ -102,7 +102,7 @@
 
         <ul class="team-icon list-inline mb-4">
             <li class="me-3 list-inline-item"> <i class="flaticon-email"></i>
-            <a href="mailto:takhassusalbarkah@gmail.com">takhassusalbarkah@gmail.com</a>
+            <a href="mailto:kias.syathiby@gmail.com">kias.syathiby@gmail.com</a>
             </li>
             <li class="list-inline-item mt-3 mt-md-0"> <i class="flaticon-social-media"></i>
             <a href="https://api.whatsapp.com/send?phone=628111516756">0811-1516-756</a>
