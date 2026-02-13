@@ -2,7 +2,7 @@
 
 A web-based information system designed to manage the New Student Admission (PSB) process for **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**. 
 
-> **Note:** This project is a rebranding and evolution of the **![Takhassus Al Barkah](https://github.com/alendiasetiawan/takhassus-albarkah)** system.
+> **Note:** This project is a rebranding and evolution of the **[Takhassus Al Barkah](https://github.com/alendiasetiawan/takhassus-albarkah)** system.
 
 This application includes features such as online registration, payment verification, student data management, and enrollment statistics.
 
