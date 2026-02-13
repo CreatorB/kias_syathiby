@@ -7,7 +7,7 @@
       <div class="row align-items-center">
         <div class="col-lg-7 col-md-12">
           <h1 class="title"><span>P</span>engajar</h1>
-          <p>Para asatidzah pengajar di setiap program Takhassus Al Barkah</p>
+          <p>Para asatidzah pengajar di setiap program KIAS</p>
         </div>
         <div class="col-lg-5 col-md-12 text-lg-end mt-3 mt-lg-0">
           <nav aria-label="breadcrumb" class="page-breadcrumb">

@@ -16,14 +16,14 @@
               <span class="app-brand-logo demo">
                 <img src="{{ asset('landing/images/logo/'.$lembaga->logo) }}" alt="" width="32" height="22">
               </span>
-              <span class="app-brand-text demo text-body fw-bold ms-1">LPTA</span>
+              <span class="app-brand-text demo text-body fw-bold ms-1">KIAS</span>
             </a>
           </div>
           <!-- /Logo -->
             @if ($berhasil == 1)
                 <h4 class="mb-1 pt-2">Alhamdulillah, Pendaftaran Berhasil!</h4>
                 <p class="mb-1">
-                    Selamat! <b>"{{ $namaLengkap }}"</b> anda telah resmi menjadi Calon Santri Takhassus Al Barkah.
+                    Selamat! <b>"{{ $namaLengkap }}"</b> anda telah resmi menjadi Calon Santri KIAS.
                     Untuk informasi selanjutnya kami akan menghubungi anda via Whatsapp <br><br>
                     Berikut <b>Kode Registrasi</b> anda :
                 </p>

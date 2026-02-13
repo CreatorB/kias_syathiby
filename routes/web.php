@@ -14,7 +14,7 @@ Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', [LandingPageController::class, 'index']);
-Route::get('/profil-takhassus-al-barkah', [LandingPageController::class, 'profilTakhassus']);
+Route::get('/profil-kias', [LandingPageController::class, 'profilKias']);
 Route::get('/panduan-santri', [LandingPageController::class, 'panduanSantri']);
 Route::get('/pengajar', [LandingPageController::class, 'pengajar']);
 Route::get('/program-tajwid-quran', [ProgramController::class, 'tajwidQuran']);

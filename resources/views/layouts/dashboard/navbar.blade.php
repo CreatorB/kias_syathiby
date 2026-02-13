@@ -3,7 +3,7 @@
       <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
         <a href="index.html" class="app-brand-link gap-2">
           <img src="{{ asset('landing/images/logo/takhassus-logo.webp') }}" width="60" height="30">
-          <span class="app-brand-text demo menu-text fw-bold">LPTA</span>
+          <span class="app-brand-text demo menu-text fw-bold">KIAS</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">

@@ -495,7 +495,7 @@
                         <span>B</span><span>a</span><span>r</span><span>u</span>
                     </a>
                     <a class="btn btn-dark wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s"
-                        href="/profil-takhassus-al-barkah" data-text="Baca Profil">
+                        href="/profil-kias" data-text="Baca Profil">
                         <span>S</span><span>e</span><span>l</span><span>e</span><span>n</span><span>g</span><span>k</span><span>a</span><span>p</span><span>n</span><span>y</span><span>a</span>
                     </a>
                 </div>

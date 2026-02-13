@@ -1,7 +1,7 @@
 <div>
     <x-links.breadcrumb>
         <x-slot:judul_halaman>Data Santri</x-slot:judul_halaman>
-        <x-slot:halaman_aktif>Data Induk Santri Takhassus</x-slot:halaman_aktif>
+        <x-slot:halaman_aktif>Data Induk Santri KIAS</x-slot:halaman_aktif>
     </x-links.breadcrumb>
 
     <div class="row">

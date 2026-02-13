@@ -48,8 +48,8 @@
 
         <h2 class="title z-index-1 mb-2">Peserta</h2>
         <p class="lead mb-3 text-black">
-            Santri program takhassus bahasa Arab adalah ikhwan dan akhwat yang sudah memiliki <b>kemampuan dasar bahasa arab</b> dan
-            sudah lancar membaca Al-Qur'an atau santri lulusan program Bahasa Arab Takhassus Al Barkah
+            Santri program KIAS bahasa Arab adalah ikhwan dan akhwat yang sudah memiliki <b>kemampuan dasar bahasa arab</b> dan
+            sudah lancar membaca Al-Qur'an atau santri lulusan program Bahasa Arab KIAS
         </p>
 
         <h2 class="title z-index-1 mb-2">Kitab Yang Dipelajari</h2>
