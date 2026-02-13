@@ -90,11 +90,173 @@ div.sticky {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #1277BF;
+    background: #359090;
     border-radius: 3px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #25A8E0;
+    background: #3a9b94;
 }
+/* Theme Overrides - Gradient KIAS */
+
+/* Primary Color Overrides (#359090) */
+.text-primary {
+    color: #359090 !important;
+}
+
+.bg-primary {
+    background-color: #359090 !important;
+}
+
+.btn-primary {
+    border-color: #359090 !important;
+    background-color: #359090 !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.show.dropdown-toggle {
+    border-color: #267084 !important; /* Darker Teal from KIAS 2 */
+    background-color: #267084 !important;
+    color: #fff !important;
+}
+
+.btn-outline-primary {
+    border-color: #359090 !important;
+    color: #359090 !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: #359090 !important;
+    color: #fff !important;
+}
+
+.border-primary {
+    border-color: #359090 !important;
+}
+
+/* Secondary Color Overrides (#3a9b94 - Mid Teal from KIAS 2) */
+.text-secondary {
+    color: #3a9b94 !important;
+}
+
+.bg-secondary {
+    background-color: #3a9b94 !important;
+}
+
+.btn-secondary {
+    border-color: #3a9b94 !important;
+    background-color: #3a9b94 !important;
+    color: #fff !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active,
+.btn-secondary.active {
+    border-color: #2c7a74 !important;
+    background-color: #2c7a74 !important;
+    color: #fff !important;
+}
+
+.btn-outline-secondary {
+    border-color: #3a9b94 !important;
+    color: #3a9b94 !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #3a9b94 !important;
+    color: #fff !important;
+}
+
+.border-secondary {
+    border-color: #3a9b94 !important;
+}
+
+/* Success Color Overrides (#8dc794 - Light Green) */
+.text-success {
+    color: #8dc794 !important;
+}
+
+.bg-success {
+    background-color: #8dc794 !important;
+}
+
+.btn-success {
+    border-color: #8dc794 !important;
+    background-color: #8dc794 !important;
+    color: #fff !important;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active {
+    border-color: #7ab380 !important;
+    background-color: #7ab380 !important;
+    color: #fff !important;
+}
+
+.btn-outline-success {
+    border-color: #8dc794 !important;
+    color: #8dc794 !important;
+}
+
+.btn-outline-success:hover {
+    background-color: #8dc794 !important;
+    color: #fff !important;
+}
+
+.border-success {
+    border-color: #8dc794 !important;
+}
+
+/* Background Override */
+body {
+    background-color: #f1f1f1 !important;
+}
+
+.bg-light {
+    background-color: #f1f1f1 !important;
+}
+
+/* Scrollbar Update */
+::-webkit-scrollbar-thumb {
+    background: #359090;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #267084;
+}
+
+/* Specific Badge/Light variants */
+.bg-light-primary {
+    background-color: rgba(53, 144, 144, 0.12) !important;
+    color: #359090 !important;
+}
+
+.bg-light-secondary {
+    background-color: rgba(58, 155, 148, 0.12) !important;
+    color: #3a9b94 !important;
+}
+
+.bg-light-success {
+    background-color: rgba(141, 199, 148, 0.12) !important;
+    color: #8dc794 !important;
+}
+
+/* Pagination */
+.pagination-primary .page-item.active .page-link {
+    background-color: #359090 !important;
+    border-color: #359090 !important;
+}
+
+.pagination-primary .page-item .page-link:hover {
+    color: #359090 !important;
+    background-color: rgba(53, 144, 144, 0.1) !important;
+}
+
