@@ -22,6 +22,7 @@
   <link href="{{ asset('landing/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 
   <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
 
   <!--== animate -->
   <link href="{{ asset('landing/css/animate.css') }}" rel="stylesheet" type="text/css" />
@@ -145,33 +146,7 @@
 
     @yield('content')
 
-    <!--footer start-->
-    <footer class="footer position-relative" data-bg-img="{{ asset('landing/images/bg/05.png') }}">
-      <div class="secondary-footer">
-        <div class="container">
-          <div class="copyright">
-            <div class="row align-items-center">
-              <div class="col-lg-6 col-md-12"> <span>© Copyright 2023 - <a
-                    href="https://kias.syathiby.id">KIAS</a></span>
-              </div>
-              <div class="col-lg-6 col-md-12 text-lg-end mt-3 mt-lg-0">
-                <div class="footer-social">
-                  <ul class="list-inline">
-                    <li class="me-2"><a href="https://api.whatsapp.com/send?phone=628111516756" target="_blank"><i
-                          class="fab fa-whatsapp"></i> 0811-1516-756</a>
-                    </li>
-                    <li class="me-2"><a href="https://www.instagram.com/kias_syathiby/" target="_blank"><i
-                          class="fab fa-instagram"></i>@kias_syathiby</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!--footer end-->
+    @include('layouts.landing.partials.footer')
 
   </div>
   <!-- page wrapper end -->

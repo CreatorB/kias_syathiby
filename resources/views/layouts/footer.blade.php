@@ -7,3 +7,4 @@
         <span class="float-md-end d-none d-md-block">v0.3.2</span>
     </p>
 </footer>
+@include('layouts.partials.credit')
