@@ -12,7 +12,7 @@ class LandingPageController extends Controller
 {
     public function index() {
         $data = [
-            'title' => 'Pusat Belajar Tajwid, Bahasa Arab dan Ilmu Syari',
+            'title' => 'Home',
             'lembaga' => Lembaga::find(1),
             'psb' => InfoPsb::find(1),
             'pengajar' => Pengajar::orderBy('id', 'asc')->limit(5)->get(),
@@ -21,9 +21,9 @@ class LandingPageController extends Controller
         return view('guest.landing_page', $data);
     }
 
-    public function profilTakhassus() {
+    public function profilKias() {
         $data = [
-            'title' => 'Profil Takhassus Al Barkah',
+            'title' => 'Profil KIAS',
             'lembaga' => Lembaga::find(1),
         ];
 

@@ -15,7 +15,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Login - PSB Online | Lembaga Pendidikan Takhassus Al Barkah</title>
+    <title>Login - PSB Online | KIAS (Kursus Ilmu bahasa Arab & Syar'i)</title>
 
     <meta name="description" content="" />
 
@@ -67,7 +67,7 @@
               <div class="app-brand justify-content-center mb-4 mt-2">
                 <a href="/" class="app-brand-link gap-2">
                     <img src="{{ asset('landing/images/logo/takhassus-logo.webp') }}" width="60" height="30">
-                    <span class="app-brand-text demo text-primary fw-bold ms-1">LPTA</span>
+                    <span class="app-brand-text demo text-primary fw-bold ms-1">KIAS</span>
                 </a>
               </div>
               <!-- /Logo -->

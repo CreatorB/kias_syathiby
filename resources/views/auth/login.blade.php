@@ -6,10 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-    <meta name="description" content="Takhassus Al Barkah - Sistem Informasi Pendaftaran Santri Baru">
-    <meta name="author" content="Takhassus Al Barkah">
+    <meta name="description" content="KIAS - Sistem Informasi Pendaftaran Santri Baru">
+    <meta name="author" content="KIAS">
     <meta name="theme-color" content="#ffffff"/>
-    <title>Halaman Login | Lembaga Pendidikan Takhassus Al Barkah</title>
+    <title>Halaman Login | KIAS (Kursus Ilmu bahasa Arab & Syar'i)</title>
     <link rel="apple-touch-icon" href="{{ asset('landing/images/takhassus-icon.ico') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('landing/images/takhassus-icon.ico') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
@@ -51,7 +51,7 @@
             <div class="auth-inner row m-0">
               <!-- Brand logo--><a class="brand-logo" href="/">
                 <img src="{{ asset('landing/images/logo/takhassus-logo.webp') }}" width="45" height="25">
-                <h2 class="brand-text ms-1" style="color:#1277BF">Takhassus Al Barkah</h2></a>
+                <h2 class="brand-text ms-1" style="color:#359090">KIAS</h2></a>
               <!-- /Brand logo-->
               <!-- Left Text-->
               <div class="d-none d-lg-flex col-lg-8 align-items-center p-5">
@@ -62,7 +62,7 @@
               <!-- Login-->
               <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                  <h2 class="card-title fw-bold mb-1">Takhassus Al Barkah</h2>
+                  <h2 class="card-title fw-bold mb-1">KIAS</h2>
                   <p class="card-text mb-2">Sistem Informasi Pendaftaran Santri Baru</p>
                   <!--PESAN GAGAL LOGIN-->
                   @if (\Session::has('flash_message_error'))
