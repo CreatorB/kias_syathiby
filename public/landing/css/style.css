@@ -378,5 +378,613 @@ inset 0 30px 0 rgba(5,248,161, 0.4), inset -30px 0 0 rgba(255,8,68, 0.4), inset 
 .morph {position: relative; height: 130%; fill: #ffe2e1; flex: none; width: 150%;}
 .login-form img{height: 100px;}
 .remember-checkbox label{margin-bottom: 0;}
-.round-shape {position: absolute; right: 10%; bottom: 0; height: 300px; width: 300px; border-radius: 50%; background: none; border:50px solid #2575fc; animation: heartbeat 0.5s cubic-bezier(0.245, 0.325, 0.51, 1.305) infinite alternate; opacity: 0.050;}
+.round-shape {position: absolute; right: 10%; bottom: 0; height: 300px; width: 300px; border-radius: 50%; background: none; border:50px solid #359090; animation: heartbeat 0.5s cubic-bezier(0.245, 0.325, 0.51, 1.305) infinite alternate; opacity: 0.050;}
 
+/* Landing Page Theme Overrides - Gradient KIAS */
+
+/* Primary Color Overrides (#359090) */
+.text-theme,
+a,
+a:hover,
+a:focus,
+.btn-theme,
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-item .nav-link.active,
+.contact-media i,
+.list-icon li i,
+.error-page>span,
+h1 span {
+    color: #359090 !important;
+}
+
+.theme-bg,
+.scroll-top a,
+.video-btn .play-btn,
+.btn-theme,
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background-color: #359090 !important;
+}
+
+.theme-bg {
+    background-color: #359090 !important;
+}
+
+/* Gradients */
+.grediant-bg,
+.grediant-overlay:before {
+    background: #359090 !important;
+    background: linear-gradient(90deg, #359090 0%, #267084 100%) !important;
+}
+
+/* Border Colors */
+.theme-bg .form-control:focus,
+.form-control:focus {
+    border-color: #359090 !important;
+}
+
+/* Secondary/Accent Colors */
+.box-loader span,
+.timeline-inner::before,
+.timeline-content:before,
+.timeline-content:after {
+    background-color: #359090 !important;
+    border-color: #359090 !important;
+}
+
+.timeline-title h2 {
+    color: #359090 !important;
+}
+
+/* Button Overrides */
+.btn-theme {
+    background-color: #359090;
+    border-color: #359090;
+    color: #fff !important;
+}
+
+.btn-theme:hover {
+    background-color: #267084;
+    border-color: #267084;
+    color: #fff !important;
+}
+
+/* Scroll Top */
+.scroll-top a {
+    background: #359090 !important;
+}
+
+.scroll-top a:hover {
+    color: #359090 !important;
+    background: #ffffff !important;
+}
+
+/* Selection */
+::selection {
+    background: #359090;
+    color: #fff;
+}
+
+::-moz-selection {
+    background: #359090;
+    color: #fff;
+}
+
+/* Preloader Colors */
+.loader .loader-box:nth-child(1)::before {
+    background: #359090 !important;
+}
+
+.loader .loader-box:nth-child(2)::before {
+    background: #8dc794 !important;
+}
+
+.loader .loader-box:nth-child(3)::before {
+    background: #267084 !important;
+}
+
+.loader .loader-box:nth-child(4)::before {
+    background: #3a9b94 !important;
+}
+
+/* Contact Icons */
+.contact-media i {
+    color: #359090 !important;
+}
+
+/* Footer Links */
+.footer-social ul li a:hover,
+.media-icon li a {
+    color: #359090 !important;
+}
+
+/* Navbar Dropdown */
+.nav-item.dropdown .dropdown-menu a:hover,
+.navbar-nav .dropdown-menu .dropdown-submenu .dropdown-toggle.show,
+.navbar-nav .dropdown-menu .dropdown-submenu .dropdown-toggle:focus {
+    color: #359090 !important;
+}
+/* Refined Landing Page Theme Overrides - Gradient KIAS v2 */
+
+/* --- Teal #359090 (Primary) Replacements for #2575fc --- */
+
+/* Accordions */
+.accordion-button:hover,
+.accordion-button:not(.collapsed),
+.dark-bg .accordion .accordion-button:hover,
+.dark-bg .accordion .accordion-button:not(.collapsed) {
+    background-color: #359090 !important;
+    color: #ffffff !important;
+}
+
+.accordion .accordion-button:after {
+    background: #359090 !important;
+}
+
+/* Team, Posts, Comments, Icons */
+.team-member .team-description h5,
+.team-link:hover,
+.team-description .team-icon li a:hover,
+.team-description .team-icon li i,
+.post .post-desc h4 a:hover,
+.post-meta ul li i,
+.post.style-2:hover .post-categories,
+.post-author span,
+.comment-reply a:hover {
+    color: #359090 !important;
+}
+
+/* Backgrounds & Decorations */
+.team-member.style-3:before,
+.team-member.style-3:after,
+.tab .nav-tabs .nav-link.active i::after,
+.tab .nav-tabs.active>a:focus i::after,
+.post .post-image::before,
+.post .post-image::after,
+.post-categories,
+.post-title:after,
+.post.style-3 .post-meta:after,
+.testimonial-caption::before,
+.round-shape {
+    background-color: #359090 !important;
+    border-color: #359090 !important;
+}
+
+/* Tabs */
+.tab .nav-tabs .nav-link.active,
+.tab .nav-tabs .nav-link:hover,
+.tab .nav-tabs.active>a:focus,
+.tab .nav-tabs>a:hover {
+    background: #359090 !important;
+    color: #ffffff !important;
+}
+
+.tab.style-2 .nav-tabs .nav-link.active h5,
+.tab.style-2 .nav-tabs.active>a:focus h5 {
+    color: #359090 !important;
+}
+
+
+/* --- Darker Teal #267084 (Secondary) Replacements for #005bea --- */
+
+/* Featured Items, Contact Media, Steps, Categories */
+.featured-item.style-6:hover .featured-icon i,
+.step-num,
+.post-categories:hover,
+.comment-date,
+.widget-categories li i,
+.featured-item.style-1:hover .featured-icon i,
+.featured-item.style-2:hover .featured-icon i,
+.featured-item.style-6:hover .featured-icon i,
+.btn.btn-white:hover,
+.btn.btn-white.btn-border:hover,
+.btn-simple:hover,
+.price-table.style-2 .price-title {
+    color: #267084 !important;
+}
+
+[class*='col-']:nth-child(2) .contact-media {
+    border-bottom-color: #267084 !important;
+}
+
+/* Background Elements */
+.timeline-inner::after,
+.tab.style-2 .nav-tabs .nav-link i::after,
+.post-title:before,
+.post.style-3 .post-meta:before,
+.testimonial-caption:before,
+.anti-02 {
+    background: #267084 !important;
+}
+
+.counter span {
+    color: #267084 !important;
+}
+
+/* Gradients */
+.anti-03 {
+    background: linear-gradient(to right, #267084, #359090) !important;
+}
+
+
+/* --- Light Green #8dc794 (Success/Accent) Replacements for #00c9ff --- */
+
+/* Selection & Error Page */
+::-moz-selection {
+    background: #8dc794 !important;
+    color: #fff !important;
+}
+
+::selection {
+    background: #8dc794 !important;
+    color: #fff !important;
+}
+
+.error-page>span:nth-of-type(3) {
+    color: #8dc794 !important;
+}
+
+/* Header 3 Elements */
+.header-3 #header-wrap.fixed-header .navbar-toggler span {
+    background-color: #8dc794 !important;
+}
+
+.header-3 .navbar-nav .nav-link:hover::before,
+.header-3 .navbar-nav .nav-item .nav-link.active::before,
+.header-3 .navbar-nav .nav-link:focus::before {
+    color: #8dc794 !important;
+}
+
+/* Specific Animation/Shape overrides */
+.round-shape {
+    border-color: #359090 !important;
+}
+/* Final Aggressive Theme Overrides - Gradient KIAS v3 */
+
+/* --- RESPONSIVE & MOBILE OVERRIDES --- */
+
+@media (max-width: 992px) {
+    .navbar-toggler span {
+        background: #359090 !important;
+    }
+
+    .header-3 #header-wrap.fixed-header .navbar-toggler span {
+        background: #359090 !important;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link:focus,
+    .navbar-nav .nav-link.active,
+    .nav-item .nav-link.show,
+    .navbar-nav .nav-link:hover::before,
+    .navbar-nav .nav-link:focus::before {
+        color: #359090 !important;
+        text-shadow: none !important;
+    }
+}
+
+/* --- GLOBAL COLOR FORCING --- */
+
+/* Buttons - Catch All */
+.btn-primary,
+.btn-theme,
+button[type="submit"],
+.btn {
+    background-color: #359090;
+    border-color: #359090;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-theme:hover,
+button[type="submit"]:hover,
+.btn:hover {
+    background-color: #267084 !important;
+    border-color: #267084 !important;
+    color: #fff !important;
+}
+
+/* Text Colors - Catch All */
+.text-primary,
+.text-theme {
+    color: #359090 !important;
+}
+
+/* Backgrounds - Catch All */
+.bg-primary,
+.theme-bg {
+    background-color: #359090 !important;
+}
+
+/* Shadows - Remove Blue Shadows */
+.box-shadow,
+#header-wrap.fixed-header,
+.navbar-nav ul,
+.btn,
+.icon-btn,
+.timeline-content,
+.price-table,
+.featured-item,
+.team-member {
+    box-shadow: 0px 0px 15px 0px rgba(53, 144, 144, 0.15) !important;
+    /* Teal Shadow */
+}
+
+/* Specific Element Fixes from previous checks */
+.round-shape {
+    border-color: #359090 !important;
+    background: none !important;
+    /* Ensure no blue bg leaks */
+}
+
+/* Scroll Top */
+.scroll-top a {
+    background: #359090 !important;
+}
+
+.scroll-top a:hover {
+    background: #fff !important;
+    color: #359090 !important;
+}
+
+/* Preloader (Again, just to be safe) */
+.loader .loader-box::before {
+    background: #359090 !important;
+}
+
+/* ======================================================
+   KIAS University Theme - Enhanced Gradient Styling
+   Color Palette:
+   - Primary: #359090 (Teal)
+   - Secondary: #267084 (Dark Teal)
+   - Accent: #3a9b94 (Medium Teal)
+   - Highlight: #8dc794 (Light Green)
+   - Light: #f1f1f1
+====================================================== */
+
+/* --- Gradient Backgrounds for Sections --- */
+.grey-bg {
+    background: linear-gradient(135deg, #f1f1f1 0%, rgba(53, 144, 144, 0.05) 50%, #f1f1f1 100%) !important;
+}
+
+/* Hero/Banner Gradient Effect */
+.fullscreen-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(38, 112, 132, 0.03) 0%, rgba(53, 144, 144, 0.05) 50%, rgba(141, 199, 148, 0.03) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Theme Background Gradient */
+.theme-bg {
+    background: linear-gradient(135deg, #267084 0%, #359090 50%, #3a9b94 100%) !important;
+}
+
+/* Dark Background with Gradient */
+.dark-bg {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
+
+/* --- Button Gradients --- */
+.btn.btn-theme {
+    background: linear-gradient(90deg, #267084 0%, #359090 50%, #3a9b94 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(53, 144, 144, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn.btn-theme:hover {
+    background: linear-gradient(90deg, #1f5a6a 0%, #267084 50%, #359090 100%) !important;
+    box-shadow: 0 6px 20px rgba(53, 144, 144, 0.4) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Secondary Button Style */
+.btn.btn-border {
+    border: 2px solid #359090 !important;
+    color: #359090 !important;
+    background: transparent !important;
+}
+
+.btn.btn-border:hover {
+    background: linear-gradient(90deg, #267084 0%, #359090 100%) !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+}
+
+/* --- Header Gradient Effect --- */
+#header-wrap.fixed-header {
+    background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.98) 100%) !important;
+    box-shadow: 0 2px 30px rgba(53, 144, 144, 0.15) !important;
+}
+
+/* --- Section Dividers with Gradient --- */
+section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, #359090 50%, transparent 100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- Featured Items Gradient Hover --- */
+.featured-item:hover::before {
+    background: linear-gradient(180deg, #267084 0%, #359090 50%, #3a9b94 100%) !important;
+}
+
+/* --- Price Table Gradient Active --- */
+.price-table.active {
+    background: linear-gradient(135deg, #267084 0%, #359090 50%, #3a9b94 100%) !important;
+}
+
+.price-table.active .price-title,
+.price-table.active .price-value h2,
+.price-table.active .price-value h2 span,
+.price-table.active .price-value span,
+.price-table.active .price-list ul li,
+.price-table.active h3 {
+    color: #ffffff !important;
+}
+
+/* --- Contact Media Gradient Border --- */
+.contact-media {
+    border-bottom: 3px solid transparent !important;
+    border-image: linear-gradient(90deg, #267084, #359090, #8dc794) 1 !important;
+}
+
+/* --- Timeline Gradient --- */
+.timeline:after {
+    background: linear-gradient(180deg, #359090 0%, #267084 50%, #3a9b94 100%) !important;
+}
+
+/* --- Progress Bar Gradient --- */
+.ht-progress-bar .progress .progress-bar {
+    background: linear-gradient(90deg, #267084 0%, #359090 50%, #8dc794 100%) !important;
+}
+
+/* --- Testimonial Gradient Accent --- */
+.testimonial.style-4:after {
+    background: linear-gradient(135deg, #267084 0%, #359090 100%) !important;
+}
+
+/* --- Footer Gradient --- */
+.footer.theme-bg {
+    background: linear-gradient(135deg, #267084 0%, #359090 50%, #3a9b94 100%) !important;
+}
+
+/* --- Card Hover Effects with Gradient Shadow --- */
+.featured-item:hover,
+.team-member:hover,
+.post:hover,
+.price-table:hover {
+    box-shadow: 0 15px 40px rgba(53, 144, 144, 0.2) !important;
+}
+
+/* --- Accordion Gradient Header --- */
+.accordion-button:not(.collapsed) {
+    background: linear-gradient(90deg, #267084 0%, #359090 100%) !important;
+}
+
+/* --- Tab Active Gradient --- */
+.tab .nav-tabs .nav-link.active {
+    background: linear-gradient(90deg, #267084 0%, #359090 100%) !important;
+}
+
+/* --- Video Play Button Gradient --- */
+.video-btn .play-btn {
+    background: linear-gradient(135deg, #267084 0%, #359090 100%) !important;
+    box-shadow: 0 5px 25px rgba(53, 144, 144, 0.4) !important;
+}
+
+.video-btn .play-btn:hover {
+    background: linear-gradient(135deg, #359090 0%, #8dc794 100%) !important;
+}
+
+/* --- Scroll to Top Gradient --- */
+.scroll-top a {
+    background: linear-gradient(135deg, #267084 0%, #359090 100%) !important;
+    box-shadow: 0 5px 20px rgba(53, 144, 144, 0.3) !important;
+}
+
+/* --- Selection Gradient Effect --- */
+::selection {
+    background: #359090 !important;
+    color: #ffffff !important;
+}
+
+::-moz-selection {
+    background: #359090 !important;
+    color: #ffffff !important;
+}
+
+/* --- Links with Gradient Underline on Hover --- */
+a:hover {
+    color: #359090 !important;
+    text-decoration: none !important;
+}
+
+/* --- Form Focus Gradient Border --- */
+.form-control:focus {
+    border-color: #359090 !important;
+    box-shadow: 0 0 0 0.2rem rgba(53, 144, 144, 0.15) !important;
+}
+
+/* --- Page Title Gradient Overlay --- */
+.page-title {
+    position: relative;
+}
+
+.page-title::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(38, 112, 132, 0.02) 0%, rgba(53, 144, 144, 0.03) 50%, rgba(141, 199, 148, 0.02) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* --- Counter Gradient Text --- */
+.counter span:first-child {
+    background: linear-gradient(90deg, #267084, #359090) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}
+
+/* --- Wave Shape Gradient --- */
+.wave-bg use {
+    fill: rgba(53, 144, 144, 0.1) !important;
+}
+
+/* --- Decorative Elements Gradient --- */
+.title-effect .bar {
+    background: linear-gradient(90deg, #267084 0%, #359090 50%, #8dc794 100%) !important;
+}
+
+.title-effect-2 .ellipse {
+    background: linear-gradient(135deg, #267084 0%, #359090 100%) !important;
+}
+
+/* --- Step Icon Gradient --- */
+.step-num {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%) !important;
+    color: #359090 !important;
+    box-shadow: 0 12px 20px 0 rgba(53, 144, 144, 0.3) !important;
+}
+
+/* --- Owl Carousel Dots Gradient --- */
+.owl-theme .owl-dots .owl-dot.active span {
+    background: linear-gradient(90deg, #267084 0%, #359090 100%) !important;
+}
+
+/* --- Widget Search Button Gradient --- */
+.widget-searchbox .search-btn {
+    color: #359090 !important;
+}
+
+/* --- Tags Hover Gradient --- */
+.widget .widget-tags li a:hover,
+.post-tags li a:hover {
+    background: linear-gradient(90deg, #267084 0%, #359090 100%) !important;
+    color: #ffffff !important;
+}
+
+/* --- Pagination Active Gradient --- */
+.pagination > li.active .page-link,
+.page-link:hover,
+.page-link:focus {
+    background: linear-gradient(90deg, #267084 0%, #359090 100%) !important;
+    border-color: #359090 !important;
+}
