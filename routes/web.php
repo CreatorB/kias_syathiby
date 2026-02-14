@@ -12,7 +12,7 @@ use App\Http\Controllers\Guest\EventController;
 use App\Livewire\Peserta\EventHistory;
 
 Auth::routes();
-Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+Route::get('/logout', [LogoutController::class, 'logout'])->name('custom.logout');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', [LandingPageController::class, 'index']);
