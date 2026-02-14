@@ -23,7 +23,7 @@
                 style="max-height: 45px; opacity: 0.9; transition: all 0.3s ease;">
             </a>
             <a href="https://syathiby.id" target="_blank" class="partner-logo" title="Ma'had Aly Syathiby">
-              <img src="{{ asset('landing/images/partners/syathiby.webp') }}" alt="Ma'had Aly Syathiby" class="img-fluid"
+              <img src="{{ asset('landing/images/partners/mahadalysyathiby.png') }}" alt="Ma'had Aly Syathiby" class="img-fluid"
                 style="max-height: 45px; opacity: 0.9; transition: all 0.3s ease;">
             </a>
             <a href="https://www.instagram.com/masjidalbarkahcileungsi" target="_blank" class="partner-logo" title="Masjid Jami' Al-Barkah">

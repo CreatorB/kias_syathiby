@@ -127,6 +127,9 @@
                         </li>
                         <li><a href="/program-ulum-syariah">Ulum Asy-Syariah</a>
                         </li>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="/events"><i class="fas fa-calendar-alt me-1"></i> Events / Daurah</a>
+                        </li>
                       </ul>
                     </li>
                     <li class="nav-item"> <a class="nav-link" href="#pengajar">Pengajar</a>

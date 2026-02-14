@@ -63,6 +63,9 @@
   <!--== responsive -->
   <link href="{{ asset('landing/css/responsive.css') }}" rel="stylesheet" type="text/css" />
 
+  <!-- page specific css -->
+  @stack('pageCss')
+
   <!-- inject css end -->
 
 </head>
@@ -126,6 +129,9 @@
                         <li><a href="/program-takmili">Takmili</a>
                         </li>
                         <li><a href="/program-ulum-syariah">Ulum Asy-Syariah</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="/events"><i class="fas fa-calendar-alt me-1"></i> Events / Daurah</a>
                         </li>
                       </ul>
                     </li>
@@ -196,6 +202,9 @@
 
   <!--== theme-script -->
   <script src="{{ asset('landing/js/theme-script.js') }}"></script>
+
+  <!-- page specific js -->
+  @stack('pageJS')
 
   <!-- inject js end -->
 
