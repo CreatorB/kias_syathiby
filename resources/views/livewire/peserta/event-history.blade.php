@@ -179,12 +179,11 @@
                                             @endif
                                         @endif
 
-                                        {{-- Certificate Button --}}
-                                        @if($event->has_certificate && $registration->payment_status === 'valid' && $registration->attendances->count() > 0)
-                                            <a href="{{ route('dashboard::events.certificate', $event->id) }}"
-                                                class="btn btn-warning btn-sm">
-                                                <i data-feather="award" style="width: 14px;"></i> Download Sertifikat
-                                            </a>
+                                        {{-- Certificate Button - TODO: Implement certificate download feature --}}
+                                        @if($event->has_certificate && $registration->payment_status === 'valid' && $registration->attendances->count() > 0 && $event->hasEnded())
+                                            <button class="btn btn-warning btn-sm" disabled title="Fitur sertifikat akan segera hadir">
+                                                <i data-feather="award" style="width: 14px;"></i> Sertifikat (Segera)
+                                            </button>
                                         @endif
 
                                         {{-- View Event Button --}}

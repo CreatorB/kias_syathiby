@@ -21,7 +21,7 @@
     <!--page title end-->
 
     <!--success section start-->
-    <section class="pt-5 pb-5">
+    <section class="pt-3 pb-4">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-8">
@@ -96,6 +96,15 @@
 
 @push('pageCss')
 <style>
+    .page-title {
+        padding: 70px 0 20px !important;
+    }
+
+    .page-title .title {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+
     .btn-theme {
         background-color: #359090;
         border-color: #359090;
@@ -112,6 +121,27 @@
         display: inline-block;
         min-width: 30px;
         color: #359090;
+    }
+
+    .card-body {
+        padding: 1.5rem !important;
+    }
+
+    .card-body .mb-4 {
+        margin-bottom: 1rem !important;
+    }
+
+    .card-body h2 {
+        font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            padding: 60px 0 15px !important;
+        }
+        .page-title .title {
+            font-size: 1.5rem;
+        }
     }
 </style>
 @endpush

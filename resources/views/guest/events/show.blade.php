@@ -240,7 +240,7 @@
                 <div class="col-lg-4">
                     <div class="card border-0 shadow-sm sticky-top" style="top: 100px;">
                         <div class="card-header bg-theme text-white">
-                            <h5 class="mb-0"><i class="fas fa-user-plus me-2"></i> Daftar Event</h5>
+                            <h5 class="mb-0 text-white"><i class="fas fa-user-plus me-2"></i> Daftar Event</h5>
                         </div>
                         <div class="card-body p-4">
                             @if(session('error'))

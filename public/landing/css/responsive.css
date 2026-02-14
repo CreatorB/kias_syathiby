@@ -91,6 +91,11 @@ h6 {font-size: 17px; line-height: 26px;}
 
 .navbar-collapse {background:#ffffff; max-height: 400px; overflow: auto; border: medium none; -webkit-box-shadow: 7px 5px 30px rgba(72,73,121,0.15); -moz-box-shadow: 7px 5px 30px rgba(72,73,121,0.15); box-shadow: 7px 5px 30px rgba(72,73,121,0.15); left: 0; padding: 10px; position: absolute; z-index: 99; top: 40px; width: 100%;}
 
+/*Mobile Nav Buttons inside drawer*/
+.nav-mobile-buttons {border-color: rgba(0,0,0,0.1) !important;}
+.nav-mobile-buttons .btn-theme {background-color: #359090; border-color: #359090; color: #fff;}
+.nav-mobile-buttons .btn-theme:hover {background-color: #2a7070; border-color: #2a7070;}
+
 .navbar-toggler span {width: 80%; height: 2px; margin: 0 auto; display: block; background: #2575fc; transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375); transition-delay: 0.2s;}
 .navbar-toggler span:first-of-type {transform: rotate(45deg) translate(2px, 2px);}
 .navbar-toggler span:nth-of-type(2) {opacity: 0;}
@@ -219,7 +224,6 @@ h4 {font-size: 18px; line-height: 26px;}
 .section-title h2{font-size: 28px; line-height: 36px;}
 
 /*Header*/
-.header a.btn{display: none;}
 .navbar-toggler{margin-right: 0;}
 
 /*Banner*/
