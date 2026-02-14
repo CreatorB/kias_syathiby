@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class Superadmin
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,11 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Allow superadmin (1) and admin (2) roles
-        if (in_array(Auth::user()->role_id, [1, 2])) {
+        // Only allow superadmin (1)
+        if (Auth::check() && Auth::user()->role_id == 1) {
             return $next($request);
-        } else {
-            return redirect('/');
         }
+
+        return redirect('/admin/dashboard')->with('error', 'Akses ditolak. Hanya Superadmin yang dapat mengakses halaman ini.');
     }
 }

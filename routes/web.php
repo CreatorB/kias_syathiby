@@ -8,6 +8,8 @@ use App\Http\Controllers\Guest\ProgramController;
 use App\Http\Controllers\Santri\DaftarController;
 use App\Http\Controllers\Santri\CariNamaController;
 use App\Http\Controllers\Guest\LandingPageController;
+use App\Http\Controllers\Guest\EventController;
+use App\Livewire\Peserta\EventHistory;
 
 Auth::routes();
 Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
@@ -34,6 +36,18 @@ Route::get('/cari-nama', [CariNamaController::class, 'search']);
 Route::get('/detail-nama', [CariNamaController::class, 'detail'])->name('detailNamaSantri');
 Route::get('/edit-biodata/{kode}', [CariNamaController::class, 'edit']);
 Route::post('/edit-biodata/update', [CariNamaController::class, 'update']);
+
+// Event Routes (Public)
+Route::redirect('/event', '/events'); // Redirect typo
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.show');
+Route::post('/events/{slug}/register', [EventController::class, 'register'])->name('events.register');
+Route::get('/events/{slug}/success', [EventController::class, 'success'])->name('events.success');
+
+// User Dashboard Routes (Peserta/Santri)
+Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard', 'as' => 'dashboard::'], function () {
+    Route::get('/events', EventHistory::class)->name('events');
+});
 
 require __DIR__ . '/admin.php';
 
