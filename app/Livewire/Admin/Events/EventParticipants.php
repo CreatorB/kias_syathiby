@@ -24,6 +24,9 @@ class EventParticipants extends Component
     #[Url]
     public $filterStatus = '';
 
+    #[Url]
+    public $filterGender = '';
+
     public $limitData = 15;
 
     public function mount($id)
@@ -49,6 +52,13 @@ class EventParticipants extends Component
             })
             ->when($this->filterStatus, function ($q) {
                 return $q->where('payment_status', $this->filterStatus);
+            })
+            ->when($this->filterGender, function ($q) {
+                if ($this->filterGender === 'L') {
+                    return $q->whereIn('gender', ['L', 'Laki-Laki']);
+                } elseif ($this->filterGender === 'P') {
+                    return $q->whereIn('gender', ['P', 'Perempuan']);
+                }
             })
             ->orderBy('registered_at', 'desc')
             ->paginate($this->limitData);
@@ -97,6 +107,28 @@ class EventParticipants extends Component
     }
 
     /**
+     * Get ikhwan (male) registrations count.
+     */
+    #[Computed]
+    public function ikhwanCount()
+    {
+        return EventRegistration::where('event_id', $this->eventId)
+            ->whereIn('gender', ['L', 'Laki-Laki'])
+            ->count();
+    }
+
+    /**
+     * Get akhwat (female) registrations count.
+     */
+    #[Computed]
+    public function akhwatCount()
+    {
+        return EventRegistration::where('event_id', $this->eventId)
+            ->whereIn('gender', ['P', 'Perempuan'])
+            ->count();
+    }
+
+    /**
      * Confirm payment.
      */
     public function confirmPayment($id)
@@ -128,7 +160,7 @@ class EventParticipants extends Component
      */
     public function resetFilters()
     {
-        $this->reset(['search', 'filterStatus']);
+        $this->reset(['search', 'filterStatus', 'filterGender']);
     }
 
     public function render()

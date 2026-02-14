@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Guest\InfoPsbController;
 use App\Http\Controllers\Guest\ProgramController;
@@ -13,6 +14,19 @@ use App\Livewire\Peserta\EventHistory;
 
 Auth::routes();
 Route::get('/logout', [LogoutController::class, 'logout'])->name('custom.logout');
+
+// Cache management routes (production helper)
+Route::get('/optimize', function () {
+    Artisan::call('optimize:clear');
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
+    return 'Optimized! Cache cleared and recached.';
+});
+Route::get('/clear', function () {
+    Artisan::call('optimize:clear');
+    return 'Cache cleared!';
+});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', [LandingPageController::class, 'index']);

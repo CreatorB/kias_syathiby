@@ -144,16 +144,63 @@
                     <li class="nav-item"> <a class="nav-link" href="/panduan-santri">Panduan Santri</a>
                     </li>
                   </ul>
+                  <!-- Mobile Nav Buttons -->
+                  <div class="d-lg-none nav-mobile-buttons mt-3 pt-3 border-top">
+                    <div class="d-flex gap-2">
+                      @auth
+                        @if(auth()->user()->isAdmin())
+                          <a class="btn btn-theme btn-sm flex-fill" href="{{ route('admin::dashboard') }}">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                          </a>
+                        @else
+                          <a class="btn btn-theme btn-sm flex-fill" href="{{ route('dashboard::events') }}">
+                            <i class="fas fa-user me-1"></i> Akun Saya
+                          </a>
+                        @endif
+                      @else
+                        <a class="btn btn-theme btn-sm flex-fill" href="{{ route('login') }}">
+                          <i class="fas fa-sign-in-alt me-1"></i> Login
+                        </a>
+                      @endauth
+                      @if ($title == 'Informasi Penerimaan Santri Baru')
+                        <a class="btn btn-theme btn-sm flex-fill" href="/pilih-program">
+                          <i class="fas fa-user-plus me-1"></i> Daftar Santri
+                        </a>
+                      @else
+                        <a class="btn btn-theme btn-sm flex-fill" href="/psb">
+                          <i class="fas fa-user-plus me-1"></i> Daftar Santri
+                        </a>
+                      @endif
+                    </div>
+                  </div>
                 </div>
-                @if ($title == 'Informasi Penerimaan Santri Baru')
-                  <a class="btn btn-theme btn-sm" href="/pilih-program" data-text="Daftar">
-                    <span>S</span><span>a</span><span>n</span><span>t</span><span>r</span><span>i</span>
-                  </a>
-                @else
-                  <a class="btn btn-theme btn-sm" href="/psb" data-text="Daftar">
-                    <span>S</span><span>a</span><span>n</span><span>t</span><span>r</span><span>i</span>
-                  </a>
-                @endif
+                <!-- Desktop Nav Buttons -->
+                <div class="d-none d-lg-flex gap-2 align-items-center">
+                  @auth
+                    @if(auth()->user()->isAdmin())
+                      <a class="btn btn-theme btn-sm" href="{{ route('admin::dashboard') }}" data-text="Dashboard">
+                        <span>D</span><span>a</span><span>s</span><span>h</span><span>b</span><span>o</span><span>a</span><span>r</span><span>d</span>
+                      </a>
+                    @else
+                      <a class="btn btn-theme btn-sm" href="{{ route('dashboard::events') }}" data-text="Akun">
+                        <span>A</span><span>k</span><span>u</span><span>n</span>
+                      </a>
+                    @endif
+                  @else
+                    <a class="btn btn-theme btn-sm" href="{{ route('login') }}" data-text="Login">
+                      <span>L</span><span>o</span><span>g</span><span>i</span><span>n</span>
+                    </a>
+                  @endauth
+                  @if ($title == 'Informasi Penerimaan Santri Baru')
+                    <a class="btn btn-theme btn-sm" href="/pilih-program" data-text="Daftar">
+                      <span>S</span><span>a</span><span>n</span><span>t</span><span>r</span><span>i</span>
+                    </a>
+                  @else
+                    <a class="btn btn-theme btn-sm" href="/psb" data-text="Daftar">
+                      <span>S</span><span>a</span><span>n</span><span>t</span><span>r</span><span>i</span>
+                    </a>
+                  @endif
+                </div>
               </nav>
             </div>
           </div>
