@@ -29,6 +29,45 @@
                     </li>
                 </ul>
             </li>
+
+            <!--MANAJEMEN EVENTS-->
+            <li class="navigation-header"><span data-i18n="Events">MANAJEMEN EVENTS</span><i data-feather="more-horizontal"></i>
+            </li>
+            <li class="nav-item {{ Route::is('admin::events.*') ? 'open' : '' }}">
+                <a class="d-flex align-items-center" href="#"><i data-feather="calendar"></i>
+                    <span class="menu-title text-truncate">Events</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ Route::is('admin::events.index') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" wire:navigate href="{{ route('admin::events.index') }}"><i data-feather="circle"></i>
+                            <span class="menu-item text-truncate">Daftar Event</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('admin::events.create') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" wire:navigate href="{{ route('admin::events.create') }}"><i data-feather="circle"></i>
+                            <span class="menu-item text-truncate">Tambah Event</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- Superadmin Only Settings --}}
+            @if(auth()->user()->isSuperadmin())
+            <li class="navigation-header"><span data-i18n="Settings">PENGATURAN</span><i data-feather="more-horizontal"></i>
+            </li>
+            <li class="nav-item {{ Route::is('admin::settings.*') ? 'open' : '' }}">
+                <a class="d-flex align-items-center" href="#"><i data-feather="settings"></i>
+                    <span class="menu-title text-truncate">Settings</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="{{ Route::is('admin::settings.permissions') ? 'active' : '' }}">
+                        <a class="d-flex align-items-center" wire:navigate href="{{ route('admin::settings.permissions') }}"><i data-feather="circle"></i>
+                            <span class="menu-item text-truncate">Hak Akses</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            @endif
         </ul>
     </div>
 </div>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class Peserta
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,11 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Allow superadmin (1) and admin (2) roles
-        if (in_array(Auth::user()->role_id, [1, 2])) {
+        // Allow santri (3) and peserta (4) roles
+        if (Auth::check() && in_array(Auth::user()->role_id, [3, 4])) {
             return $next($request);
-        } else {
-            return redirect('/');
         }
+
+        return redirect('/login');
     }
 }

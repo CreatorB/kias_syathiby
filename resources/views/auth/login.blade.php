@@ -77,8 +77,8 @@
                   <form class="auth-login-form mt-2" action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="mb-1">
-                      <label class="form-label" for="username">Username</label>
-                      <input class="form-control @error('email') is-invalid @enderror" @if(\Cookie::has('saveuser')) value="{{ \Cookie::get('saveuser') }}" @endif type="text" name="email" tabindex="1"/>
+                      <label class="form-label" for="email">Email / No. HP</label>
+                      <input class="form-control @error('email') is-invalid @enderror" @if(\Cookie::has('saveuser')) value="{{ \Cookie::get('saveuser') }}" @endif type="text" name="email" placeholder="email@example.com atau 08xxxx" tabindex="1"/>
                     </div>
 
                     <div class="mb-1">
@@ -93,7 +93,7 @@
                       </div>
                     </div>
                     <div class="mb-1">
-                      <label><em>Checklist <b>"Simpan Password"</b> untuk masuk kembali tanpa menuliskan Username dan Password   </em></label>
+                      <label><em>Checklist <b>"Simpan Password"</b> untuk masuk kembali tanpa menuliskan Email/No.HP dan Password   </em></label>
                     </div>
                     <div class="mb-1">
                       <div class="form-check">
