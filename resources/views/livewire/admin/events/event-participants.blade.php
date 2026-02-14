@@ -34,8 +34,14 @@
                     <div class="card-body statistics-body">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h2 class="fw-bolder">{{ $this->totalRegistrations }}</h2>
-                                <p class="card-text">Total Pendaftar</p>
+                                <div class="d-flex align-items-center gap-2">
+                                    <h2 class="fw-bolder mb-0">{{ $this->totalRegistrations }}</h2>
+                                    <div class="d-flex flex-column gap-25" style="font-size: 11px;">
+                                        <span class="text-primary" title="Ikhwan">🧔 {{ $this->ikhwanCount }}</span>
+                                        <span class="text-danger" title="Akhwat">🧕 {{ $this->akhwatCount }}</span>
+                                    </div>
+                                </div>
+                                <p class="card-text mb-0">Total</p>
                             </div>
                             <div class="avatar bg-light-primary p-50">
                                 <span class="avatar-content">
@@ -114,11 +120,11 @@
                             <option value="100">100 per hal</option>
                         </select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <input type="text" wire:model.live.debounce.300ms="search" class="form-control"
                             placeholder="Cari nama/email/HP...">
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select wire:model.live="filterStatus" class="form-select">
                             <option value="">Semua Status</option>
                             <option value="pending">Menunggu</option>
@@ -127,7 +133,14 @@
                         </select>
                     </div>
                     <div class="col-md-2">
-                        <button wire:click="resetFilters" class="btn btn-outline-secondary">Reset</button>
+                        <select wire:model.live="filterGender" class="form-select">
+                            <option value="">Semua Gender</option>
+                            <option value="L">Ikhwan (Laki-laki)</option>
+                            <option value="P">Akhwat (Perempuan)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button wire:click="resetFilters" class="btn btn-outline-secondary w-100">Reset</button>
                     </div>
                 </div>
             </div>
