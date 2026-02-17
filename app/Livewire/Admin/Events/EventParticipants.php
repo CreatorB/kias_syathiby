@@ -29,10 +29,134 @@ class EventParticipants extends Component
 
     public $limitData = 15;
 
+    public $linkName;
+    public $linkQuotaIkhwan;
+    public $linkQuotaAkhwat;
+    public $linkActiveFrom;
+    public $linkActiveUntil;
+    public $selectedLinkId;
+    public $isEditingLink = false;
+
+    public $manualName;
+    public $manualEmail;
+    public $manualPhone;
+    public $manualGender = 'Laki-Laki';
+    public $manualAddress;
+
     public function mount($id)
     {
         $this->eventId = $id;
         $this->event = Event::findOrFail($id);
+    }
+
+    /**
+     * Get internal links.
+     */
+    #[Computed]
+    public function internalLinks()
+    {
+        return \App\Models\EventInternalLink::where('event_id', $this->eventId)
+            ->latest()
+            ->get();
+    }
+
+    /**
+     * Save internal link (create/update).
+     */
+    public function saveLink()
+    {
+        $this->validate([
+            'linkName' => 'required|string|max:255',
+            'linkQuotaIkhwan' => 'required|integer|min:0',
+            'linkQuotaAkhwat' => 'required|integer|min:0',
+            'linkActiveFrom' => 'nullable|date',
+            'linkActiveUntil' => 'nullable|date|after_or_equal:linkActiveFrom',
+        ]);
+
+        if ($this->isEditingLink) {
+            $link = \App\Models\EventInternalLink::find($this->selectedLinkId);
+            $link->update([
+                'name' => $this->linkName,
+                'quota_ikhwan' => $this->linkQuotaIkhwan,
+                'quota_akhwat' => $this->linkQuotaAkhwat,
+                'active_from' => $this->linkActiveFrom,
+                'active_until' => $this->linkActiveUntil,
+            ]);
+            $this->dispatch('link-saved', 'Link berhasil diperbarui!');
+        } else {
+            \App\Models\EventInternalLink::create([
+                'event_id' => $this->eventId,
+                'token' => \Illuminate\Support\Str::random(10),
+                'name' => $this->linkName,
+                'quota_ikhwan' => $this->linkQuotaIkhwan,
+                'quota_akhwat' => $this->linkQuotaAkhwat,
+                'active_from' => $this->linkActiveFrom,
+                'active_until' => $this->linkActiveUntil,
+            ]);
+            $this->dispatch('link-saved', 'Link internal berhasil dibuat!');
+        }
+
+        $this->resetLinkInput();
+    }
+
+    public function editLink($id)
+    {
+        $link = \App\Models\EventInternalLink::find($id);
+        $this->selectedLinkId = $id;
+        $this->linkName = $link->name;
+        $this->linkQuotaIkhwan = $link->quota_ikhwan;
+        $this->linkQuotaAkhwat = $link->quota_akhwat;
+        $this->linkActiveFrom = $link->active_from ? $link->active_from->format('Y-m-d\TH:i') : null;
+        $this->linkActiveUntil = $link->active_until ? $link->active_until->format('Y-m-d\TH:i') : null;
+        $this->isEditingLink = true;
+        $this->dispatch('open-link-modal');
+    }
+
+    public function deleteLink($id)
+    {
+        \App\Models\EventInternalLink::destroy($id);
+        $this->dispatch('link-deleted', 'Link berhasil dihapus!');
+    }
+
+    public function resetLinkInput()
+    {
+        $this->reset(['linkName', 'linkQuotaIkhwan', 'linkQuotaAkhwat', 'linkActiveFrom', 'linkActiveUntil', 'selectedLinkId', 'isEditingLink']);
+    }
+
+    /**
+     * Manual Add Participant
+     */
+    public function addParticipant()
+    {
+        $this->validate([
+            'manualName' => 'required|string',
+            'manualEmail' => 'required|email',
+            'manualPhone' => 'required|string',
+            'manualGender' => 'required|in:Laki-Laki,Perempuan',
+        ]);
+
+        // Use Service
+        $data = [
+            'name' => $this->manualName,
+            'email' => $this->manualEmail,
+            'phone' => $this->manualPhone,
+            'gender' => $this->manualGender,
+            'address' => $this->manualAddress,
+            'password' => \Illuminate\Support\Str::random(8), // Random password
+        ];
+
+        $service = app(\App\Services\EventRegistrationService::class);
+        $service->registerParticipant($this->eventId, $data);
+
+        // Increment Quota
+        $genderKey = ($this->manualGender === 'Laki-Laki') ? 'quota_ikhwan' : 'quota_akhwat';
+        if ($this->event->$genderKey !== null) {
+            $this->event->increment($genderKey);
+        }
+
+        $this->reset(['manualName', 'manualEmail', 'manualPhone', 'manualGender', 'manualAddress']);
+        $this->dispatch('participant-added', 'Peserta berhasil ditambahkan manual!');
+        $this->dispatch('close-manual-modal');
     }
 
     /**

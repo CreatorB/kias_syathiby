@@ -74,7 +74,8 @@ class Event extends Model
         // Filter and clean image paths - only keep filenames that exist
         $cleanImages = [];
         foreach ($images as $img) {
-            if (!$img) continue;
+            if (!$img)
+                continue;
 
             // Extract just the filename if full path is stored
             $filename = basename($img);
@@ -122,7 +123,7 @@ class Event extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 'published')
-                     ->where('end_date', '>=', now());
+            ->where('end_date', '>=', now());
     }
 
     /**
@@ -131,7 +132,7 @@ class Event extends Model
     public function scopeUpcoming($query)
     {
         return $query->where('status', 'published')
-                     ->where('start_date', '>=', now());
+            ->where('start_date', '>=', now());
     }
 
     /**
@@ -319,5 +320,13 @@ class Event extends Model
             'is_full' => $quota !== null && $remaining === 0,
             'is_unlimited' => $quota === null,
         ];
+    }
+
+    /**
+     * Get the internal links for the event.
+     */
+    public function internalLinks(): HasMany
+    {
+        return $this->hasMany(EventInternalLink::class);
     }
 }

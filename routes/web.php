@@ -58,10 +58,17 @@ Route::get('/events/{slug}', [EventController::class, 'show'])->name('events.sho
 Route::post('/events/{slug}/register', [EventController::class, 'register'])->name('events.register');
 Route::get('/events/{slug}/success', [EventController::class, 'success'])->name('events.success');
 
+// Internal Event Routes
+Route::get('/events/internal/{slug}/{token}', [\App\Http\Controllers\Guest\InternalEventController::class, 'show'])->name('events.internal.show');
+Route::post('/events/internal/{slug}/{token}/register', [\App\Http\Controllers\Guest\InternalEventController::class, 'store'])->name('events.internal.store');
+
 // User Dashboard Routes (Peserta/Santri)
 Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard', 'as' => 'dashboard::'], function () {
     Route::get('/events', EventHistory::class)->name('events');
 });
+
+
+
 
 require __DIR__ . '/admin.php';
 
