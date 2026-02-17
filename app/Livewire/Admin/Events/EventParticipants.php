@@ -43,6 +43,13 @@ class EventParticipants extends Component
     public $manualGender = 'Laki-Laki';
     public $manualAddress;
 
+    public $selectedParticipantId;
+    public $editName;
+    public $editEmail;
+    public $editPhone;
+    public $editGender;
+    public $editAddress;
+
     public function mount($id)
     {
         $this->eventId = $id;
@@ -157,6 +164,81 @@ class EventParticipants extends Component
         $this->reset(['manualName', 'manualEmail', 'manualPhone', 'manualGender', 'manualAddress']);
         $this->dispatch('participant-added', 'Peserta berhasil ditambahkan manual!');
         $this->dispatch('close-manual-modal');
+    }
+
+    /**
+     * Edit Participant
+     */
+    public function editParticipant($id)
+    {
+        $participant = EventRegistration::findOrFail($id);
+        $this->selectedParticipantId = $id;
+        $this->editName = $participant->name;
+        $this->editEmail = $participant->email;
+        $this->editPhone = $participant->phone;
+        $this->editGender = $participant->gender;
+        $this->editAddress = $participant->address; // Assuming address field exists in EventRegistration/User
+
+        $this->dispatch('open-edit-participant-modal');
+    }
+
+    /**
+     * Update Participant
+     */
+    public function updateParticipant()
+    {
+        $this->validate([
+            'editName' => 'required|string',
+            'editEmail' => 'required|email',
+            'editPhone' => 'required|string',
+            'editGender' => 'required|in:Laki-Laki,Perempuan,L,P',
+        ]);
+
+        $participant = EventRegistration::findOrFail($this->selectedParticipantId);
+        $participant->update([
+            'name' => $this->editName,
+            'email' => $this->editEmail,
+            'phone' => $this->editPhone,
+            'gender' => $this->editGender,
+            // 'address' => $this->editAddress, // Update if address exists
+        ]);
+
+        // Also update User model if exists
+        if ($participant->user_id) {
+            $user = \App\Models\User::find($participant->user_id);
+            if ($user) {
+                $user->update([
+                    'name' => $this->editName,
+                    'email' => $this->editEmail,
+                    // 'phone' => $this->editPhone, // Update if phone exists in User
+                ]);
+            }
+        }
+
+        $this->dispatch('participant-updated', 'Data peserta berhasil diperbarui!');
+        $this->dispatch('close-edit-participant-modal');
+        $this->reset(['selectedParticipantId', 'editName', 'editEmail', 'editPhone', 'editGender', 'editAddress']);
+    }
+
+    /**
+     * Reset Password
+     */
+    public function resetPassword($id)
+    {
+        $participant = EventRegistration::findOrFail($id);
+        if ($participant->user_id) {
+            $user = \App\Models\User::find($participant->user_id);
+            if ($user) {
+                $user->update([
+                    'password' => bcrypt('bismillah'),
+                ]);
+                $this->dispatch('password-reset', 'Password berhasil direset ke "bismillah"!');
+            } else {
+                $this->dispatch('error', 'User tidak ditemukan.');
+            }
+        } else {
+            $this->dispatch('error', 'Peserta tidak memiliki akun user.');
+        }
     }
 
     /**

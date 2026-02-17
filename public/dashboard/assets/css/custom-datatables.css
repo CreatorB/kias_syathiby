@@ -1,0 +1,25 @@
+/* Custom DataTable Pagination for Mobile Responsiveness */
+@media screen and (max-width: 767px) {
+  div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    display: flex !important;
+  }
+
+  div.dataTables_wrapper div.dataTables_info {
+    text-align: center !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  div.dataTables_wrapper .dataTables_length,
+  div.dataTables_wrapper .dataTables_filter {
+    text-align: center !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Ensure the pagination container itself is clear */
+  div.dataTables_wrapper div.dataTables_paginate {
+    text-align: center !important;
+    width: 100% !important;
+  }
+}

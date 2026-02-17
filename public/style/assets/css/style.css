@@ -98,6 +98,7 @@ div.sticky {
 ::-webkit-scrollbar-thumb:hover {
     background: #3a9b94;
 }
+
 /* Theme Overrides - Gradient KIAS */
 
 /* Primary Color Overrides (#359090) */
@@ -120,7 +121,8 @@ div.sticky {
 .btn-primary:active,
 .btn-primary.active,
 .btn-primary.show.dropdown-toggle {
-    border-color: #267084 !important; /* Darker Teal from KIAS 2 */
+    border-color: #267084 !important;
+    /* Darker Teal from KIAS 2 */
     background-color: #267084 !important;
     color: #fff !important;
 }
@@ -260,3 +262,47 @@ body {
     background-color: rgba(53, 144, 144, 0.1) !important;
 }
 
+
+/* Custom DataTable Pagination for Mobile Responsiveness */
+@media screen and (max-width: 767px) {
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        display: flex !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_info {
+        text-align: center !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    div.dataTables_wrapper .dataTables_length,
+    div.dataTables_wrapper .dataTables_filter {
+        text-align: center !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    /* Ensure the pagination container itself is clear */
+    div.dataTables_wrapper div.dataTables_paginate {
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    /* Standard Bootstrap/Laravel Pagination */
+    .pagination {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        display: flex !important;
+        margin-top: 10px !important;
+    }
+
+    .pagination .page-item .page-link {
+        padding: 0.375rem 0.75rem !important;
+        /* Smaller padding for mobile */
+        font-size: 0.875rem !important;
+    }
+
+    .card-footer .pagination {
+        margin-bottom: 0 !important;
+    }
+}

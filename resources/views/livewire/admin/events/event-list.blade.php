@@ -147,8 +147,8 @@
                                     <span class="badge bg-primary">{{ $event->registrations->count() }}</span>
                                 </td>
                                 <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0"
+                                    <div class="dropdown" style="position: static !important;">
+                                        <button type="button" class="btn btn-sm dropdown-toggle hide-arrow py-0 dropdown-action"
                                             data-bs-toggle="dropdown">
                                             <i data-feather="more-vertical"></i>
                                         </button>
@@ -195,22 +195,17 @@
 
             {{-- Pagination --}}
             <div class="card-footer">
-                {{ $this->events->links() }}
+                {{ $this->events->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
 </div>
 
 @push('pageCss')
-<style>
     /* Fix dropdown menu appearing behind table */
-    .table-responsive {
-        overflow: visible !important;
-    }
     .dropdown-menu {
         z-index: 1050 !important;
     }
-</style>
 @endpush
 
 @push('pageJS')
@@ -219,6 +214,26 @@
         Livewire.on('event-deleted', () => {
             toastr.success('Event berhasil dihapus!');
         });
+    });
+
+    // Fix for Bootstrap 5 Dropdowns inside overflow tables
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropdowns = document.querySelectorAll('.dropdown-action');
+        dropdowns.forEach(function(dd) {
+            dd.addEventListener('show.bs.dropdown', function (e) {
+                // This is a known workaround for Bootstrap 5 in overflow containers
+                // However, with Popper.js it usually handles this if boundary is set.
+                // Since previous attempts failed, we will try a different CSS approach 
+                // via class toggling or just let standard behavior work with a CSS fix.
+            });
+        });
+    });
+
+    // Re-initialize Feather icons after Livewire updates
+    document.addEventListener('livewire:updated', () => {
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
     });
 </script>
 @endpush
