@@ -169,7 +169,8 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
+                    {{-- Desktop Table View --}}
+                    <div class="table-responsive d-none d-md-block">
                         <table class="table table-hover">
                             <thead class="table-light">
                                 <tr>
@@ -236,13 +237,21 @@
                                                     class="btn btn-sm btn-danger" title="Tolak">
                                                     <i data-feather="x" style="width: 14px;"></i>
                                                 </button>
-                                            @else
-                                                <button wire:click="deleteRegistration({{ $registration->id }})"
-                                                    wire:confirm="Yakin ingin menghapus peserta ini?"
-                                                    class="btn btn-sm btn-outline-danger" title="Hapus">
-                                                    <i data-feather="trash-2" style="width: 14px;"></i>
-                                                </button>
                                             @endif
+                                            <button wire:click="editParticipant({{ $registration->id }})"
+                                                class="btn btn-sm btn-outline-warning" title="Edit">
+                                                <i data-feather="edit-2" style="width: 14px;"></i>
+                                            </button>
+                                            <button wire:click="resetPassword({{ $registration->id }})"
+                                                wire:confirm="Reset password ke '[REDACTED-LEGACY-PASSWORD]'?"
+                                                class="btn btn-sm btn-outline-secondary" title="Reset Password">
+                                                <i data-feather="key" style="width: 14px;"></i>
+                                            </button>
+                                            <button wire:click="deleteRegistration({{ $registration->id }})"
+                                                wire:confirm="Yakin ingin menghapus peserta ini?"
+                                                class="btn btn-sm btn-outline-danger" title="Hapus">
+                                                <i data-feather="trash-2" style="width: 14px;"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 @empty
@@ -257,6 +266,84 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+
+                    {{-- Mobile Card View --}}
+                    <div class="d-md-none">
+                        @forelse($this->registrations as $registration)
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h6 class="mb-0">{{ $registration->name }}</h6>
+                                            <small class="text-muted">{{ $registration->gender }}</small>
+                                        </div>
+                                        <div>
+                                            @switch($registration->payment_status)
+                                                @case('pending')
+                                                    <span class="badge bg-warning">Menunggu</span>
+                                                    @break
+                                                @case('valid')
+                                                    <span class="badge bg-success">Terkonfirmasi</span>
+                                                    @break
+                                                @case('invalid')
+                                                    <span class="badge bg-danger">Ditolak</span>
+                                                    @break
+                                            @endswitch
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-2">
+                                        <small class="d-block"><i data-feather="mail" style="width: 14px;"></i> {{ $registration->email }}</small>
+                                        <small class="d-block"><i data-feather="phone" style="width: 14px;"></i> {{ $registration->phone }}</small>
+                                        <small class="d-block text-muted"><i data-feather="calendar" style="width: 14px;"></i> {{ $registration->registered_at->format('d M Y H:i') }}</small>
+                                    </div>
+
+                                    @if($event->is_paid && $registration->payment_proof)
+                                        <div class="mb-2">
+                                            <a href="{{ asset('berkas/events/payments/' . $registration->payment_proof) }}"
+                                                target="_blank" class="btn btn-sm btn-outline-primary w-100">
+                                                <i data-feather="image" style="width: 14px;"></i> Lihat Bukti Bayar
+                                            </a>
+                                        </div>
+                                    @endif
+
+                                    <div class="d-flex flex-wrap gap-1">
+                                        @if($registration->payment_status == 'pending')
+                                            <button wire:click="confirmPayment({{ $registration->id }})"
+                                                class="btn btn-sm btn-success flex-fill">
+                                                <i data-feather="check" style="width: 14px;"></i> Konfirmasi
+                                            </button>
+                                            <button wire:click="rejectPayment({{ $registration->id }})"
+                                                class="btn btn-sm btn-danger flex-fill">
+                                                <i data-feather="x" style="width: 14px;"></i> Tolak
+                                            </button>
+                                        @endif
+                                        <button wire:click="editParticipant({{ $registration->id }})"
+                                            class="btn btn-sm btn-outline-warning">
+                                            <i data-feather="edit-2" style="width: 14px;"></i>
+                                        </button>
+                                        <button wire:click="resetPassword({{ $registration->id }})"
+                                            wire:confirm="Reset password ke '[REDACTED-LEGACY-PASSWORD]'?"
+                                            class="btn btn-sm btn-outline-secondary">
+                                            <i data-feather="key" style="width: 14px;"></i>
+                                        </button>
+                                        <button wire:click="deleteRegistration({{ $registration->id }})"
+                                            wire:confirm="Yakin ingin menghapus peserta ini?"
+                                            class="btn btn-sm btn-outline-danger">
+                                            <i data-feather="trash-2" style="width: 14px;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-4">
+                                <div class="text-muted">
+                                    <i data-feather="users" style="width: 48px; height: 48px;"></i>
+                                    <p class="mt-1">Belum ada peserta terdaftar</p>
+                                </div>
+                            </div>
+                        @endforelse
                     </div>
 
                     <div class="card-footer">
@@ -452,6 +539,53 @@
             </div>
         </div>
     </div>
+
+    <!-- Edit Participant Modal -->
+    <div wire:ignore.self class="modal fade" id="editParticipantModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Peserta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form wire:submit.prevent="updateParticipant">
+                    <div class="mb-3">
+                        <label class="form-label">Nama Lengkap</label>
+                        <input type="text" wire:model="editName" class="form-control">
+                        @error('editName') <span class="text-danger small">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" wire:model="editEmail" class="form-control">
+                        @error('editEmail') <span class="text-danger small">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">No. WhatsApp</label>
+                        <input type="text" wire:model="editPhone" class="form-control">
+                        @error('editPhone') <span class="text-danger small">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Jenis Kelamin</label>
+                        <select wire:model="editGender" class="form-select">
+                            <option value="Laki-Laki">Laki-Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                        @error('editGender') <span class="text-danger small">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Alamat / Asal Kota</label>
+                        <textarea wire:model="editAddress" class="form-control" rows="2"></textarea>
+                        @error('editAddress') <span class="text-danger small">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
 </div>
 
 @push('pageCss')
@@ -506,6 +640,22 @@
         });
         Livewire.on('participant-added', (message) => {
             manualModal.hide();
+            toastr.success(message);
+        });
+
+        // Edit Participant Modal
+        const editModal = new bootstrap.Modal(document.getElementById('editParticipantModal'));
+        Livewire.on('open-edit-participant-modal', () => {
+             editModal.show();
+        });
+        Livewire.on('close-edit-participant-modal', () => {
+             editModal.hide();
+        });
+        Livewire.on('participant-updated', (message) => {
+            editModal.hide();
+            toastr.success(message);
+        });
+        Livewire.on('password-reset', (message) => {
             toastr.success(message);
         });
     });

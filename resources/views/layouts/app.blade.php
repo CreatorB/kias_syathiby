@@ -34,7 +34,7 @@
     @stack('pageCss')
     <!-- END: Page CSS-->
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('style/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('style/assets/css/style.css?v=4') }}">
 </head>
 <!-- END: Head-->
 
