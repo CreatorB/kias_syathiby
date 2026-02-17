@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,6 +12,15 @@ return new class extends Migration
     {
         Schema::create('event_internal_links', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            $table->string('token')->unique();
+            $table->string('name');
+            $table->integer('quota_ikhwan')->default(0);
+            $table->integer('quota_akhwat')->default(0);
+            $table->integer('usage_ikhwan')->default(0);
+            $table->integer('usage_akhwat')->default(0);
+            $table->dateTime('active_from')->nullable();
+            $table->dateTime('active_until')->nullable();
             $table->timestamps();
         });
     }
