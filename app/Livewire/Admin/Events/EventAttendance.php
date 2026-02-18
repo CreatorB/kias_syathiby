@@ -25,6 +25,9 @@ class EventAttendance extends Component
     #[Url]
     public $filterDate = '';
 
+    #[Url]
+    public $filterGender = '';
+
     public $limitData = 20;
 
     public function mount($id)
@@ -40,15 +43,20 @@ class EventAttendance extends Component
     #[Computed]
     public function participants()
     {
-        return EventRegistration::with(['attendances' => function ($q) {
+        return EventRegistration::with([
+            'attendances' => function ($q) {
                 if ($this->filterDate) {
                     $q->whereDate('attended_at', $this->filterDate);
                 }
-            }])
+            }
+        ])
             ->where('event_id', $this->eventId)
             ->where('payment_status', 'valid')
             ->when($this->search, function ($q) {
                 return $q->where('name', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->filterGender, function ($q) {
+                return $q->where('gender', $this->filterGender);
             })
             ->orderBy('name', 'asc')
             ->paginate($this->limitData);
@@ -62,6 +70,9 @@ class EventAttendance extends Component
     {
         return EventRegistration::where('event_id', $this->eventId)
             ->where('payment_status', 'valid')
+            ->when($this->filterGender, function ($q) {
+                return $q->where('gender', $this->filterGender);
+            })
             ->count();
     }
 
@@ -72,8 +83,8 @@ class EventAttendance extends Component
     public function attendedCount()
     {
         return Attendance::whereHas('registration', function ($q) {
-                $q->where('event_id', $this->eventId);
-            })
+            $q->where('event_id', $this->eventId);
+        })
             ->when($this->filterDate, function ($q) {
                 return $q->whereDate('attended_at', $this->filterDate);
             })
@@ -124,7 +135,7 @@ class EventAttendance extends Component
      */
     public function resetFilters()
     {
-        $this->reset(['search']);
+        $this->reset(['search', 'filterGender']);
         $this->filterDate = now()->format('Y-m-d');
     }
 

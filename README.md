@@ -1,6 +1,6 @@
-# KIAS (Kursus Ilmu Bahasa Arab dan Syar'i) - New Student Registration System
+# KIAS (Kursus Ilmu Bahasa Arab dan Syar'i) Syathiby
 
-A web-based information system designed to manage the New Student Admission (PSB) process for **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**. 
+A web-based information system designed to manage the process for **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**. 
 
 > **Note:** This project is a rebranding and evolution of the **[Takhassus Al Barkah](https://github.com/alendiasetiawan/takhassus-albarkah)** system.
 
@@ -47,10 +47,15 @@ This application includes features such as online registration, payment verifica
   - Registration management (Transfer Verification).
   - Master Student Data management with advanced filtering (Gender/Program).
   - Data Export/Import capabilities.
+  - **Event Management**:
+    - Create, Edit, Delete Events.
+    - Export Attendance to Excel and PDF.
+    - Printable Attendance Sheets.
 - **Student (Calon Santri)**:
   - Online registration form.
   - Required document uploads.
   - Registration status & acceptance check.
+  - Event Registration & Attendance.
 
 ### 2. **Registration Module**
 - Automated data validation.
@@ -171,13 +176,13 @@ Use the following accounts to log in and test the system:
 ## 📝 Developer Notes
 - The main layout is located at `resources/views/layouts/app.blade.php`.
 - The admin navigation menu can be edited at `resources/views/layouts/sidebars/admin_sidebar.blade.php`.
-- To modify student data filtering logic, checked `App\Livewire\Admin\Pendaftaran\DataSantri.php`.
+- To modify student data filtering logic, check `App\Livewire\Admin\Pendaftaran\DataSantri.php`.
 
 ---
 
 ## 🚀 Deployment / Update Guide (Existing Server)
 
-Panduan untuk deploy atau update ke server yang sudah ada (tanpa menghapus data lama).
+Guide for deploying or updating to an existing server (without deleting old data).
 
 ### 1. Pull Latest Code
 ```bash
@@ -191,7 +196,7 @@ composer install --no-dev --optimize-autoloader
 ```
 
 ### 3. Create Required Directories
-Buat folder yang diperlukan untuk upload file (jika belum ada):
+Create necessary folders for file uploads (if they don't exist):
 ```bash
 # Linux/MacOS
 mkdir -p public/berkas/events/images
@@ -213,22 +218,22 @@ New-Item -ItemType Directory -Force -Path "public\berkas\bukti_transfer"
 ```
 
 ### 4. Run Migrations
-**PENTING:** Gunakan `--force` untuk production environment.
+**IMPORTANT:** Use `--force` for production environment.
 ```bash
 php artisan migrate --force
 ```
 
-Migrations yang akan dijalankan (update terbaru):
-- `2024_01_01_000001_create_roles_table` - Tabel roles
-- `2024_01_01_000002_add_role_id_to_users_table` - Relasi user ke role
-- `2024_01_01_000003_create_events_table` - Tabel events
-- `2024_01_01_000004_create_event_registrations_table` - Pendaftaran event
-- `2024_01_01_000005_create_event_attendances_table` - Absensi event
+Migrations to be run (latest updates):
+- `2024_01_01_000001_create_roles_table` - Roles table
+- `2024_01_01_000002_add_role_id_to_users_table` - User role relation
+- `2024_01_01_000003_create_events_table` - Events table
+- `2024_01_01_000004_create_event_registrations_table` - Event registrations
+- `2024_01_01_000005_create_event_attendances_table` - Event attendance
 - `2024_01_01_000006_add_images_to_events_table` - Multiple images
-- `2024_01_01_000007_add_missing_fields_to_users_table` - Field user
-- `2024_01_01_000008_add_registration_dates_and_groups_to_events_table` - Periode pendaftaran & grup WA
-- `2024_01_01_000009_add_quota_to_events_table` - Kuota peserta
-- `2024_01_01_000010_add_auto_accept_to_events_table` - Auto accept pendaftar
+- `2024_01_01_000007_add_missing_fields_to_users_table` - User fields
+- `2024_01_01_000008_add_registration_dates_and_groups_to_events_table` - Registration periods & WhatsApp groups
+- `2024_01_01_000009_add_quota_to_events_table` - Participant quota
+- `2024_01_01_000010_add_auto_accept_to_events_table` - Auto accept registrations
 
 ### 5. Clear & Optimize Cache
 ```bash
@@ -252,32 +257,33 @@ php artisan queue:restart
 
 ## 📋 Events Management Features
 
-### Fitur Event Admin
+### Admin Event Features
 - **CRUD Events** - Create, Read, Update, Delete event
-- **Multiple Images** - Upload hingga 5 gambar per event
-- **Periode Pendaftaran** - Set tanggal buka/tutup pendaftaran
-- **Grup WhatsApp** - Link grup terpisah untuk Ikhwan, Akhwat, dan Umum
-- **Kuota Peserta** - Batasi jumlah peserta per jenis kelamin
-- **Auto Accept** - Pendaftar otomatis dikonfirmasi atau manual review
-- **Fitur Sertifikat** - Generate sertifikat dengan template custom
-- **Fitur Absensi** - Peserta bisa absen saat event berlangsung
+- **Multiple Images** - Upload up to 5 images per event
+- **Registration Period** - Set registration open/close dates
+- **WhatsApp Groups** - Separate group links for Ikhwan (Male), Akhwat (Female), and Public
+- **Participant Quota** - Limit participants by gender
+- **Auto Accept** - Automatically confirm registrations or manual review
+- **Certificate Feature** - Generate certificates with custom templates
+- **Attendance Feature** - Participants can check-in during the event
+- **Export Data** - Export attendance list to Excel (CSV) and PDF
 
-### Fitur Event User
-- **Pendaftaran Event** - Daftar event dengan/tanpa login
-- **Status Pendaftaran** - Lihat status (pending/valid/invalid)
-- **Absensi** - Klik tombol hadir saat event berlangsung
-- **Download Sertifikat** - Setelah absen, bisa download sertifikat
-- **Link Grup** - Akses grup WA sesuai jenis kelamin
+### User Event Features
+- **Event Registration** - Register for events with/without login
+- **Registration Status** - View status (pending/valid/invalid)
+- **Attendance** - click "Present" button during event
+- **Download Certificate** - Download certificate after attending
+- **Group Links** - Access WhatsApp group based on gender
 
-### Alur Pendaftaran Event
-1. User melihat list event di `/events`
-2. User klik event untuk melihat detail
-3. Jika belum login, user bisa daftar sekaligus membuat akun
-4. Jika sudah login, form akan auto-fill data user
-5. Upload bukti bayar (jika event berbayar)
-6. Admin konfirmasi pembayaran (atau auto-accept jika diaktifkan)
-7. Saat event berlangsung, user bisa absen dari dashboard
-8. Setelah absen, user bisa download sertifikat (jika tersedia)
+### Event Registration Flow
+1. User views event list at `/events`
+2. User clicks event to view details
+3. If not logged in, user can register and create an account simultaneously
+4. If logged in, form auto-fills user data
+5. Upload payment proof (if paid event)
+6. Admin confirms payment (or auto-accept if enabled)
+7. During event, user can check-in (attendance) from dashboard
+8. After attendance, user can download certificate (if available)
 
 ---
 
@@ -288,69 +294,69 @@ php artisan queue:restart
 |--------|------|-------------|
 | id | bigint | Primary key |
 | slug | varchar | URL-friendly identifier |
-| title | varchar | Judul event |
-| content | text | Deskripsi (HTML) |
+| title | varchar | Event title |
+| content | text | Description (HTML) |
 | image | varchar | Legacy single image |
 | images | json | Array of image filenames |
-| start_date | datetime | Waktu mulai event |
-| end_date | datetime | Waktu selesai event |
-| registration_start | datetime | Waktu buka pendaftaran |
-| registration_end | datetime | Waktu tutup pendaftaran |
-| is_paid | boolean | Event berbayar? |
-| price | decimal | Harga (jika berbayar) |
-| has_attendance | boolean | Fitur absensi aktif? |
-| has_certificate | boolean | Fitur sertifikat aktif? |
-| certificate_template | varchar | File template sertifikat |
-| certificate_font | varchar | Font untuk nama |
-| certificate_font_color | varchar | Warna font |
-| certificate_font_size | int | Ukuran font |
-| certificate_name_x | int | Posisi X nama |
-| certificate_name_y | int | Posisi Y nama |
+| start_date | datetime | Event start time |
+| end_date | datetime | Event end time |
+| registration_start | datetime | Registration open time |
+| registration_end | datetime | Registration close time |
+| is_paid | boolean | Is paid event? |
+| price | decimal | Price (if paid) |
+| has_attendance | boolean | Attendance feature enabled? |
+| has_certificate | boolean | Certificate feature enabled? |
+| certificate_template | varchar | Certificate template file |
+| certificate_font | varchar | Font for name |
+| certificate_font_color | varchar | Font color |
+| certificate_font_size | int | Font size |
+| certificate_name_x | int | Name X position |
+| certificate_name_y | int | Name Y position |
 | status | enum | draft/published/closed |
-| group_ikhwan | varchar | Link grup Ikhwan |
-| group_akhwat | varchar | Link grup Akhwat |
-| group_public | varchar | Link grup umum |
-| quota_ikhwan | int | Kuota peserta Ikhwan |
-| quota_akhwat | int | Kuota peserta Akhwat |
-| auto_accept | boolean | Auto konfirmasi pendaftar? |
+| group_ikhwan | varchar | Ikhwan group link |
+| group_akhwat | varchar | Akhwat group link |
+| group_public | varchar | Public group link |
+| quota_ikhwan | int | Ikhwan quota |
+| quota_akhwat | int | Akhwat quota |
+| auto_accept | boolean | Auto confirm registration? |
 
 ### event_registrations
 | Column | Type | Description |
 |--------|------|-------------|
 | id | bigint | Primary key |
-| event_id | bigint | FK ke events |
-| user_id | bigint | FK ke users |
-| name | varchar | Nama peserta |
-| phone | varchar | Nomor HP |
+| event_id | bigint | FK to events |
+| user_id | bigint | FK to users |
+| name | varchar | Participant name |
+| phone | varchar | Phone number |
 | email | varchar | Email |
-| address | text | Alamat |
-| gender | varchar | L/P |
-| birth_place | varchar | Tempat lahir |
-| birth_date | date | Tanggal lahir |
-| occupation | varchar | Pekerjaan |
-| payment_proof | varchar | File bukti bayar |
+| address | text | Address |
+| gender | varchar | L/P (Gender) |
+| birth_place | varchar | Birth place |
+| birth_date | date | Birth date |
+| occupation | varchar | Occupation |
+| payment_proof | varchar | Payment proof file |
 | payment_status | enum | pending/valid/invalid |
-| registered_at | datetime | Waktu daftar |
+| registered_at | datetime | Registration time |
 
 ### event_attendances
 | Column | Type | Description |
 |--------|------|-------------|
 | id | bigint | Primary key |
-| event_registration_id | bigint | FK ke registrations |
-| attended_at | datetime | Waktu absen |
+| event_registration_id | bigint | FK to registrations |
+| attended_at | datetime | Attendance time |
 
 ---
 
 ## 🔧 Troubleshooting
 
 ### Error: "SQLSTATE[42S22]: Column not found"
-Jalankan migrations:
+Run migrations:
 ```bash
 php artisan migrate --force
 ```
 
 ### Error: "The directory does not exist"
-Buat folder yang diperlukan:
+Create required folders:
 ```bash
 mkdir -p public/berkas/events/images
 mkdir -p public/berkas/events/certificates
@@ -367,7 +373,7 @@ chmod -R 755 bootstrap/cache
 ```
 
 ### Cache Issues
-Clear semua cache:
+Clear all cache:
 ```bash
 php artisan optimize:clear
 ```

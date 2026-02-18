@@ -42,6 +42,8 @@ class EventParticipants extends Component
     public $manualPhone;
     public $manualGender = 'Laki-Laki';
     public $manualAddress;
+    public $manualPassword = 'bismillah';
+    public $manualPasswordConfirmation = 'bismillah';
 
     public $selectedParticipantId;
     public $editName;
@@ -140,6 +142,8 @@ class EventParticipants extends Component
             'manualEmail' => 'required|email',
             'manualPhone' => 'required|string',
             'manualGender' => 'required|in:Laki-Laki,Perempuan',
+            'manualPassword' => 'required|string|min:6',
+            'manualPasswordConfirmation' => 'required|same:manualPassword',
         ]);
 
         // Use Service
@@ -149,7 +153,7 @@ class EventParticipants extends Component
             'phone' => $this->manualPhone,
             'gender' => $this->manualGender,
             'address' => $this->manualAddress,
-            'password' => \Illuminate\Support\Str::random(8), // Random password
+            'password' => $this->manualPassword,
         ];
 
         $service = app(\App\Services\EventRegistrationService::class);
@@ -161,7 +165,7 @@ class EventParticipants extends Component
             $this->event->increment($genderKey);
         }
 
-        $this->reset(['manualName', 'manualEmail', 'manualPhone', 'manualGender', 'manualAddress']);
+        $this->reset(['manualName', 'manualEmail', 'manualPhone', 'manualGender', 'manualAddress', 'manualPassword', 'manualPasswordConfirmation']);
         $this->dispatch('participant-added', 'Peserta berhasil ditambahkan manual!');
         $this->dispatch('close-manual-modal');
     }

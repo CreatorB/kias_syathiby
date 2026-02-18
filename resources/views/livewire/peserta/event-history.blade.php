@@ -3,63 +3,6 @@
     <x-breadcrumb title="Riwayat Event" parent="Dashboard" parentLink="#" current="Events" />
 
     <div class="content-body">
-        {{-- Upgrade to Santri Banner (only for peserta role_id = 4) --}}
-        @if(auth()->user()->role_id == 4)
-        <div class="card mb-2 bg-gradient-primary">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <h4 class="text-white mb-1">Upgrade ke Santri KIAS</h4>
-                        <p class="text-white mb-0">Ikuti program pembelajaran lengkap Tajwid, Bahasa Arab, Takmili, atau Ulum Syariah dengan bimbingan para asatidzah berpengalaman.</p>
-                    </div>
-                    <div class="col-md-4 text-md-end mt-2 mt-md-0">
-                        <a href="/pilih-program" class="btn btn-light">
-                            <i data-feather="arrow-up-circle" class="me-50"></i> Daftar Santri
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endif
-
-        {{-- Stats --}}
-        <div class="row mb-2">
-            <div class="col-lg-6 col-md-6 col-12">
-                <div class="card card-statistics">
-                    <div class="card-body statistics-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h2 class="fw-bolder">{{ $this->totalEvents }}</h2>
-                                <p class="card-text">Total Event Diikuti</p>
-                            </div>
-                            <div class="avatar bg-light-primary p-50">
-                                <span class="avatar-content">
-                                    <i data-feather="calendar" class="font-medium-4"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-12">
-                <div class="card card-statistics">
-                    <div class="card-body statistics-body">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h2 class="fw-bolder text-success">{{ $this->confirmedCount }}</h2>
-                                <p class="card-text">Terkonfirmasi</p>
-                            </div>
-                            <div class="avatar bg-light-success p-50">
-                                <span class="avatar-content">
-                                    <i data-feather="check-circle" class="font-medium-4"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         {{-- Flash Messages --}}
         @if(session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -253,5 +196,62 @@
             </div>
             @endif
         </div>
+
+        {{-- Stats --}}
+        <div class="row mb-2">
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="card card-statistics">
+                    <div class="card-body statistics-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h2 class="fw-bolder">{{ $this->totalEvents }}</h2>
+                                <p class="card-text">Total Event Diikuti</p>
+                            </div>
+                            <div class="avatar bg-light-primary p-50">
+                                <span class="avatar-content">
+                                    <i data-feather="calendar" class="font-medium-4"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-12">
+                <div class="card card-statistics">
+                    <div class="card-body statistics-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h2 class="fw-bolder text-success">{{ $this->confirmedCount }}</h2>
+                                <p class="card-text">Terkonfirmasi</p>
+                            </div>
+                            <div class="avatar bg-light-success p-50">
+                                <span class="avatar-content">
+                                    <i data-feather="check-circle" class="font-medium-4"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Upgrade to Santri Banner (only for peserta role_id = 4) --}}
+        @if(auth()->user()->role_id == 4)
+        <div class="card mt-2 bg-gradient-primary">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h4 class="text-white mb-1">Upgrade ke Santri KIAS</h4>
+                        <p class="text-white mb-0">Ikuti program pembelajaran lengkap Tajwid, Bahasa Arab, Takmili, atau Ulum Syariah dengan bimbingan para asatidzah berpengalaman.</p>
+                    </div>
+                    <div class="col-md-4 text-md-end mt-2 mt-md-0">
+                        <a href="/pilih-program" class="btn btn-light">
+                            <i data-feather="arrow-up-circle" class="me-50"></i> Daftar Santri
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 </div>

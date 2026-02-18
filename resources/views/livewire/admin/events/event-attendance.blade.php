@@ -43,11 +43,29 @@
                         <input type="text" wire:model.live.debounce.300ms="search" class="form-control"
                             placeholder="Cari nama...">
                     </div>
-                    <div class="col-md-3">
-                        <input type="date" wire:model.live="filterDate" class="form-control">
+                    <div class="col-md-2">
+                        <select wire:model.live="filterGender" class="form-select">
+                            <option value="">Semua Gender</option>
+                            <option value="Laki-Laki">Laki-Laki (Ikhwan)</option>
+                            <option value="Perempuan">Perempuan (Akhwat)</option>
+                        </select>
                     </div>
                     <div class="col-md-2">
-                        <button wire:click="resetFilters" class="btn btn-outline-secondary">Hari Ini</button>
+                        <input type="date" wire:model.live="filterDate" class="form-control">
+                    </div>
+                    <div class="col-md-3 text-end">
+                        <button wire:click="resetFilters" class="btn btn-outline-secondary btn-sm"
+                            title="Reset Filter">
+                            <i data-feather="refresh-ccw" style="width: 14px;"></i>
+                        </button>
+                        <a href="{{ route('admin::events.attendance.export_excel', ['id' => $event->id, 'gender' => $filterGender, 'date' => $filterDate, 'search' => $search]) }}"
+                            class="btn btn-outline-success btn-sm" target="_blank">
+                            <i data-feather="download" style="width: 14px;"></i> Excel
+                        </a>
+                        <a href="{{ route('admin::events.attendance.print', ['id' => $event->id, 'gender' => $filterGender, 'date' => $filterDate, 'search' => $search]) }}"
+                            class="btn btn-outline-primary btn-sm" target="_blank">
+                            <i data-feather="printer" style="width: 14px;"></i> Print/PDF
+                        </a>
                     </div>
                 </div>
             </div>
@@ -87,14 +105,12 @@
                                 <td>
                                     @if($participant->attendances->isNotEmpty())
                                         <button wire:click="removeAttendance({{ $participant->id }})"
-                                            class="btn btn-sm btn-outline-danger"
-                                            title="Batalkan Kehadiran">
+                                            class="btn btn-sm btn-outline-danger" title="Batalkan Kehadiran">
                                             <i data-feather="x" style="width: 14px;"></i> Batalkan
                                         </button>
                                     @else
                                         <button wire:click="markAttendance({{ $participant->id }})"
-                                            class="btn btn-sm btn-success"
-                                            title="Tandai Hadir">
+                                            class="btn btn-sm btn-success" title="Tandai Hadir">
                                             <i data-feather="check" style="width: 14px;"></i> Hadir
                                         </button>
                                     @endif
@@ -122,22 +138,22 @@
 </div>
 
 @push('pageCss')
-<style>
-    .table-responsive {
-        overflow: visible !important;
-    }
-</style>
+    <style>
+        .table-responsive {
+            overflow: visible !important;
+        }
+    </style>
 @endpush
 
 @push('pageJS')
-<script>
-    document.addEventListener('livewire:initialized', () => {
-        Livewire.on('attendance-marked', () => {
-            toastr.success('Kehadiran berhasil dicatat!');
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('attendance-marked', () => {
+                toastr.success('Kehadiran berhasil dicatat!');
+            });
+            Livewire.on('attendance-removed', () => {
+                toastr.warning('Kehadiran dibatalkan!');
+            });
         });
-        Livewire.on('attendance-removed', () => {
-            toastr.warning('Kehadiran dibatalkan!');
-        });
-    });
-</script>
+    </script>
 @endpush
