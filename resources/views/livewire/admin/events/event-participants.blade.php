@@ -530,6 +530,16 @@
                             <label class="form-label">Alamat (Opsional)</label>
                             <textarea wire:model="manualAddress" class="form-control" rows="2"></textarea>
                         </div>
+                        <div class="mb-1">
+                            <label class="form-label">Password</label>
+                            <input type="password" wire:model="manualPassword" class="form-control" value="[REDACTED-LEGACY-PASSWORD]">
+                            @error('manualPassword') <span class="text-danger small">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-1">
+                            <label class="form-label">Konfirmasi Password</label>
+                            <input type="password" wire:model="manualPasswordConfirmation" class="form-control" value="[REDACTED-LEGACY-PASSWORD]">
+                            @error('manualPasswordConfirmation') <span class="text-danger small">{{ $message }}</span> @enderror
+                        </div>
                         <div class="d-flex justify-content-end mt-2">
                             <button type="button" class="btn btn-secondary me-1" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Tambahkan Peserta</button>
