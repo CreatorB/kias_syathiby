@@ -57,6 +57,11 @@ This application includes features such as online registration, payment verifica
   - Registration status & acceptance check.
   - Event Registration & Attendance.
 
+### Authentication
+- All roles can login using **Email** or **Phone Number**.
+- Phone number normalization supports formats: `08xx`, `+628xx`, `628xx`.
+- **Passwordless login** for Peserta (participants) who are registered in an event happening today — designed for easy attendance check-in during daurah.
+
 ### 2. **Registration Module**
 - Automated data validation.
 - Proof of payment upload.
@@ -75,7 +80,7 @@ This application includes features such as online registration, payment verifica
 - **Frontend Interactivity**: [Livewire 3.x](https://livewire.laravel.com)
 - **UI Framework**: Bootstrap 5 (Vuexy Admin Template)
 - **Database**: MySQL
-- **Authentication**: Laravel Standard Auth + Role-based middleware.
+- **Authentication**: Laravel Standard Auth + Role-based middleware + Passwordless login for event participants.
 - **Other Packages**:
   - `barryvdh/laravel-debugbar`: Debugging tools.
   - `mobiledetect/mobiledetectlib`: User device detection.
@@ -140,6 +145,11 @@ If using the built-in server:
 ```bash
 php artisan serve
 ```
+or local public
+```
+php artisan serve --host=0.0.0.0 --port=8000
+```
+
 Access at `http://localhost:8000`.
 
 ---
@@ -226,7 +236,7 @@ php artisan migrate --force
 Migrations to be run (latest updates):
 - `2024_01_01_000001_create_roles_table` - Roles table
 - `2024_01_01_000002_add_role_id_to_users_table` - User role relation
-- `2024_01_01_000003_create_events_table` - Events table
+- `2024_01_01_000003_create_events_table` - Events table (status: draft/published/closed/internal)
 - `2024_01_01_000004_create_event_registrations_table` - Event registrations
 - `2024_01_01_000005_create_event_attendances_table` - Event attendance
 - `2024_01_01_000006_add_images_to_events_table` - Multiple images
@@ -234,6 +244,8 @@ Migrations to be run (latest updates):
 - `2024_01_01_000008_add_registration_dates_and_groups_to_events_table` - Registration periods & WhatsApp groups
 - `2024_01_01_000009_add_quota_to_events_table` - Participant quota
 - `2024_01_01_000010_add_auto_accept_to_events_table` - Auto accept registrations
+- `2026_02_17_151916_create_event_internal_links_table` - Internal registration links with tokens & quotas
+- `2026_02_20_165043_add_internal_status_to_events_table` - Add 'internal' status to events enum
 
 ### 5. Clear & Optimize Cache
 ```bash
@@ -267,6 +279,8 @@ php artisan queue:restart
 - **Certificate Feature** - Generate certificates with custom templates
 - **Attendance Feature** - Participants can check-in during the event
 - **Export Data** - Export attendance list to Excel (CSV) and PDF
+- **Internal Events** - Events that are not publicly listed, accessible only via internal links with unique tokens
+- **Internal Links** - Generate private registration links with per-link quotas and active period
 
 ### User Event Features
 - **Event Registration** - Register for events with/without login
@@ -275,8 +289,16 @@ php artisan queue:restart
 - **Download Certificate** - Download certificate after attending
 - **Group Links** - Access WhatsApp group based on gender
 
+### Event Status Types
+| Status | Description |
+|--------|-------------|
+| **Draft** | Event is not visible to anyone, still in preparation |
+| **Published** | Event is publicly listed at `/events` and open for registration |
+| **Closed** | Event registration is closed |
+| **Internal** | Event is NOT publicly listed. Only accessible via internal link (`/events/internal/{slug}/{token}`) |
+
 ### Event Registration Flow
-1. User views event list at `/events`
+1. User views event list at `/events` (published events only)
 2. User clicks event to view details
 3. If not logged in, user can register and create an account simultaneously
 4. If logged in, form auto-fills user data
@@ -284,6 +306,12 @@ php artisan queue:restart
 6. Admin confirms payment (or auto-accept if enabled)
 7. During event, user can check-in (attendance) from dashboard
 8. After attendance, user can download certificate (if available)
+
+### Internal Event Flow
+1. Admin creates event with status **Internal**
+2. Admin creates internal link(s) with quota and active period
+3. Admin shares the internal link URL to intended participants
+4. Participants access the event via the unique link and register
 
 ---
 
@@ -312,7 +340,7 @@ php artisan queue:restart
 | certificate_font_size | int | Font size |
 | certificate_name_x | int | Name X position |
 | certificate_name_y | int | Name Y position |
-| status | enum | draft/published/closed |
+| status | enum | draft/published/closed/internal |
 | group_ikhwan | varchar | Ikhwan group link |
 | group_akhwat | varchar | Akhwat group link |
 | group_public | varchar | Public group link |
@@ -337,6 +365,20 @@ php artisan queue:restart
 | payment_proof | varchar | Payment proof file |
 | payment_status | enum | pending/valid/invalid |
 | registered_at | datetime | Registration time |
+
+### event_internal_links
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigint | Primary key |
+| event_id | bigint | FK to events |
+| token | varchar | Unique access token |
+| name | varchar | Link name/label |
+| quota_ikhwan | int | Ikhwan quota for this link |
+| quota_akhwat | int | Akhwat quota for this link |
+| usage_ikhwan | int | Usage count ikhwan |
+| usage_akhwat | int | Usage count akhwat |
+| active_from | datetime | Link active from |
+| active_until | datetime | Link active until |
 
 ### event_attendances
 | Column | Type | Description |

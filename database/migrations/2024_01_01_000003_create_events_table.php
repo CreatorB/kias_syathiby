@@ -29,7 +29,7 @@ return new class extends Migration
             $table->integer('certificate_font_size')->default(24);
             $table->integer('certificate_name_x')->default(400);
             $table->integer('certificate_name_y')->default(300);
-            $table->enum('status', ['draft', 'published', 'closed'])->default('draft');
+            $table->enum('status', ['draft', 'published', 'closed', 'internal'])->default('draft');
             $table->timestamps();
         });
     }

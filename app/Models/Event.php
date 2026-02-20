@@ -170,7 +170,7 @@ class Event extends Model
         $regStart = $this->registration_start ?? $this->start_date->subDays(30);
         $regEnd = $this->registration_end ?? $this->start_date;
 
-        return $now->between($regStart, $regEnd) && $this->status === 'published';
+        return $now->between($regStart, $regEnd) && in_array($this->status, ['published', 'internal']);
     }
 
     /**

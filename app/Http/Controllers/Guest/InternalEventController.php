@@ -24,12 +24,17 @@ class InternalEventController extends Controller
      */
     public function show($slug, $token)
     {
-        $event = Event::where('slug', $slug)->firstOrFail();
+        $event = Event::where('slug', $slug)
+            ->whereIn('status', ['published', 'internal'])
+            ->firstOrFail();
         $link = EventInternalLink::where('token', $token)
             ->where('event_id', $event->id)
             ->firstOrFail();
 
         if (!$link->isAvailable()) {
+            if ($event->status === 'internal') {
+                abort(404);
+            }
             return redirect()->route('events.show', $slug)
                 ->with('error', 'Link pendaftaran internal ini sudah tidak berlaku atau kuota link penuh.');
         }
@@ -64,7 +69,9 @@ class InternalEventController extends Controller
      */
     public function store(Request $request, $slug, $token)
     {
-        $event = Event::where('slug', $slug)->firstOrFail();
+        $event = Event::where('slug', $slug)
+            ->whereIn('status', ['published', 'internal'])
+            ->firstOrFail();
         $link = EventInternalLink::where('token', $token)
             ->where('event_id', $event->id)
             ->firstOrFail();
