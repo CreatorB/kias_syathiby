@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -104,6 +105,25 @@ class LoginController extends Controller
         })->first();
     }
 
+    /**
+     * Check if peserta has a registration for an event happening today.
+     */
+    protected function pesertaHasEventToday(User $user): bool
+    {
+        if (!$user->isPeserta()) {
+            return false;
+        }
+
+        return EventRegistration::where('user_id', $user->id)
+            ->whereHas('event', function ($query) {
+                $today = now()->toDateString();
+                $query->whereIn('status', ['published', 'internal'])
+                    ->whereDate('start_date', '<=', $today)
+                    ->whereDate('end_date', '>=', $today);
+            })
+            ->exists();
+    }
+
     public function login(Request $request)
     {
         $inputIdentifier = trim($request->email); // Can be email or phone
@@ -123,9 +143,22 @@ class LoginController extends Controller
             return redirect()->route('login')->with('flash_message_error', 'User tidak ditemukan dengan email/No.HP: ' . $inputIdentifier);
         }
 
-        if (Auth::attempt(['email' => $user->email, 'password' => $inputPassword])) {
+        $authenticated = false;
+
+        // If password provided, try normal authentication
+        if (!empty($inputPassword)) {
+            $authenticated = Auth::attempt(['email' => $user->email, 'password' => $inputPassword]);
+        }
+
+        // If not authenticated via password, check if peserta with today's event (passwordless login)
+        if (!$authenticated && $this->pesertaHasEventToday($user)) {
+            Auth::login($user);
+            $authenticated = true;
+        }
+
+        if ($authenticated) {
             // Save login credentials if requested
-            if ($request->has('simpanpwd')) {
+            if ($request->has('simpanpwd') && !empty($inputPassword)) {
                 Cookie::queue('saveuser', $request->email, 40160);
                 Cookie::queue('savepwd', $request->password, 40160);
             }

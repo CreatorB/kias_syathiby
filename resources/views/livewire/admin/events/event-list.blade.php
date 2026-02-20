@@ -5,7 +5,7 @@
     <div class="content-body">
         {{-- Stats Cards --}}
         <div class="row mb-2">
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-3 col-md-6 col-12">
                 <div class="card card-statistics">
                     <div class="card-body statistics-body">
                         <div class="d-flex justify-content-between">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-3 col-md-6 col-12">
                 <div class="card card-statistics">
                     <div class="card-body statistics-body">
                         <div class="d-flex justify-content-between">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-12">
+            <div class="col-lg-3 col-md-6 col-12">
                 <div class="card card-statistics">
                     <div class="card-body statistics-body">
                         <div class="d-flex justify-content-between">
@@ -50,6 +50,23 @@
                             <div class="avatar bg-light-warning p-50">
                                 <span class="avatar-content">
                                     <i data-feather="edit" class="font-medium-4"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="card card-statistics">
+                    <div class="card-body statistics-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h2 class="fw-bolder text-info">{{ $this->internalCount }}</h2>
+                                <p class="card-text">Internal</p>
+                            </div>
+                            <div class="avatar bg-light-info p-50">
+                                <span class="avatar-content">
+                                    <i data-feather="lock" class="font-medium-4"></i>
                                 </span>
                             </div>
                         </div>
@@ -86,6 +103,7 @@
                             <option value="draft">Draft</option>
                             <option value="published">Published</option>
                             <option value="closed">Closed</option>
+                            <option value="internal">Internal</option>
                         </select>
                     </div>
                     <div class="col-md-2">
@@ -141,6 +159,9 @@
                                         @case('closed')
                                             <span class="badge bg-secondary">Closed</span>
                                             @break
+                                        @case('internal')
+                                            <span class="badge bg-info">Internal</span>
+                                            @break
                                     @endswitch
                                 </td>
                                 <td>
@@ -166,9 +187,21 @@
                                                     <i data-feather="check-square" class="me-50"></i> Absensi
                                                 </a>
                                             @endif
-                                            <a class="dropdown-item" href="/events/{{ $event->slug }}" target="_blank">
-                                                <i data-feather="external-link" class="me-50"></i> Lihat
-                                            </a>
+                                            @if($event->status === 'internal')
+                                                @if($event->internalLinks->first())
+                                                    <a class="dropdown-item" href="/events/internal/{{ $event->slug }}/{{ $event->internalLinks->first()->token }}" target="_blank">
+                                                        <i data-feather="link" class="me-50"></i> Lihat (Internal Link)
+                                                    </a>
+                                                @else
+                                                    <span class="dropdown-item text-muted">
+                                                        <i data-feather="alert-circle" class="me-50"></i> Buat Internal Link dulu
+                                                    </span>
+                                                @endif
+                                            @else
+                                                <a class="dropdown-item" href="/events/{{ $event->slug }}" target="_blank">
+                                                    <i data-feather="external-link" class="me-50"></i> Lihat
+                                                </a>
+                                            @endif
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-danger" href="#"
                                                 wire:click.prevent="deleteEvent({{ $event->id }})"

@@ -106,6 +106,7 @@
                         </svg>
                       </span>
                     </div>
+                    <small class="text-muted"><em>Peserta daurah hari ini bisa login tanpa password</em></small>
                   </div>
                   <div class="mb-1">
                     <label><em>Checklist <b>"Simpan Password"</b> untuk masuk kembali tanpa menuliskan Email/No.HP dan

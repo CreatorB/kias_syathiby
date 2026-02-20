@@ -29,6 +29,7 @@ class EventList extends Component
     public function events()
     {
         return Event::query()
+            ->with(['registrations', 'internalLinks'])
             ->when($this->search, function ($q) {
                 return $q->where('title', 'like', '%' . $this->search . '%');
             })
@@ -64,6 +65,15 @@ class EventList extends Component
     public function draftCount()
     {
         return Event::where('status', 'draft')->count();
+    }
+
+    /**
+     * Get internal events count.
+     */
+    #[Computed]
+    public function internalCount()
+    {
+        return Event::where('status', 'internal')->count();
     }
 
     /**

@@ -72,7 +72,7 @@ class EventForm extends Component
             'certificate_font_size' => 'nullable|integer|min:10|max:100',
             'certificate_name_x' => 'nullable|integer',
             'certificate_name_y' => 'nullable|integer',
-            'status' => 'required|in:draft,published,closed',
+            'status' => 'required|in:draft,published,closed,internal',
             'group_ikhwan' => 'nullable|url|max:500',
             'group_akhwat' => 'nullable|url|max:500',
             'group_public' => 'nullable|url|max:500',

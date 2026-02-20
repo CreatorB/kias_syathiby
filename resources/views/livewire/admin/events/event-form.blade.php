@@ -196,7 +196,13 @@
                                             <option value="draft">Draft</option>
                                             <option value="published">Published</option>
                                             <option value="closed">Closed</option>
+                                            <option value="internal">Internal</option>
                                         </select>
+                                        @if($status === 'internal')
+                                            <small class="text-info d-block mt-1">
+                                                <i class="fas fa-info-circle"></i> Event internal tidak tampil di halaman publik. Peserta hanya bisa mengakses melalui link khusus (internal link).
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
