@@ -110,20 +110,18 @@
             <a href="/" class="btn-home">
                 <i class="fas fa-home"></i> Beranda
             </a>
-            <a href="#" class="btn-wa" id="waButton">
+            <a href="#" class="btn-wa" id="waButton" target="_blank">
                 <i class="fab fa-whatsapp"></i> Hubungi Kami
             </a>
         </div>
     </div>
 
     <script>
-        document.getElementById('waButton').addEventListener('click', function(e) {
-            e.preventDefault();
+        (function() {
             var currentUrl = window.location.href;
-            var message = encodeURIComponent("Assalamu'alaikum, mau tanya kenapa halaman: " + currentUrl + " tidak bisa diakses?");
-            var waNumber = "628111516756";
-            window.open("https://wa.me/" + waNumber + "?text=" + message, "_blank");
-        });
+            var message = encodeURIComponent("Assalamualaikum, saya tidak bisa mengakses link : " + currentUrl);
+            document.getElementById('waButton').href = "https://api.whatsapp.com/send?phone=628111516756&text=" + message;
+        })();
     </script>
 </body>
 
