@@ -44,7 +44,7 @@
           </div>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
-              <a class="dropdown-item" href="pages-account-settings-account.html">
+              <a class="dropdown-item" href="{{ route('pengaturan') }}">
                 <div class="d-flex">
                   <div class="flex-shrink-0 me-3">
                       <div class="avatar avatar-online">
@@ -53,13 +53,13 @@
                     </div>
                   </div>
                   <div class="flex-grow-1">
-                    <span class="fw-semibold d-block">{{ Auth::user()->nama_lengkap }}</span>
+                    <span class="fw-semibold d-block">{{ Auth::user()->nama ?? Auth::user()->name }}</span>
                     @php
                       $roleId = Auth::user()->role_id;
-                      $role = DB::table('role')
+                      $role = DB::table('roles')
                         ->where('id', $roleId)
                         ->first();
-                      $namaRole = $role->nama_role;
+                      $namaRole = $role->nama_role ?? 'User';
                     @endphp
                     <small class="text-muted">{{ $namaRole }}</small>
                   </div>
@@ -70,13 +70,7 @@
               <div class="dropdown-divider"></div>
             </li>
             <li>
-              <a class="dropdown-item" href="pages-profile-user.html">
-                <i class="ti ti-user-check me-2 ti-sm"></i>
-                <span class="align-middle">Ganti Password</span>
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="pages-account-settings-account.html">
+              <a class="dropdown-item" href="{{ route('pengaturan') }}">
                 <i class="ti ti-settings me-2 ti-sm"></i>
                 <span class="align-middle">Pengaturan</span>
               </a>
@@ -85,9 +79,9 @@
               <div class="dropdown-divider"></div>
             </li>
             <li>
-              <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
+              <a class="dropdown-item" href="/logout">
                 <i class="ti ti-logout me-2 ti-sm"></i>
-                <span class="align-middle">Log Out</span>
+                <span class="align-middle">Keluar</span>
               </a>
             </li>
           </ul>
