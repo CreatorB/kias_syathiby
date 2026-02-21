@@ -1,12 +1,12 @@
 # KIAS (Kursus Ilmu Bahasa Arab dan Syar'i) Syathiby
 
-A web-based information system designed to manage the process for **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**. 
+A web-based information system designed to manage the process for **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**.
 
 > **Note:** This project is a rebranding and evolution of the **[Takhassus Al Barkah](https://github.com/alendiasetiawan/takhassus-albarkah)** system.
 
-This application includes features such as online registration, payment verification, student data management, and enrollment statistics.
+This application includes features such as online registration, payment verification, student data management, event management, account settings, and enrollment statistics.
 
-## 🎨 Color Palette
+## Color Palette
 
 ### Gradient KIAS 1
 | Color | Hex Code |
@@ -39,55 +39,114 @@ This application includes features such as online registration, payment verifica
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-### 1. **Multi-Role User**
-- **Administrator**:
-  - Comprehensive statistical dashboard (Total Students, Male/Female ratios, Payment Status).
-  - Registration management (Transfer Verification).
-  - Master Student Data management with advanced filtering (Gender/Program).
-  - Data Export/Import capabilities.
-  - **Event Management**:
-    - Create, Edit, Delete Events.
-    - Export Attendance to Excel and PDF.
-    - Printable Attendance Sheets.
-- **Student (Calon Santri)**:
-  - Online registration form.
-  - Required document uploads.
-  - Registration status & acceptance check.
-  - Event Registration & Attendance.
+### 1. Multi-Role User System
 
-### Authentication
-- All roles can login using **Email** or **Phone Number**.
+| Role | ID | Description |
+|------|----|-------------|
+| **Superadmin** | 1 | Full access including permission management |
+| **Admin** | 2 | Dashboard, registrations, student data, event management |
+| **Santri** | 3 | Student role with profile and event access |
+| **Peserta** | 4 | Participant role for event registration and attendance |
+
+### 2. Authentication
+- Login using **Email** or **Phone Number**.
 - Phone number normalization supports formats: `08xx`, `+628xx`, `628xx`.
-- **Passwordless login** for Peserta (participants) who are registered in an event happening today — designed for easy attendance check-in during daurah.
+- **Passwordless login** for Peserta (participants) registered in a same-day event — designed for easy attendance check-in during daurah.
 
-### 2. **Registration Module**
+### 3. Account Settings (`/pengaturan`)
+All authenticated users can manage their own account:
+- **Update Profile** — Full name, email, phone, gender, birth place/date, occupation, address.
+- **Change Password** — Requires current password verification, minimum 8 characters.
+
+### 4. Registration Module
 - Automated data validation.
 - Proof of payment upload.
 - Manual/Automatic verification by administrators.
 
-### 3. **Data Management**
+### 5. Student Data Management
 - Filter students by **Gender** (Ikhwan/Akhwat).
 - Filter students by **Educational Program**.
 - Real-time student search (powered by Livewire).
 
+### 6. Permission Management (Superadmin)
+- Role-based permission system with `permissions` and `role_permissions` tables.
+- Superadmin can assign/revoke granular permissions per role via `/admin/settings/permissions`.
+- Superadmin automatically has all permissions.
+
 ---
 
-## 🛠️ Technology Stack
+## Events Management
+
+### Admin Event Features
+- **CRUD Events** — Create, Read, Update, Delete events.
+- **Multiple Images** — Upload up to 5 images per event.
+- **Registration Period** — Set registration open/close dates.
+- **WhatsApp Groups** — Separate group links for Ikhwan (Male), Akhwat (Female), and Public.
+- **Participant Quota** — Limit participants by gender.
+- **Auto Accept** — Automatically confirm registrations or require manual review.
+- **Certificate Feature** — Generate certificates with custom templates.
+- **Attendance Feature** — Participants can check-in during the event; exportable to Excel (CSV) and PDF; printable attendance sheets.
+- **Internal Events** — Events not publicly listed, accessible only via internal links with unique tokens.
+- **Internal Links** — Generate private registration links with per-link quotas and active period.
+
+### Admin Participant Management
+- **Manual Add Participant** — Admin can manually add participants to an event (auto-confirmed, increments quota).
+- **Edit Participant** — Update name, email, phone, gender, address per participant.
+- **Reset Password (Individual)** — Reset a single participant's password to `bismillah`.
+- **Bulk Reset Password** — Reset ALL participants' passwords in an event to `bismillah` with a single click and confirmation dialog.
+- **Confirm/Reject Payment** — Approve or reject payment for pending registrations.
+- **Delete Participant** — Remove a participant from the event.
+- **Filtering** — Filter participants by search query, payment status, and gender.
+
+### User Event Features
+- **Event Registration** — Register for events with or without an existing account.
+- **Registration Status** — View status (pending/valid/invalid).
+- **Attendance** — Click "Present" button during event.
+- **Download Certificate** — Download certificate after attending.
+- **Group Links** — Access WhatsApp group based on gender.
+
+### Event Status Types
+| Status | Description |
+|--------|-------------|
+| **Draft** | Event is not visible to anyone, still in preparation |
+| **Published** | Event is publicly listed at `/events` and open for registration |
+| **Closed** | Event registration is closed |
+| **Internal** | Event is NOT publicly listed. Only accessible via internal link (`/events/internal/{slug}/{token}`) |
+
+### Event Registration Flow
+1. User views event list at `/events` (published events only)
+2. User clicks event to view details
+3. If not logged in, user can register and create an account simultaneously
+4. If logged in, form auto-fills user data
+5. Upload payment proof (if paid event)
+6. Admin confirms payment (or auto-accept if enabled)
+7. During event, user can check-in (attendance) from dashboard
+8. After attendance, user can download certificate (if available)
+
+### Internal Event Flow
+1. Admin creates event with status **Internal**
+2. Admin creates internal link(s) with quota and active period
+3. Admin shares the internal link URL to intended participants
+4. Participants access the event via the unique link and register
+
+---
+
+## Technology Stack
 
 - **Backend Framework**: [Laravel 10.x](https://laravel.com)
 - **Frontend Interactivity**: [Livewire 3.x](https://livewire.laravel.com)
 - **UI Framework**: Bootstrap 5 (Vuexy Admin Template)
 - **Database**: MySQL
-- **Authentication**: Laravel Standard Auth + Role-based middleware + Passwordless login for event participants.
+- **Authentication**: Laravel Standard Auth + Role-based middleware + Passwordless login for event participants
 - **Other Packages**:
   - `barryvdh/laravel-debugbar`: Debugging tools.
   - `mobiledetect/mobiledetectlib`: User device detection.
 
 ---
 
-## ⚙️ System Requirements
+## System Requirements
 
 Ensure your local development environment meets the following requirements (highly recommended to use **Laragon**):
 - PHP >= 8.1
@@ -96,7 +155,7 @@ Ensure your local development environment meets the following requirements (high
 
 ---
 
-## 📥 Installation Guide (Local Development)
+## Installation Guide (Local Development)
 
 Follow these steps to run the project on your local machine:
 
@@ -154,7 +213,7 @@ Access at `http://localhost:8000`.
 
 ---
 
-## 🔑 Demo Accounts (Default Credentials)
+## Demo Accounts (Default Credentials)
 
 Use the following accounts to log in and test the system:
 
@@ -165,32 +224,49 @@ Use the following accounts to log in and test the system:
 
 ---
 
-## 📂 Key Directory Structure
+## Key Directory Structure
 
-- `app/Http/Controllers`: Standard backend logic.
-- `app/Livewire`: Interactive components (Data Santri, Dashboard).
-- `app/Models`: Database models (Santri, User, Program).
-- `resources/views/layouts`: Main templates (Sidebar, Header).
-- `resources/views/livewire`: Livewire component views.
-- `public/berkas`: Storage location for student uploads (Ignored by Git).
+```
+app/
+  Http/Controllers/       # Standard backend logic
+  Livewire/
+    Admin/
+      Events/             # Event CRUD, Participants, Attendance
+      Pendaftaran/        # DataSantri, VerifikasiTransfer, DetailPendaftar
+      Settings/           # PermissionManager (superadmin)
+    Peserta/              # EventHistory (user dashboard)
+    User/                 # Pengaturan (account settings for all users)
+  Models/                 # User, Role, Permission, Event, EventRegistration, etc.
+  Services/               # EventRegistrationService
+resources/views/
+  layouts/                # Main templates (app.blade.php, dashboard/, sidebars/, navbars/)
+  livewire/               # Livewire component views
+  components/             # Blade components (breadcrumb, etc.)
+public/berkas/            # Storage for user uploads (ignored by Git)
+routes/
+  web.php                 # Public + authenticated user routes
+  admin.php               # Admin-only routes
+```
 
 ---
 
-## 🔒 Security
+## Security
 
 - This project is configured with a secure `.gitignore`.
 - Sensitive files such as `.env`, `vendor` folder, and user upload data (`public/berkas`) are **NOT** included in the repository.
 
 ---
 
-## 📝 Developer Notes
-- The main layout is located at `resources/views/layouts/app.blade.php`.
+## Developer Notes
+- The main admin layout is located at `resources/views/layouts/app.blade.php`.
+- The dashboard (peserta) layout is at `resources/views/layouts/dashboard/master.blade.php`.
 - The admin navigation menu can be edited at `resources/views/layouts/sidebars/admin_sidebar.blade.php`.
 - To modify student data filtering logic, check `App\Livewire\Admin\Pendaftaran\DataSantri.php`.
+- Account settings for all users: `App\Livewire\User\Pengaturan.php`.
 
 ---
 
-## 🚀 Deployment / Update Guide (Existing Server)
+## Deployment / Update Guide (Existing Server)
 
 Guide for deploying or updating to an existing server (without deleting old data).
 
@@ -234,18 +310,18 @@ php artisan migrate --force
 ```
 
 Migrations to be run (latest updates):
-- `2024_01_01_000001_create_roles_table` - Roles table
-- `2024_01_01_000002_add_role_id_to_users_table` - User role relation
-- `2024_01_01_000003_create_events_table` - Events table (status: draft/published/closed/internal)
-- `2024_01_01_000004_create_event_registrations_table` - Event registrations
-- `2024_01_01_000005_create_event_attendances_table` - Event attendance
-- `2024_01_01_000006_add_images_to_events_table` - Multiple images
-- `2024_01_01_000007_add_missing_fields_to_users_table` - User fields
-- `2024_01_01_000008_add_registration_dates_and_groups_to_events_table` - Registration periods & WhatsApp groups
-- `2024_01_01_000009_add_quota_to_events_table` - Participant quota
-- `2024_01_01_000010_add_auto_accept_to_events_table` - Auto accept registrations
-- `2026_02_17_151916_create_event_internal_links_table` - Internal registration links with tokens & quotas
-- `2026_02_20_165043_add_internal_status_to_events_table` - Add 'internal' status to events enum
+- `2024_01_01_000001_create_roles_table` — Roles table
+- `2024_01_01_000002_add_role_id_to_users_table` — User role relation
+- `2024_01_01_000003_create_events_table` — Events table (status: draft/published/closed/internal)
+- `2024_01_01_000004_create_event_registrations_table` — Event registrations
+- `2024_01_01_000005_create_event_attendances_table` — Event attendance
+- `2024_01_01_000006_create_permissions_table` — Permissions and role_permissions tables
+- `2024_01_01_000007_add_images_to_events_table` — Multiple images
+- `2024_01_01_000008_add_registration_dates_and_groups_to_events_table` — Registration periods & WhatsApp groups
+- `2024_01_01_000009_add_quota_to_events_table` — Participant quota
+- `2024_01_01_000010_add_auto_accept_to_events_table` — Auto accept registrations
+- `2026_02_17_151916_create_event_internal_links_table` — Internal registration links with tokens & quotas
+- `2026_02_20_165043_add_internal_status_to_events_table` — Add 'internal' status to events enum
 
 ### 5. Clear & Optimize Cache
 ```bash
@@ -267,55 +343,47 @@ php artisan queue:restart
 
 ---
 
-## 📋 Events Management Features
+## Database Schema
 
-### Admin Event Features
-- **CRUD Events** - Create, Read, Update, Delete event
-- **Multiple Images** - Upload up to 5 images per event
-- **Registration Period** - Set registration open/close dates
-- **WhatsApp Groups** - Separate group links for Ikhwan (Male), Akhwat (Female), and Public
-- **Participant Quota** - Limit participants by gender
-- **Auto Accept** - Automatically confirm registrations or manual review
-- **Certificate Feature** - Generate certificates with custom templates
-- **Attendance Feature** - Participants can check-in during the event
-- **Export Data** - Export attendance list to Excel (CSV) and PDF
-- **Internal Events** - Events that are not publicly listed, accessible only via internal links with unique tokens
-- **Internal Links** - Generate private registration links with per-link quotas and active period
+### users
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigint | Primary key |
+| nama | varchar | Full name |
+| email | varchar | Email (unique) |
+| password | varchar | Hashed password |
+| role_id | bigint | FK to roles (default: 4) |
+| phone | varchar | Phone number |
+| address | text | Address |
+| gender | enum | Laki-Laki / Perempuan |
+| birth_place | varchar | Birth place |
+| birth_date | date | Birth date |
+| occupation | varchar | Occupation |
+| email_verified_at | timestamp | Email verification |
+| remember_token | varchar | Remember me token |
+| timestamps | | created_at, updated_at |
 
-### User Event Features
-- **Event Registration** - Register for events with/without login
-- **Registration Status** - View status (pending/valid/invalid)
-- **Attendance** - click "Present" button during event
-- **Download Certificate** - Download certificate after attending
-- **Group Links** - Access WhatsApp group based on gender
+### roles
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigint | Primary key |
+| nama_role | varchar | Role name |
 
-### Event Status Types
-| Status | Description |
-|--------|-------------|
-| **Draft** | Event is not visible to anyone, still in preparation |
-| **Published** | Event is publicly listed at `/events` and open for registration |
-| **Closed** | Event registration is closed |
-| **Internal** | Event is NOT publicly listed. Only accessible via internal link (`/events/internal/{slug}/{token}`) |
+### permissions
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigint | Primary key |
+| name | varchar | Permission key (e.g., `view_user_photos`) |
+| display_name | varchar | Human-readable name |
+| group | varchar | Permission group (e.g., `users`, `events`) |
+| description | text | Description |
 
-### Event Registration Flow
-1. User views event list at `/events` (published events only)
-2. User clicks event to view details
-3. If not logged in, user can register and create an account simultaneously
-4. If logged in, form auto-fills user data
-5. Upload payment proof (if paid event)
-6. Admin confirms payment (or auto-accept if enabled)
-7. During event, user can check-in (attendance) from dashboard
-8. After attendance, user can download certificate (if available)
-
-### Internal Event Flow
-1. Admin creates event with status **Internal**
-2. Admin creates internal link(s) with quota and active period
-3. Admin shares the internal link URL to intended participants
-4. Participants access the event via the unique link and register
-
----
-
-## 🗄️ Database Schema (Events)
+### role_permissions
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigint | Primary key |
+| role_id | bigint | FK to roles |
+| permission_id | bigint | FK to permissions |
 
 ### events
 | Column | Type | Description |
@@ -389,7 +457,7 @@ php artisan queue:restart
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Error: "SQLSTATE[42S22]: Column not found"
 Run migrations:
@@ -422,4 +490,4 @@ php artisan optimize:clear
 
 ---
 
-Copyright creatorbe ITS Syathiby 2024 © 2026 **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**.
+Copyright creatorbe ITS Syathiby 2024 - 2026 **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**.
