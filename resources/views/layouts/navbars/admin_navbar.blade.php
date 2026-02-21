@@ -18,7 +18,7 @@
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                    <a class="dropdown-item" href="#"><i class="me-50" data-feather="settings"></i>Pengaturan</a>
+                    <a class="dropdown-item" href="{{ route('pengaturan') }}"><i class="me-50" data-feather="settings"></i>Pengaturan</a>
                     <a class="dropdown-item" href="/logout"><i class="me-50" data-feather="power"></i>Keluar</a>
                 </div>
             </li>
@@ -78,7 +78,7 @@
                     <a class="dropdown-item" href="/santri/profil"><b class="text-primary">{{ $nama_depan }}
                             {{ $nama_belakang }} ({{ $level }})</b> </a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#"><i class="me-50" data-feather="settings"></i>Pengaturan</a>
+                    <a class="dropdown-item" href="{{ route('pengaturan') }}"><i class="me-50" data-feather="settings"></i>Pengaturan</a>
                     <a class="dropdown-item" href="/logout"><i class="me-50" data-feather="power"></i>Keluar</a>
                 </div>
             </li>

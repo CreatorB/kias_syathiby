@@ -11,6 +11,7 @@ use App\Http\Controllers\Santri\CariNamaController;
 use App\Http\Controllers\Guest\LandingPageController;
 use App\Http\Controllers\Guest\EventController;
 use App\Livewire\Peserta\EventHistory;
+use App\Livewire\User\Pengaturan;
 
 Auth::routes();
 Route::get('/logout', [LogoutController::class, 'logout'])->name('custom.logout');
@@ -61,6 +62,11 @@ Route::get('/events/{slug}/success', [EventController::class, 'success'])->name(
 // Internal Event Routes
 Route::get('/events/internal/{slug}/{token}', [\App\Http\Controllers\Guest\InternalEventController::class, 'show'])->name('events.internal.show');
 Route::post('/events/internal/{slug}/{token}/register', [\App\Http\Controllers\Guest\InternalEventController::class, 'store'])->name('events.internal.store');
+
+// User Routes (All Authenticated Users)
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/pengaturan', Pengaturan::class)->name('pengaturan');
+});
 
 // User Dashboard Routes (Peserta/Santri)
 Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard', 'as' => 'dashboard::'], function () {

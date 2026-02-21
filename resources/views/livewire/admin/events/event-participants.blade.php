@@ -130,9 +130,23 @@
                 <div class="card">
                     <div class="card-header border-bottom d-flex justify-content-between align-items-center">
                         <h4 class="card-title">Daftar Peserta</h4>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manualParticipantModal">
-                            <i data-feather="plus" class="me-50"></i> Tambah Peserta Manual
-                        </button>
+                        <div class="d-flex gap-1">
+                            <button type="button"
+                                wire:click="bulkResetPassword"
+                                wire:confirm="Yakin ingin mereset password SEMUA peserta di event ini ke '[REDACTED-LEGACY-PASSWORD]'?"
+                                class="btn btn-outline-warning"
+                                wire:loading.attr="disabled">
+                                <span wire:loading.remove wire:target="bulkResetPassword">
+                                    <i data-feather="refresh-cw" class="me-50"></i> Reset Semua Password
+                                </span>
+                                <span wire:loading wire:target="bulkResetPassword">
+                                    <span class="spinner-border spinner-border-sm me-50"></span> Mereset...
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manualParticipantModal">
+                                <i data-feather="plus" class="me-50"></i> Tambah Peserta Manual
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body mt-1">
                         <div class="row mb-2 align-items-center">
@@ -666,6 +680,9 @@
             toastr.success(message);
         });
         Livewire.on('password-reset', (message) => {
+            toastr.success(message);
+        });
+        Livewire.on('bulk-password-reset', (message) => {
             toastr.success(message);
         });
     });

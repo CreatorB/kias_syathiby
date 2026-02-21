@@ -225,6 +225,27 @@ class EventParticipants extends Component
     }
 
     /**
+     * Bulk Reset Password - reset all participants' passwords to '[REDACTED-LEGACY-PASSWORD]'
+     */
+    public function bulkResetPassword()
+    {
+        $registrations = EventRegistration::where('event_id', $this->eventId)
+            ->whereNotNull('user_id')
+            ->get();
+
+        $count = 0;
+        foreach ($registrations as $registration) {
+            $user = \App\Models\User::find($registration->user_id);
+            if ($user) {
+                $user->update(['password' => bcrypt('[REDACTED-LEGACY-PASSWORD]')]);
+                $count++;
+            }
+        }
+
+        $this->dispatch('bulk-password-reset', "Password $count peserta berhasil direset ke \"[REDACTED-LEGACY-PASSWORD]\"!");
+    }
+
+    /**
      * Reset Password
      */
     public function resetPassword($id)
