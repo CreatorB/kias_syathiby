@@ -12,7 +12,7 @@
                         <span class="user-status">{{ $level }}</span>
                     </div>
                     <span class="avatar">
-                        <img class="round" src="{{ asset('style/app-assets/images/avatars/user-ikhwan.png') }}"
+                        <img class="round" src="{{ asset('style/app-assets/images/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}"
                             alt="avatar" height="40" width="40">
                         <span class="avatar-status-online"></span>
                     </span>
@@ -69,7 +69,7 @@
                         <span class="user-status" style="display: block !important;">{{ $level ?? 'Admin' }}</span>
                     </div>
                     <span class="avatar">
-                        <img class="round" src="{{ asset('style/app-assets/images/avatars/user-ikhwan.png') }}"
+                        <img class="round" src="{{ asset('style/app-assets/images/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}"
                             alt="avatar" height="40" width="40">
                         <span class="avatar-status-online"></span>
                     </span>
