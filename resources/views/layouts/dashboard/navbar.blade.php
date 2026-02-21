@@ -37,7 +37,7 @@
             <!-- Avatar Dropdown -->
             <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
-                <img src="{{ asset('dashboard/assets/img/avatars/user-ikhwan.png') }}" alt
+                <img src="{{ asset('dashboard/assets/img/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}" alt
                   class="h-auto rounded-circle" />
               </div>
             </a>
@@ -47,8 +47,8 @@
               <a class="dropdown-item" href="pages-account-settings-account.html">
                 <div class="d-flex">
                   <div class="flex-shrink-0 me-3">
-                    <div class="avatar avatar-online">
-                      <img src="{{ asset('dashboard/assets/img/avatars/user-ikhwan.png') }}" alt
+                      <div class="avatar avatar-online">
+                      <img src="{{ asset('dashboard/assets/img/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}" alt
                         class="h-auto rounded-circle" />
                     </div>
                   </div>
