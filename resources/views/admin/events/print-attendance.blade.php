@@ -87,8 +87,11 @@
         <tbody>
             @foreach($participants as $index => $participant)
                 @php
-                    $attendance = $participant->attendances->when(isset($filterDate) && $filterDate, function ($q) use ($filterDate) {
-                        return $q->whereDate('attended_at', $filterDate);
+                    $attendance = $participant->attendances->filter(function ($attendance) use ($filterDate) {
+                        if (!isset($filterDate) || !$filterDate) {
+                            return true;
+                        }
+                        return $attendance->attended_at->format('Y-m-d') === $filterDate;
                     })->first();
                 @endphp
                 <tr>
