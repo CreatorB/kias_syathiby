@@ -23,7 +23,11 @@ class EventAttendanceController extends Controller
         }
 
         if ($request->has('search') && $request->search != '') {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($searchTerm) . '%'])
+                  ->orWhereRaw('LOWER(email) LIKE ?', ['%' . strtolower($searchTerm) . '%']);
+            });
         }
 
         $participants = $query->orderBy('name', 'asc')->get();
@@ -46,8 +50,11 @@ class EventAttendanceController extends Controller
 
             // Data
             foreach ($participants as $index => $row) {
-                $attendance = $row->attendances->when($filterDate, function ($q) use ($filterDate) {
-                    return $q->whereDate('attended_at', $filterDate);
+                $attendance = $row->attendances->filter(function ($attendance) use ($filterDate) {
+                    if (!$filterDate) {
+                        return true;
+                    }
+                    return $attendance->attended_at->format('Y-m-d') === $filterDate;
                 })->first();
 
                 $status = $attendance ? 'Hadir' : 'Belum Hadir';
@@ -84,7 +91,11 @@ class EventAttendanceController extends Controller
         }
 
         if ($request->has('search') && $request->search != '') {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($searchTerm) . '%'])
+                  ->orWhereRaw('LOWER(email) LIKE ?', ['%' . strtolower($searchTerm) . '%']);
+            });
         }
 
         $participants = $query->orderBy('name', 'asc')->get();

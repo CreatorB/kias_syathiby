@@ -53,7 +53,11 @@ class EventAttendance extends Component
             ->where('event_id', $this->eventId)
             ->where('payment_status', 'valid')
             ->when($this->search, function ($q) {
-                return $q->where('name', 'like', '%' . $this->search . '%');
+                $searchTerm = $this->search;
+                return $q->where(function($query) use ($searchTerm) {
+                    $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($searchTerm) . '%'])
+                          ->orWhereRaw('LOWER(email) LIKE ?', ['%' . strtolower($searchTerm) . '%']);
+                });
             })
             ->when($this->filterGender, function ($q) {
                 return $q->where('gender', $this->filterGender);
