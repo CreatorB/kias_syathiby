@@ -58,6 +58,10 @@
                             title="Reset Filter">
                             <i data-feather="refresh-ccw" style="width: 14px;"></i>
                         </button>
+                        <a href="{{ route('admin::events.attendance.export_csv', ['id' => $event->id, 'gender' => $filterGender, 'date' => $filterDate, 'search' => $search]) }}"
+                            class="btn btn-outline-secondary btn-sm" target="_blank">
+                            <i data-feather="download" style="width: 14px;"></i> CSV
+                        </a>
                         <a href="{{ route('admin::events.attendance.export_excel', ['id' => $event->id, 'gender' => $filterGender, 'date' => $filterDate, 'search' => $search]) }}"
                             class="btn btn-outline-success btn-sm" target="_blank">
                             <i data-feather="download" style="width: 14px;"></i> Excel

@@ -12,7 +12,8 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
         "livewire/livewire": "^3.4.12",
-        "mobiledetect/mobiledetectlib": "^4.8"
+        "mobiledetect/mobiledetectlib": "^4.8",
+        "phpoffice/phpspreadsheet": "^2.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
