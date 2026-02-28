@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth', 'admin'], 'as' => 'admin::'], function ()
             Route::get('/{id}/edit', EventForm::class)->name('events.edit');
             Route::get('/{id}/participants', EventParticipants::class)->name('events.participants');
             Route::get('/{id}/attendance', EventAttendance::class)->name('events.attendance');
+            Route::get('/{id}/attendance/export-csv', [\App\Http\Controllers\Admin\EventAttendanceController::class, 'exportCsv'])->name('events.attendance.export_csv');
             Route::get('/{id}/attendance/export-excel', [\App\Http\Controllers\Admin\EventAttendanceController::class, 'exportExcel'])->name('events.attendance.export_excel');
             Route::get('/{id}/attendance/print', [\App\Http\Controllers\Admin\EventAttendanceController::class, 'print'])->name('events.attendance.print');
         });
