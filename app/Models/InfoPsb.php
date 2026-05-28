@@ -14,10 +14,11 @@ class InfoPsb extends Model
     protected $table = 'info_psb';
     protected $guarded = [];
 
-    protected $fillable = [
-        'biaya_sarana_prasana',
+protected $fillable = [
+        'biaya_sarana_prasarana',
         'biaya_kuliah_perdana',
         'biaya_spp_bulanan',
+        'link_group',
     ];
 
     protected $casts = [
