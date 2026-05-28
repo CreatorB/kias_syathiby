@@ -28,7 +28,7 @@
                 style="font-size: 0.875rem; line-height: 1.2;">{{ Auth::user()->nama_lengkap ?? Auth::user()->name ?? 'User' }}</span>
               @php
                 $roleId = Auth::user()->role_id;
-                $role = DB::table('role')->where('id', $roleId)->first();
+                $role = DB::table('roles')->where('id', $roleId)->first();
                 $namaRole = $role->nama_role ?? 'User';
               @endphp
               <small class="text-muted d-block" style="font-size: 0.75rem; line-height: 1.2;">{{ $namaRole }}</small>
@@ -37,7 +37,7 @@
             <!-- Avatar Dropdown -->
             <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
-                <img src="{{ asset('dashboard/assets/img/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}" alt
+                <img src="{{ asset('dashboard-assets/assets/img/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}" alt
                   class="h-auto rounded-circle" />
               </div>
             </a>
@@ -48,7 +48,7 @@
                 <div class="d-flex">
                   <div class="flex-shrink-0 me-3">
                       <div class="avatar avatar-online">
-                      <img src="{{ asset('dashboard/assets/img/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}" alt
+                      <img src="{{ asset('dashboard-assets/assets/img/avatars/' . (Auth::user()->gender == 'Perempuan' ? 'user-akhwat.png' : 'user-ikhwan.png')) }}" alt
                         class="h-auto rounded-circle" />
                     </div>
                   </div>
@@ -59,7 +59,7 @@
                       $role = DB::table('roles')
                         ->where('id', $roleId)
                         ->first();
-                      $namaRole = $role->nama_role ?? 'User';
+                $namaRole = $role->nama_role ?? 'Peserta';
                     @endphp
                     <small class="text-muted">{{ $namaRole }}</small>
                   </div>

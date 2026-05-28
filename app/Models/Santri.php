@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,17 +12,56 @@ class Santri extends Model
 {
     use HasFactory;
 
+    const STATUS_MENUNGGU = 'Menunggu';
+    const STATUS_DITERIMA = 'Diterima';
+    const STATUS_DITOLAK = 'Ditolak';
+
     protected $table = 'santri';
-    protected $guarded = [];
+    protected $fillable = [
+        'kode_registrasi',
+        'no_induk',
+        'nik',
+        'nisn',
+        'nama',
+        'jk',
+        'tmp_lahir',
+        'tgl_lahir',
+        'alamat',
+        'nama_ayah',
+        'no_hp_ayah',
+        'pendidikan',
+        'pekerjaan_id',
+        'email',
+        'kode_negara',
+        'no_hp',
+        'hp',
+        'tahun_psb',
+        'program_id',
+        'photo',
+        'ktp',
+        'transfer',
+        'nominal_transfer',
+        'status_transfer',
+        'kirim_notifikasi',
+        'ijazah',
+        'status_pendaftaran',
+        'alasan_penolakan',
+        'tgl_verifikasi',
+    ];
 
     public function program(): BelongsTo
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
-    public function pekerjaan(): BelongsTo
+public function pekerjaan(): BelongsTo
     {
-        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id', 'id');
+        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'santri_id');
     }
 
     public static function cariNama($tahunPsb, $dataSearch)

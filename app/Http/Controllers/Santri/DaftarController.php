@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Santri;
 
 use App\Models\Santri;
+use App\Models\User;
 use App\Models\InfoPsb;
 use App\Models\Lembaga;
 use App\Models\Program;
@@ -14,6 +15,7 @@ use App\Services\InfoPsbService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Requests\FormSantriBaruRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DaftarController extends Controller
 {
@@ -25,10 +27,12 @@ class DaftarController extends Controller
     }
 
     public function pilihProgram() {
+        $psb = $this->infoPsbService->psbAktif();
+
         $data = [
             'title' => 'Pilih Program',
             'lembaga' => Lembaga::find(1),
-            'psb' => $this->infoPsbService->psbAktif(),
+            'psb' => $psb,
             'tajwid' => Program::daftarTajwid($this->tahunAjaran),
             'bahasaArab' => Program::daftarBahasa($this->tahunAjaran),
             'takmili' => Program::daftarTakmili($this->tahunAjaran),
@@ -40,63 +44,130 @@ class DaftarController extends Controller
 
     //Formulir Online
     public function create($id) {
+        $psb = $this->infoPsbService->psbAktif();
+
+        if (!$psb || !$psb->isOpen()) {
+            return redirect('/pilih-program')->with('error', 'Pendaftaran sudah ditutup.');
+        }
+
+        $program = Program::find($id);
+
+        if (!$program || $program->status_psb !== 'Buka') {
+            return redirect('/pilih-program')->with('error', 'Program tidak tersedia.');
+        }
+
         $data = [
             'title' => 'Formulir Online',
             'lembaga' => Lembaga::find(1),
-            'program' => Program::find($id),
+            'program' => $program,
             'pekerjaan' => Pekerjaan::all(),
             'kodeNegara' => KodeNegara::all(),
             'tahunPsb' => $this->tahunAjaran,
-            'psb' => $this->infoPsbService->psbAktif(),
+            'psb' => $psb,
         ];
 
         return view('santri.formulir_online', $data);
     }
 
-    //Simpan Formulir Pendaftaran
+//Simpan Formulir Pendaftaran
     public function store(Request $request) {
-        $date = date('Y-m-d H-i-s');
         $tahunPsb = $this->tahunAjaran;
+        $psb = $this->infoPsbService->psbAktif();
 
-        //Logic untuk kode registrasi
-        $kodeRegistrasi = $this->DaftarService->kodeRegistrasi($tahunPsb);
+        if (!$psb || !$psb->isOpen()) {
+            return redirect('/pilih-program')->with('error', 'Pendaftaran sudah ditutup.');
+        }
 
-        //Cek apakah data sudah ada
+        if (!$psb->canRegister($request->jk)) {
+            $gender = $request->jk === 'Laki-Laki' ? 'Ikhwan' : 'Akhwat';
+            return redirect('/pilih-program')->with('error', "Mohon maaf, kuota pendaftaran {$gender} sudah penuh.");
+        }
+
         $cekSantriTerdaftar = $this->DaftarService->cekSantriTerdaftar($tahunPsb, $request);
 
         if($cekSantriTerdaftar == 0) {
             $request->validate([
-                'photo' => 'required|mimes:jpg,jpeg,png,bmp|max:1024',
-                'ktp' => 'required|mimes:jpg,jpeg,png,bmp|max:1024',
-                'transfer' => 'required|mimes:jpg,jpeg,png,bmp|max:1024',
+                'noInduk' => 'nullable|string|max:50',
+                'nik' => 'nullable|string|max:16',
+                'nisn' => 'nullable|string|max:10',
+                'nama' => 'required|string|min:3|max:100',
+                'jk' => 'required|in:Laki-Laki,Perempuan',
+                'tmpLahir' => 'required|string|max:50',
+                'tglLahir' => 'required|date|before:today|after:1950-01-01',
+                'alamat' => 'required|string|min:10|max:500',
+                'namaAyah' => 'nullable|string|max:100',
+                'noHpAyah' => 'nullable|digits_between:8,15',
+                'pendidikan' => 'required|string',
+                'pekerjaanId' => 'required|integer|exists:pekerjaan,id',
+                'email' => 'required|email|max:100',
+                'kodeNegara' => 'required|integer',
+                'noHp' => 'required|digits_between:8,15',
+                'programId' => 'required|integer|exists:program,id',
+                'tahunPsb' => 'required|string',
+                'nominalTransfer' => 'required|numeric',
+                'photo' => 'required|image|mimes:jpg,jpeg,png,bmp|max:1024|dimensions:min_width=100,min_height=100',
+                'ktp' => 'required|image|mimes:jpg,jpeg,png,bmp|max:1024|dimensions:min_width=100,min_height=100',
+                'transfer' => 'required|image|mimes:jpg,jpeg,png,bmp|max:1024|dimensions:min_width=100,min_height:100',
             ],[
-                'photo.required' => 'Wajib diisi',
-                'photo.mimes' => 'File harus format gambar: jpg,jpeg,png,bmp',
-                'photo.max' => 'File yang anda upload lebih dari 1 MB, silahkan upload ulang!',
-                'ktp.required' => 'Wajib diisi',
-                'ktp.mimes' => 'File harus format gambar: jpg,jpeg,png,bmp',
-                'ktp.max' => 'File yang anda upload lebih dari 1 MB, silahkan upload ulang!',
-                'transfer.required' => 'Wajib diisi',
-                'transfer.mimes' => 'File harus format gambar: jpg,jpeg,png,bmp',
-                'transfer.max' => 'File yang anda upload lebih dari 1 MB, silahkan upload ulang!',
+                'noInduk.max' => 'Nomor Induk maksimal 50 karakter',
+                'nik.max' => 'NIK maksimal 16 digit',
+                'nisn.max' => 'NISN maksimal 10 digit',
+                'nama.required' => 'Nama lengkap wajib diisi',
+                'nama.min' => 'Nama minimal 3 karakter',
+                'nama.max' => 'Nama maksimal 100 karakter',
+                'jk.required' => 'Jenis kelamin wajib dipilih',
+                'jk.in' => 'Jenis kelamin tidak valid',
+                'tmpLahir.required' => 'Tempat lahir wajib diisi',
+                'tmpLahir.max' => 'Tempat lahir maksimal 50 karakter',
+                'tglLahir.required' => 'Tanggal lahir wajib diisi',
+                'tglLahir.date' => 'Format tanggal lahir tidak valid',
+                'tglLahir.before' => 'Tanggal lahir harus sebelum hari ini',
+                'alamat.required' => 'Alamat wajib diisi',
+                'alamat.min' => 'Alamat minimal 10 karakter',
+                'alamat.max' => 'Alamat maksimal 500 karakter',
+                'namaAyah.max' => 'Nama ayah maksimal 100 karakter',
+                'noHpAyah.digits_between' => 'Nomor HP ayah harus 8-15 digit',
+                'pendidikan.required' => 'Pendidikan terakhir wajib dipilih',
+                'pekerjaanId.required' => 'Pekerjaan wajib dipilih',
+                'pekerjaanId.exists' => 'Pekerjaan tidak valid',
+                'email.required' => 'Email wajib diisi',
+                'email.email' => 'Format email tidak valid',
+                'noHp.required' => 'Nomor WhatsApp wajib diisi',
+                'noHp.digits_between' => 'Nomor WhatsApp harus 8-15 digit',
+                'photo.required' => 'Pas photo wajib diupload',
+                'photo.image' => 'File harus berupa gambar',
+                'photo.mimes' => 'Format file harus jpg, jpeg, png, atau bmp',
+                'photo.max' => 'Ukuran file maksimal 1 MB',
+                'photo.dimensions' => 'Ukuran gambar terlalu kecil (min 100x100 pixel)',
+                'ktp.required' => 'KTP/Kartu identitas wajib diupload',
+                'ktp.image' => 'File harus berupa gambar',
+                'ktp.mimes' => 'Format file harus jpg, jpeg, png, atau bmp',
+                'ktp.max' => 'Ukuran file maksimal 1 MB',
+                'ktp.dimensions' => 'Ukuran gambar terlalu kecil (min 100x100 pixel)',
+                'transfer.required' => 'Bukti transfer wajib diupload',
+                'transfer.image' => 'File harus berupa gambar',
+                'transfer.mimes' => 'Format file harus jpg, jpeg, png, atau bmp',
+                'transfer.max' => 'Ukuran file maksimal 1 MB',
+                'transfer.dimensions' => 'Ukuran gambar terlalu kecil (min 100x100 pixel)',
             ]);
 
-            //Upload file photo
-            $jenisPhoto = 'Photo';
+            $kodeRegistrasi = $this->DaftarService->kodeRegistrasi($tahunPsb);
+
+            $sanitizeName = function($name) use ($kodeRegistrasi) {
+                $clean = preg_replace('/[^a-zA-Z0-9]/', '_', $name);
+                return $kodeRegistrasi . '_' . $clean . '_' . time();
+            };
+
             $filePhoto = $request->photo;
-            $filenamePhoto = $date.$jenisPhoto.'.'.$filePhoto->extension();
+            $filenamePhoto = $sanitizeName('Photo') . '.' . strtolower($filePhoto->extension());
             $uploadPhoto = $filePhoto->move(public_path('berkas/'.$tahunPsb.'/'), $filenamePhoto);
 
-            //Upload File KTP
-            $jenisKtp = 'Ktp';
             $fileKtp = $request->ktp;
-            $filenameKtp = $date.$jenisKtp.'.'.$fileKtp->extension();
+            $filenameKtp = $sanitizeName('Ktp') . '.' . strtolower($fileKtp->extension());
             $uploadKtp = $fileKtp->move(public_path('berkas/'.$tahunPsb.'/'), $filenameKtp);
 
-            //Upload File Bukti Transfer
-            $jenisTransfer = 'Transfer';
             $fileTransfer = $request->transfer;
-            $filenameTransfer = $date.$jenisTransfer.'.'.$fileTransfer->extension();
+            $filenameTransfer = $sanitizeName('Transfer') . '.' . strtolower($fileTransfer->extension());
             $uploadTransfer = $fileTransfer->move(public_path('berkas/'.$tahunPsb.'/'), $filenameTransfer);
 
             $dataSantri = $this->DaftarService->dataSantri($request, $filenamePhoto, $filenameKtp,
@@ -105,7 +176,23 @@ class DaftarController extends Controller
             $namaLengkap = $request->nama;
 
             if(($uploadPhoto) && ($uploadKtp) && ($uploadTransfer)) {
-                Santri::create($dataSantri);
+                $santri = Santri::create($dataSantri);
+
+                try {
+                    $user = User::create([
+                        'nama' => $santri->nama,
+                        'email' => $santri->email,
+                        'password' => bcrypt($kodeRegistrasi),
+                        'role_id' => 4,
+                        'phone' => $santri->hp,
+                        'is_active' => false,
+                        'santri_id' => $santri->id,
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('User creation failed: ' . $e->getMessage());
+                    // Continue with redirect even if user creation fails
+                }
+
                 return redirect()->route('suksesDaftarSantri', [
                     'namaLengkap' => $namaLengkap,
                     'kodeRegistrasi' => $kodeRegistrasi,

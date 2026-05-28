@@ -82,7 +82,7 @@
 
                     <!--Action Button-->
                     <div class="d-grid d-flex justify-content-between">
-                        <x-buttons.basic-primary class="w-100 me-25" data-bs-toggle="modal" data-bs-target="#modalVerifikasi" wire:click='setIdPendaftar({{ $pendaftar->id }})'>
+                        <x-buttons.basic-primary class="w-100 me-25" data-bs-toggle="modal" data-bs-target="#modalVerifikasi" wire:click='setIdPendanfar({{ $pendaftar->id }})'>
                             Verifikasi
                         </x-buttons.basic-primary>
                         <div class="dropup">
@@ -108,6 +108,12 @@
                                         <span>Notifikasi</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center text-danger" wire:click='setIdPendanfarHapus({{ $pendaftar->id }})'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 me-50"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        <span>Hapus</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -127,9 +133,23 @@
         @endif
     </div>
 
-    <!--Modal Verifikasi Transfer-->
-    <livewire:components.pendaftaran.modal-verifikasi-transfer idModal="modalVerifikasi" :$idPendaftar />
+<!--Modal Verifikasi Transfer-->
+    <livewire:components.pendaftaran.modal-verifikasi-transfer idModal="modalVerifikasi" :pid="$idPendanfar" />
     <!--#Modal Verifikasi Transfer-->
+
+    <!--Modal Hapus Pendaftar-->
+    @if ($showDeleteModal)
+    <x-modals.project-modal id="modalHapus" wire:ignore.self>
+        <x-slot:title>Konfirmasi Hapus Pendaftar</x-slot:title>
+        <p>Yakin ingin menghapus pendaftar <strong>{{ $dataPendanfarHapus?->nama }}</strong>?</p>
+        <p class="text-danger">Tindakan ini tidak dapat dibatalkan.</p>
+        <div class="d-flex gap-2">
+            <x-buttons.basic color="danger" wire:click='hapusPendanfar'>Hapus</x-buttons.basic>
+            <x-buttons.outline color="dark" data-bs-dismiss="modal" wire:click='closeDeleteModal'>Batal</x-buttons.outline>
+        </div>
+    </x-modals.project-modal>
+    @endif
+    <!--#Modal Hapus Pendaftar-->
     <!--#Card List Santri-->
 
     @push('vendorJS')
@@ -143,6 +163,12 @@
     <script data-navigate-once>
         window.addEventListener('simpan-status', event => {
             $('#modalVerifikasi').modal('hide');
+        });
+        window.addEventListener('hapus-success', event => {
+            $('#modalHapus').modal('hide');
+        });
+        window.addEventListener('buka-modal-hapus', event => {
+            $('#modalHapus').modal('show');
         });
     </script>
 

@@ -153,7 +153,7 @@
                             <i class="fas fa-tachometer-alt me-1"></i> Dashboard
                           </a>
                         @else
-                          <a class="btn btn-theme btn-sm flex-fill" href="{{ route('dashboard::events') }}">
+                          <a class="btn btn-theme btn-sm flex-fill" href="{{ route('peserta::events') }}">
                             <i class="fas fa-user me-1"></i> Akun Saya
                           </a>
                         @endif
@@ -181,8 +181,8 @@
                       <a class="btn btn-theme btn-sm" href="{{ route('admin::dashboard') }}" data-text="Dashboard">
                         <span>D</span><span>a</span><span>s</span><span>h</span><span>b</span><span>o</span><span>a</span><span>r</span><span>d</span>
                       </a>
-                    @else
-                      <a class="btn btn-theme btn-sm" href="{{ route('dashboard::events') }}" data-text="Akun">
+@else
+                      <a class="btn btn-theme btn-sm" href="{{ route('peserta::events') }}" data-text="Akun">
                         <span>A</span><span>k</span><span>u</span><span>n</span>
                       </a>
                     @endif

@@ -19,6 +19,11 @@ class Program extends Model
         return $this->hasMany(Santri::class, 'program_id', 'id');
     }
 
+    public function jenisProgram(): BelongsTo
+    {
+        return $this->belongsTo(JenisProgram::class, 'jenis_program_id', 'id');
+    }
+
     //Jumlah pendaftar TQ
     public static function daftarTajwid($tahunPsb) {
         return Program::with(['santri' => function($query) use($tahunPsb) {

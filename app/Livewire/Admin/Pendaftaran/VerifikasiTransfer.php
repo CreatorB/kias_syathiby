@@ -20,11 +20,11 @@ class VerifikasiTransfer extends Component
     use WithPagination;
     use WithoutUrlPagination;
     //String
-    public $tahunPsb, $cariSantri = null, $wa, $nama, $program, $url = null;
+    public $tahunPsb, $cariSantri = null, $wa, $nama, $program, $url = null, $idPendanfarHapus = null, $showDeleteModal = false;
     //Integer
-    public $limitData = 10, $idPendaftar, $tambahData = 10;
+    public $limitData = 10, $idPendanfar, $tambahData = 10;
     //Collection
-    public $filterData = null, $infoPsb, $psb;
+    public $filterData = null, $infoPsb, $psb, $dataPendanfarHapus = null;
     //Boolean
     public $isMobile;
 
@@ -60,6 +60,13 @@ class VerifikasiTransfer extends Component
     #[On('simpan-status')]
     public function fetchDataPendaftar() {
         $this->dataPendaftar();
+    }
+
+    #[On('hapus-success')]
+    public function onHapusSuccess() {
+        $this->dataPendaftar();
+        $this->idPendanfarHapus = null;
+        $this->showDeleteModal = false;
     }
 
     #[On('load-data')]
@@ -104,9 +111,51 @@ class VerifikasiTransfer extends Component
     }
 
     //Set id untuk modal detail verifikasi transfer
-    public function setIdPendaftar($id)
+public function setIdPendanfar($id)
     {
-        $this->idPendaftar = $id;
+        $this->idPendanfar = $id;
+    }
+
+    public function setIdPendanfarHapus($id)
+    {
+        $this->idPendanfarHapus = $id;
+        $this->dataPendanfarHapus = Santri::queryDataSantri($id);
+        $this->showDeleteModal = true;
+        $this->dispatch('buka-modal-hapus');
+    }
+
+    public function closeDeleteModal()
+    {
+        $this->idPendanfarHapus = null;
+        $this->dataPendanfarHapus = null;
+        $this->showDeleteModal = false;
+    }
+
+    public function hapusPendanfar()
+    {
+        $santri = Santri::find($this->idPendanfarHapus);
+
+        \App\Models\User::where('santri_id', $this->idPendanfarHapus)->delete();
+
+        if ($santri) {
+            $tahunPsb = $santri->tahun_psb;
+            $files = [$santri->photo, $santri->ktp, $santri->transfer];
+
+            foreach ($files as $file) {
+                if ($file) {
+                    $filePath = public_path("berkas/{$tahunPsb}/{$file}");
+
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
+                }
+            }
+
+            $santri->delete();
+        }
+
+        $this->closeDeleteModal();
+        $this->dispatch('hapus-success');
     }
 
     //Action kirim notifikasi

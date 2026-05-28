@@ -5,7 +5,7 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="{{ asset('dashboard/assets/') }}"
+  data-assets-path="{{ asset('dashboard-assets/assets/') }}"
   data-template="horizontal-menu-template-no-customizer"
 >
   <head>

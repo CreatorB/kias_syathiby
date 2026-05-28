@@ -50,7 +50,7 @@
   }
 
   // Range
-  if (typeof flatpickrRange != undefined) {
+  if (flatpickrRange) {
     flatpickrRange.flatpickr({
       mode: 'range'
     });

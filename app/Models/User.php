@@ -30,6 +30,8 @@ class User extends Authenticatable
         'birth_place',
         'birth_date',
         'occupation',
+        'is_active',
+        'santri_id',
     ];
 
     /**
@@ -51,6 +53,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'birth_date' => 'date',
         'role_id' => 'integer',
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -61,12 +64,27 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function santri(): BelongsTo
+    {
+        return $this->belongsTo(Santri::class);
+    }
+
     /**
      * Get the event registrations for the user.
      */
     public function eventRegistrations(): HasMany
     {
         return $this->hasMany(EventRegistration::class);
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class)->orderBy('created_at', 'desc');
+    }
+
+    public function unreadNotifications(): HasMany
+    {
+        return $this->hasMany(Notification::class)->where('is_read', false)->orderBy('created_at', 'desc');
     }
 
     /**
@@ -90,11 +108,11 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return in_array($this->role_id, [1, 2]);
+        return $this->role_id === 2;
     }
 
     /**
-     * Check if user is santri.
+     * Check if user is saksi.
      */
     public function isSantri(): bool
     {
@@ -107,6 +125,15 @@ class User extends Authenticatable
     public function isPeserta(): bool
     {
         return $this->role_id === 4;
+    }
+
+    /**
+     * Check if user is peserta OR has role that can access peserta menu
+     * This allows sanksi to access peserta menu but not vice versa
+     */
+    public function canAccessPesertaMenu(): bool
+    {
+        return in_array($this->role_id, [3, 4]);
     }
 
     /**
