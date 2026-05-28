@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
-  data-assets-path="{{ asset('dashboard/assets/') }}" data-template="horizontal-menu-template-no-customizer">
+  data-assets-path="{{ asset('dashboard-assets/assets/') }}" data-template="horizontal-menu-template-no-customizer">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>{{ $title }} - PSB Online | KIAS (Kursus Ilmu bahasa Arab & Syar'i)</title>
+  <title>{{ $title ?? 'Dashboard' }} - PSB Online | KIAS (Kursus Ilmu bahasa Arab & Syar'i)</title>
 
   <meta name="description"
     content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan mudir 'Aam : Ust. Badru Salam, Lc." />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="{{ asset('dashboard/assets/img/favicon/takhassus-icon.ico') }}" />
+  <link rel="icon" type="image/x-icon" href="{{ asset('dashboard-assets/assets/img/favicon/takhassus-icon.ico') }}" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -24,18 +24,18 @@
     rel="stylesheet" />
 
   <!-- Icons -->
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/fonts/fontawesome.css') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/fonts/tabler-icons.css') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/fonts/flag-icons.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/fonts/fontawesome.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/fonts/tabler-icons.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/fonts/flag-icons.css') }}" />
 
   <!-- Core CSS -->
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/css/rtl/core.css') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/css/rtl/theme-default.css') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/css/demo.css') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/css/custom-datatables.css?v=2') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/node-waves/node-waves.css') }}" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/css/rtl/core.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/css/rtl/theme-default.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/css/demo.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/css/custom-datatables.css?v=2') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/libs/node-waves/node-waves.css') }}" />
+  <link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
 
   <!-- Vendors CSS -->
   @stack('vendorCss')
@@ -44,7 +44,7 @@
   @stack('pageCss')
 
   <!-- Helpers -->
-  <script src="{{ asset('dashboard/assets/vendor/js/helpers.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/js/helpers.js') }}"></script>
 </head>
 
 <body>
@@ -92,24 +92,24 @@
 
   <!-- Core JS -->
   <!-- build:js assets/vendor/js/core.js -->
-  <script src="{{ asset('dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
-  <script src="{{ asset('dashboard/assets/vendor/libs/popper/popper.js') }}"></script>
-  <script src="{{ asset('dashboard/assets/vendor/js/bootstrap.js') }}"></script>
-  <script src="{{ asset('dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-  <script src="{{ asset('dashboard/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/libs/jquery/jquery.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/libs/popper/popper.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/js/bootstrap.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
 
-  <script src="{{ asset('dashboard/assets/vendor/libs/hammer/hammer.js') }}"></script>
-  <script src="{{ asset('dashboard/assets/vendor/libs/i18n/i18n.js') }}"></script>
-  <script src="{{ asset('dashboard/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/libs/hammer/hammer.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/libs/i18n/i18n.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
 
-  <script src="{{ asset('dashboard/assets/vendor/js/menu.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/vendor/js/menu.js') }}"></script>
   <!-- endbuild -->
 
   <!-- Vendors JS -->
   @stack('vendorScript')
 
   <!-- Main JS -->
-  <script src="{{ asset('dashboard/assets/js/main.js') }}"></script>
+  <script src="{{ asset('dashboard-assets/assets/js/main.js') }}"></script>
 
   <!-- Page JS -->
   @stack('pageScript')

@@ -73,7 +73,7 @@
 
                             <div class="d-flex gap-2 justify-content-center mt-4">
                                 @if(auth()->check())
-                                <a href="{{ route('dashboard::events') }}" class="btn btn-theme" id="btn-dashboard">
+                                <a href="{{ route('peserta::events') }}" class="btn btn-theme" id="btn-dashboard">
                                     <i class="fas fa-tachometer-alt me-2"></i> Ke Dashboard Sekarang
                                 </a>
                                 @else
@@ -161,7 +161,7 @@
 
             if (seconds <= 0) {
                 clearInterval(interval);
-                window.location.href = "{{ route('dashboard::events') }}";
+                window.location.href = "{{ route('peserta::events') }}";
             }
         }, 1000);
 

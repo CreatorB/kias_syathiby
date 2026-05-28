@@ -6,10 +6,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-    <meta name="description" content="Kursus Ilmu bahasa Arab & Syar'i">
+    <meta name="description" content="Dashboard Peserta KIAS - Kursus Ilmu bahasa Arab & Syar'i">
     <meta name="author" content="KIAS">
-    <title>{{ $title ?? 'KIAS' }} - KIAS | Sistem Informasi Penerimaan Santri Baru</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('landing/images/takhassus-icon.ico') }}">
+    <title>{{ $title ?? 'Dashboard Peserta' }} - KIAS | Sistem Informasi Penerimaan Santri Baru</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('dashboard-assets/assets/img/favicon/takhassus-icon.ico') }}">
     <link href="https://fonts.googleapis.com/css?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
         rel="stylesheet">
 
@@ -26,8 +26,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('style/app-assets/css/themes/dark-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('style/app-assets/css/themes/bordered-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('style/app-assets/css/themes/semi-dark-layout.css') }}">
-    <!-- BEGIN: Page CSS-->
-
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css"
         href="{{ asset('style/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
@@ -61,15 +59,11 @@
 
     {{-- Begin: Header --}}
     @include('layouts.navbars.admin_navbar')
-    {{-- END: Sidebar --}}
+    {{-- END: Header --}}
 
     {{-- Begin: Sidebar --}}
-    @include('layouts.sidebars.admin_sidebar')
+    @include('layouts.peserta.sidebar')
     {{-- END: Sidebar --}}
-
-    <!-- BEGIN: Bottom Navbar -->
-    @include('layouts.navbars.admin_bottomnavbar')
-    <!-- END: Bottom Navbar -->
 
     <!-- BEGIN: Content-->
     <div class="app-content content ">
@@ -116,7 +110,16 @@
                     height: 14
                 });
             }
-        })
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        });
     </script>
 
 </body>

@@ -2,14 +2,7 @@
 
 @push('vendorCss')
 <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/pickr/pickr-themes.css') }}" />
 <link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/select2/select2.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/tagify/tagify.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/bootstrap-select/bootstrap-select.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/typeahead-js/typeahead.css') }}" />
 @endpush
 
 @push('pageCss')
@@ -32,7 +25,12 @@
 <!--Alert jika ada validasi yang tidak sesuai-->
 @if (isset($errors) && $errors->any())
 <div class="alert alert-danger" role="alert">
-    Daftar Gagal, Periksa kembali kolom isian anda!
+    <strong>Daftar Gagal, Periksa kembali kolom isian anda!</strong>
+    <ul class="mb-0 mt-2">
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
 </div>
 @endif
 
@@ -63,16 +61,48 @@
                 <form method="POST" action="/isi-form/store" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-6 mb-3">
-                            <label class="form-label" for="basic-icon-default-fullname">Nama Lengkap</label>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="inputNoInduk">Nomor Induk</label>
                             <div class="input-group input-group-merge">
-                                <span id="basic-icon-default-fullname2" class="input-group-text"
+                                <span class="input-group-text"><i class="ti ti-id"></i></span>
+                                <input type="text" class="form-control" id="inputNoInduk"
+                                    placeholder="Nomor induk pesantren"
+                                    name="noInduk" value="{{ old('noInduk') }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="inputNik">NIK (KTP)</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="ti ti-credit-card"></i></span>
+                                <input type="text" class="form-control" id="inputNik"
+                                    placeholder="Nomor KTP 16 digit"
+                                    name="nik" value="{{ old('nik') }}"
+                                    pattern="[0-9]{16}" maxlength="16">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <label class="form-label" for="inputNisn">NISN</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="ti ti-book"></i></span>
+                                <input type="text" class="form-control" id="inputNisn"
+                                    placeholder="Nomor NISN 10 digit"
+                                    name="nisn" value="{{ old('nisn') }}"
+                                    pattern="[0-9]{10}" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-3">
+                            <label class="form-label" for="inputNama">Nama Lengkap <span class="text-danger">*</span></label>
+                            <div class="input-group input-group-merge">
+                                <span id="iconNama" class="input-group-text"
                                 ><i class="ti ti-user"></i
                                 ></span>
                                 <input
                                 type="text"
                                 class="form-control"
-                                id="basic-icon-default-fullname"
+                                id="inputNama"
                                 placeholder="Tulis nama lengkap"
                                 name="nama"
                                 value="{{ old('nama') }}"
@@ -83,7 +113,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 mb-3">
-                            <label class="form-label d-block">Jenis Kelamin</label>
+                            <label class="form-label d-block">Jenis Kelamin <span class="text-danger">*</span></label>
                             <div class="form-check form-check-inline mt-3">
                                 <input
                                 class="form-check-input"
@@ -91,6 +121,7 @@
                                 name="jk"
                                 id="dataLakiLaki"
                                 value="Laki-Laki"
+                                {{ old('jk') == 'Laki-Laki' ? 'checked' : '' }}
                                 required
                                 oninvalid="this.setCustomValidity('Wajib diisi!')"
                                 oninput="this.setCustomValidity('')"
@@ -104,23 +135,27 @@
                                 name="jk"
                                 id="dataPerempuan"
                                 value="Perempuan"
+                                {{ old('jk') == 'Perempuan' ? 'checked' : '' }}
+                                required
+                                oninvalid="this.setCustomValidity('Wajib diisi!')"
+                                oninput="this.setCustomValidity('')"
                                 />
                                 <label class="form-check-label" for="dataPerempuan">Perempuan</label>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+<div class="row">
                         <div class="col-lg-6 mb-3">
-                            <label class="form-label" for="basic-icon-default-fullname">Tempat Lahir</label>
+                            <label class="form-label" for="inputTempatLahir">Tempat Lahir <span class="text-danger">*</span></label>
                             <div class="input-group input-group-merge">
-                                <span id="basic-icon-default-fullname2" class="input-group-text"
+                                <span id="iconTempatLahir" class="input-group-text"
                                 ><i class="ti ti-building"></i
                                 ></span>
                                 <input
                                 type="text"
                                 class="form-control"
-                                id="basic-icon-default-fullname"
+                                id="inputTempatLahir"
                                 placeholder="Kota kelahiran anda"
                                 name="tmpLahir"
                                 value="{{ old('tmpLahir') }}"
@@ -131,15 +166,16 @@
                             </div>
                         </div>
                         <div class="col-lg-6 mb-3">
-                            <label class="form-label" for="basic-icon-default-fullname">Tanggal Lahir</label>
+                            <label class="form-label" for="flatpickr-date">Tanggal Lahir <span class="text-danger">*</span></label>
                             <div class="input-group input-group-merge">
-                                <span id="basic-icon-default-fullname2" class="input-group-text"
+                                <span id="iconTanggalLahir" class="input-group-text"
                                 ><i class="ti ti-calendar"></i
                                 ></span>
                                 <input type="text" class="form-control"
                                 placeholder="Pilih tanggal..."
                                 id="flatpickr-date"
                                 name="tglLahir"
+                                value="{{ old('tglLahir') }}"
                                 required
                                 oninvalid="this.setCustomValidity('Kapan anda dilahirkan?')"
                                 oninput="this.setCustomValidity('')"
@@ -150,13 +186,14 @@
 
                     <div class="row">
                         <div class="col-12 mb-3">
-                            <label class="form-label">Alamat</label>
+                            <label class="form-label" for="inputAlamat">Alamat <span class="text-danger">*</span></label>
                             <div class="input-group input-group-merge">
-                                <span class="input-group-text"
+                                <span id="iconAlamat" class="input-group-text"
                                 ><i class="ti ti-home"></i
                                 ></span>
                                 <textarea
                                 class="form-control"
+                                id="inputAlamat"
                                 placeholder="Tulis alamat domisili dengan lengkap disertai kecamatan, kabupaten dan provinsi"
                                 name="alamat"
                                 required
@@ -169,7 +206,29 @@
 
                     <div class="row">
                         <div class="col-lg-6 mb-3">
-                            <label for="pilihPendidikan" class="form-label">Pendidikan Terakhir</label>
+                            <label class="form-label" for="inputNamaAyah">Nama Ayah</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="ti ti-user"></i></span>
+                                <input type="text" class="form-control" id="inputNamaAyah"
+                                    placeholder="Nama lengkap ayah"
+                                    name="namaAyah" value="{{ old('namaAyah') }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label class="form-label" for="inputNoHpAyah">Nomor HP Ayah</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="ti ti-phone"></i></span>
+                                <input type="tel" class="form-control" id="inputNoHpAyah"
+                                    placeholder="08123456789"
+                                    name="noHpAyah" value="{{ old('noHpAyah') }}"
+                                    pattern="[0-9]{8,15}" maxlength="15">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-3">
+                            <label for="pilihPendidikan" class="form-label">Pendidikan Terakhir <span class="text-danger">*</span></label>
                             <select id="pilihPendidikan" class="form-select"
                             name="pendidikan"
                             required
@@ -192,8 +251,8 @@
                         </div>
 
                         <div class="col-lg-6 mb-3">
-                            <label for="select2Basic" class="form-label">Pekerjaan</label>
-                            <select id="select2Basic"
+                            <label for="pilihPekerjaan" class="form-label">Pekerjaan <span class="text-danger">*</span></label>
+                            <select id="pilihPekerjaan"
                             class="select2 form-select form-select-lg"
                             data-allow-clear="true"
                             name="pekerjaanId"
@@ -201,22 +260,23 @@
                             oninvalid="this.setCustomValidity('Apa pekerjaan anda?')"
                             oninput="this.setCustomValidity('')"
                             >
-                            <option value=""></option>
+                            <option value="">--Pilih--</option>
                                 @foreach ($pekerjaan as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama_pekerjaan }}</option>
+                                    <option value="{{ $item->id }}" {{ old('pekerjaanId') == $item->id ? 'selected' : '' }}>{{ $item->nama_pekerjaan }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
-                    <div class="row">
+<div class="row">
                         <div class="col-lg-6 mb-3">
-                            <label class="form-label" for="basic-icon-default-fullname">Email</label>
+                            <label class="form-label" for="inputEmail">Email <span class="text-danger">*</span></label>
                             <div class="input-group input-group-merge">
-                                <span id="basic-icon-default-fullname2" class="input-group-text"
+                                <span id="iconEmail" class="input-group-text"
                                 ><i class="ti ti-mail"></i
                                 ></span>
                                 <input type="email" class="form-control"
+                                id="inputEmail"
                                 placeholder="nama@domain.com"
                                 name="email"
                                 value="{{ old('email') }}"
@@ -228,20 +288,23 @@
                         </div>
 
                         <div class="col-lg-6 mb-3">
-                            <label class="form-label">Nomor Whatsapp</label>
+                            <label class="form-label" for="inputNoHp">Nomor WhatsApp <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <select class="select2 form-select form-select-lg"
-                                name="kodeNegara">
-                                    <option value="62">(+62) ID</option>
+                                name="kodeNegara" id="selectKodeNegara">
+                                    <option value="62" {{ old('kodeNegara', '62') == '62' ? 'selected' : '' }}>(+62) ID</option>
                                     @foreach ($kodeNegara as $item)
-                                        <option value="{{ $item->kode_hp }}">(+{{ $item->kode_hp }})</option>
+                                        <option value="{{ $item->kode_hp }}" {{ old('kodeNegara') == $item->kode_hp ? 'selected' : '' }}>(+{{ $item->kode_hp }})</option>
                                     @endforeach
                                 </select>
-                                <input class="form-control" type="number" step="any"
+                                <input class="form-control" type="tel"
+                                id="inputNoHp"
                                 name="noHp"
                                 value="{{ old('noHp') }}"
+                                placeholder="8123456789"
+                                pattern="[0-9]{8,15}"
                                 required
-                                oninvalid="this.setCustomValidity('Anda harus mengisi nomor whatsapp')"
+                                oninvalid="this.setCustomValidity('Anda harus mengisi nomor whatsapp yang valid (8-15 digit)')"
                                 oninput="this.setCustomValidity('')"
                                 >
                             </div>
@@ -252,7 +315,7 @@
                     <label><b>LAMPIRAN BERKAS!</b></label><br>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb-3">
-                            <label class="form-label">Pas Photo</label>
+                            <label class="form-label">Pas Photo <span class="text-danger">*</span></label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"
                                 ><i class="ti ti-photo"></i
@@ -276,7 +339,7 @@
                         </div>
 
                         <div class="col-lg-4 col-md-6 mb-3">
-                            <label class="form-label">KTP/KTS/SIM/KK</label>
+                            <label class="form-label">KTP/KTS/SIM/KK <span class="text-danger">*</span></label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"
                                 ><i class="ti ti-photo"></i
@@ -300,7 +363,7 @@
                         </div>
 
                         <div class="col-lg-4 col-md-6 mb-3">
-                            <label class="form-label">Bukti Transfer</label>
+                            <label class="form-label">Bukti Transfer <span class="text-danger">*</span></label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"
                                 ><i class="ti ti-photo"></i
@@ -344,22 +407,12 @@
 @push('vendorScript')
 <script src="{{ asset('dashboard/assets/vendor/libs/moment/moment.js') }}"></script>
 <script src="{{ asset('dashboard/assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/pickr/pickr.js') }}"></script>
 <script src="{{ asset('dashboard/assets/vendor/libs/select2/select2.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/tagify/tagify.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/bootstrap-select/bootstrap-select.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/typeahead-js/typeahead.js') }}"></script>
-<script src="{{ asset('dashboard/assets/vendor/libs/bloodhound/bloodhound.js') }}"></script>
 @endpush
 
 @push('pageScript')
 <script src="{{ asset('dashboard/assets/js/forms-pickers.js') }}"></script>
 <script src="{{ asset('dashboard/assets/js/forms-selects.js') }}"></script>
-<script src="{{ asset('dashboard/assets/js/forms-tagify.js') }}"></script>
-<script src="{{ asset('dashboard/assets/js/forms-typeahead.js') }}"></script>
 
 <script>
     $('form').submit(function (event) {

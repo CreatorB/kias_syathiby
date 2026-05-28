@@ -8,9 +8,11 @@ use App\Http\Controllers\Guest\InfoPsbController;
 use App\Http\Controllers\Guest\ProgramController;
 use App\Http\Controllers\Santri\DaftarController;
 use App\Http\Controllers\Santri\CariNamaController;
+use App\Http\Controllers\Santri\DashboardController;
 use App\Http\Controllers\Guest\LandingPageController;
 use App\Http\Controllers\Guest\EventController;
 use App\Livewire\Peserta\EventHistory;
+use App\Livewire\Peserta\Dashboard;
 use App\Livewire\User\Pengaturan;
 
 Auth::routes();
@@ -39,6 +41,7 @@ Route::get('/program-bahasa-arab', [ProgramController::class, 'bahasaArab']);
 Route::get('/program-takmili', [ProgramController::class, 'takmili']);
 Route::get('/program-ulum-syariah', [ProgramController::class, 'ulumSyariah']);
 Route::get('/psb', [InfoPsbController::class, 'index']);
+Route::post('/psb/register', [InfoPsbController::class, 'register'])->name('psb.register');
 Route::get('/download-brosur', [InfoPsbController::class, 'download']);
 
 Route::get('/pilih-program', [DaftarController::class, 'pilihProgram']);
@@ -69,8 +72,12 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 // User Dashboard Routes (Peserta/Santri)
-Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard', 'as' => 'dashboard::'], function () {
-    Route::get('/events', EventHistory::class)->name('events');
+Route::group(['middleware' => ['auth'], 'prefix' => 'peserta/dashboard', 'as' => 'peserta::'], function () {
+    Route::get('/', \App\Livewire\Peserta\Dashboard::class)->name('index');
+    Route::get('/events', \App\Livewire\Peserta\EventHistory::class)->name('events');
+    Route::get('/formulir/{kode}', [DashboardController::class, 'formulir'])->name('formulir');
+    Route::get('/notification/{id}/read', [DashboardController::class, 'markNotificationAsRead'])->name('notification.read');
+    Route::get('/notification/read-all', [DashboardController::class, 'markAllNotificationsAsRead'])->name('notification.readAll');
 });
 
 

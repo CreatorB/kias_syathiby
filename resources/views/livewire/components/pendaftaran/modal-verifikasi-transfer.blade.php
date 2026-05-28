@@ -5,15 +5,15 @@
             <div class="row">
                 <div class="col-lg-6 col-12 mb-1">
                     <x-inputs.label>Nama Santri</x-inputs.label>
-                    <x-inputs.basic value="{{ $dataPendaftar?->nama }}" disabled/>
+                    <x-inputs.basic value="{{ $data?->nama }}" disabled/>
                 </div>
                 <div class="col-lg-6 col-12 mb-1">
                     <x-inputs.label>Program</x-inputs.label>
-                    <x-inputs.basic value="{{ $dataPendaftar?->program->nama_program }}" disabled/>
+                    <x-inputs.basic value="{{ $data?->program->nama_program }}" disabled/>
                 </div>
                 <div class="col-lg-6 col-12 mb-1">
                     <x-inputs.label>Tanggal Daftar</x-inputs.label>
-                    <x-inputs.basic value="{{ \App\Helpers\TanggalHelper::hariTanggalWaktu($dataPendaftar?->created_at) }}" disabled/>
+                    <x-inputs.basic value="{{ \App\Helpers\TanggalHelper::hariTanggalWaktu($data?->created_at) }}" disabled/>
                 </div>
                 <div class="col-lg-6 col-12 mb-1">
                     <x-inputs.label>Status Transfer</x-inputs.label>
@@ -26,9 +26,25 @@
                 <div class="col-12 mb-1">
                     <x-inputs.label>Bukti Transfer</x-inputs.label>
                     <br/>
-                    <a href="{{ asset('berkas/'.$dataPendaftar?->tahun_psb.'/'.$dataPendaftar?->transfer.'') }}" target="_blank">
-                        <img src="{{ asset('berkas/'.$dataPendaftar?->tahun_psb.'/'.$dataPendaftar?->transfer.'') }}" width="300" height="auto"/>
-                    </a>
+                    @if($data?->transfer && $data?->tahun_psb)
+                        @php
+                            $transferPath = 'berkas/'.$data->tahun_psb.'/'.$data->transfer;
+                            $transferExists = file_exists(public_path($transferPath));
+                        @endphp
+                        @if($transferExists)
+                            <a href="{{ asset($transferPath) }}" target="_blank">
+                                <img src="{{ asset($transferPath) }}" width="300" height="auto"/>
+                            </a>
+                        @else
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 150px; width: 300px;">
+                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
+                            </div>
+                        @endif
+                    @else
+                        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 150px; width: 300px;">
+                            <span class="text-muted"><i class="ti ti-info-circle me-1"></i> Bukti transfer belum diupload</span>
+                        </div>
+                    @endif
                 </div>
             </div>
 

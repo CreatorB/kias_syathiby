@@ -27,8 +27,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('style/app-assets/css/themes/bordered-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('style/app-assets/css/themes/semi-dark-layout.css') }}">
     <!-- BEGIN: Page CSS-->
-
-    <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css"
         href="{{ asset('style/app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
     @stack('pageCss')
@@ -59,17 +57,13 @@
         $level = $user->nama_role;
     @endphp
 
-    {{-- Begin: Header --}}
+    {{-- Begin: Header (Peserta Navbar) --}}
     @include('layouts.navbars.admin_navbar')
-    {{-- END: Sidebar --}}
+    {{-- END: Header --}}
 
-    {{-- Begin: Sidebar --}}
-    @include('layouts.sidebars.admin_sidebar')
+    {{-- Begin: Sidebar (Peserta Menu - horizontal) --}}
+    @include('layouts.dashboard.menu')
     {{-- END: Sidebar --}}
-
-    <!-- BEGIN: Bottom Navbar -->
-    @include('layouts.navbars.admin_bottomnavbar')
-    <!-- END: Bottom Navbar -->
 
     <!-- BEGIN: Content-->
     <div class="app-content content ">

@@ -8,9 +8,19 @@
     <div class="row">
         <!--Info Ringkas-->
         <div class="col-lg-4 col-12">
-            <x-cards.user-detail>
+<x-cards.user-detail>
                 <x-slot:photo>
-                    <img class="img-fluid rounded mt-3 mb-2" src="{{ asset('berkas/'.$dataPendaftar?->tahun_psb.'/'.$dataPendaftar?->photo.'') }}" height="210" width="210" />
+                    @php
+                        $photoPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->photo;
+                        $photoExists = file_exists(public_path($photoPath)) && !empty($dataPendanfar->photo);
+                    @endphp
+                    @if($photoExists)
+                        <img class="img-fluid rounded mt-3 mb-2" src="{{ asset($photoPath) }}" height="210" width="210" />
+                    @else
+                        <div class="bg-light rounded mt-3 mb-2 d-flex align-items-center justify-content-center" style="height: 210px; width: 210px;">
+                            <i class="ti ti-user" style="font-size: 4rem; color: #ccc;"></i>
+                        </div>
+                    @endif
                 </x-slot:photo>
                 <x-slot:nama>{{ $dataPendaftar->nama }}</x-slot:nama>
                 <x-slot:subtitle>{{ $dataPendaftar->kode_registrasi }}</x-slot:subtitle>
@@ -52,17 +62,77 @@
                         <h5>Pekerjaan</h5>
                         <span>{{ $dataPendaftar->pekerjaan?->nama_pekerjaan }}</span>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-12 mb-1">
+<div class="col-lg-6 col-md-6 col-12 mb-1">
                         <h5>Lampiran Photo</h5>
-                        <img class="img-fluid rounded" src="{{ asset('berkas/'.$dataPendaftar?->tahun_psb.'/'.$dataPendaftar?->photo.'') }}" height="auto" width="300" />
+                        @php
+                            $photoPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->photo;
+                            $photoExists = file_exists(public_path($photoPath)) && !empty($dataPendanfar->photo);
+                        @endphp
+                        @if($photoExists)
+                            <img class="img-fluid rounded" src="{{ asset($photoPath) }}" height="auto" width="300" />
+                        @else
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
+                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-6 col-md-6 col-12 mb-1">
                         <h5>Lampiran KTP</h5>
-                        <img class="img-fluid rounded" src="{{ asset('berkas/'.$dataPendaftar?->tahun_psb.'/'.$dataPendaftar?->ktp.'') }}" height="auto" width="300" />
+                        @php
+                            $ktpPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->ktp;
+                            $ktpExists = file_exists(public_path($ktpPath)) && !empty($dataPendanfar->ktp);
+                        @endphp
+                        @if($ktpExists)
+                            <img class="img-fluid rounded" src="{{ asset($ktpPath) }}" height="auto" width="300" />
+                        @else
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
+                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
+                            </div>
+                        @endif
                     </div>
                     <div class="col-lg-6 col-md-6 col-12 mb-1">
                         <h5>Lampiran Transfer</h5>
-                        <img class="img-fluid rounded" src="{{ asset('berkas/'.$dataPendaftar?->tahun_psb.'/'.$dataPendaftar?->transfer.'') }}" height="auto" width="300" />
+                        @php
+                            $transferPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->transfer;
+                            $transferExists = file_exists(public_path($transferPath)) && !empty($dataPendanfar->transfer);
+                        @endphp
+                        @if($transferExists)
+                            <img class="img-fluid rounded" src="{{ asset($transferPath) }}" height="auto" width="300" />
+                        @else
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
+                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
+                            </div>
+                        @endif
+                    </div>
+                        @endif
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 mb-1">
+                        <h5>Lampiran KTP</h5>
+                        @php
+                            $ktpPath = 'berkas/'.$dataPendaftar->tahun_psb.'/'.$dataPendaftar->kode_registrasi.'/'.$dataPendaftar->ktp;
+                            $ktpExists = file_exists(public_path($ktpPath)) && !empty($dataPendaftar->ktp);
+                        @endphp
+                        @if($ktpExists)
+                            <img class="img-fluid rounded" src="{{ asset($ktpPath) }}" height="auto" width="300" />
+                        @else
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
+                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 mb-1">
+                        <h5>Lampiran Transfer</h5>
+                        @php
+                            $transferPath = 'berkas/'.$dataPendaftar->tahun_psb.'/'.$dataPendaftar->kode_registrasi.'/'.$dataPendaftar->transfer;
+                            $transferExists = file_exists(public_path($transferPath)) && !empty($dataPendaftar->transfer);
+                        @endphp
+                        @if($transferExists)
+                            <img class="img-fluid rounded" src="{{ asset($transferPath) }}" height="auto" width="300" />
+                        @else
+                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
+                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
 

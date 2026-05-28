@@ -22,11 +22,16 @@ class DaftarService {
 
         $data = [
             'kode_registrasi' => $kodeRegistrasi,
+            'no_induk' => $request->noInduk,
+            'nik' => $request->nik,
+            'nisn' => $request->nisn,
             'nama' => $request->nama,
             'jk' => $request->jk,
             'tmp_lahir' => $request->tmpLahir,
             'tgl_lahir' => $request->tglLahir,
             'alamat' => $request->alamat,
+            'nama_ayah' => $request->namaAyah,
+            'no_hp_ayah' => $request->noHpAyah,
             'pendidikan' => $request->pendidikan,
             'pekerjaan_id' => $request->pekerjaanId,
             'email' => $request->email,
