@@ -8,6 +8,7 @@ use App\Http\Controllers\Guest\InfoPsbController;
 use App\Http\Controllers\Guest\ProgramController;
 use App\Http\Controllers\Santri\DaftarController;
 use App\Http\Controllers\Santri\CariNamaController;
+use App\Http\Controllers\Santri\RevisiBerkasController;
 use App\Http\Controllers\Santri\DashboardController;
 use App\Http\Controllers\Guest\LandingPageController;
 use App\Http\Controllers\Guest\EventController;
@@ -51,6 +52,8 @@ Route::post('/isi-form/store', [DaftarController::class, 'store']);
 Route::get('/sukses-daftar', [DaftarController::class, 'suksesDaftar'])->name('suksesDaftarSantri');
 
 Route::get('/cari-nama', [CariNamaController::class, 'search']);
+Route::get('/revisi-berkas/{kode}', [RevisiBerkasController::class, 'show'])->name('revisi-berkas.show');
+Route::post('/revisi-berkas/{kode}', [RevisiBerkasController::class, 'update'])->name('revisi-berkas.update');
 Route::get('/detail-nama', [CariNamaController::class, 'detail'])->name('detailNamaSantri');
 Route::get('/edit-biodata/{kode}', [CariNamaController::class, 'edit']);
 Route::post('/edit-biodata/update', [CariNamaController::class, 'update']);

@@ -24,6 +24,7 @@ class PengaturanPsb extends Component
     public $quota_akhwat = null;
     public $konten_psb = '';
     public $poster_images = [];
+    public $link_group = '';
 
     protected function rules()
     {
@@ -39,6 +40,7 @@ class PengaturanPsb extends Component
             'quota_ikhwan' => 'nullable|integer|min:0',
             'quota_akhwat' => 'nullable|integer|min:0',
             'konten_psb' => 'nullable|string',
+            'link_group' => 'nullable|url|max:500',
         ];
     }
 
@@ -59,13 +61,14 @@ class PengaturanPsb extends Component
             $this->quota_akhwat = $this->psb->quota_akhwat;
             $this->konten_psb = $this->psb->konten_psb ?? '';
             $this->poster_images = $this->psb->poster_images ?? [];
+            $this->link_group = $this->psb->link_group ?? '';
         } else {
             $this->psb = InfoPsb::orderBy('id', 'desc')->first();
             if ($this->psb) {
                 $this->psbId = $this->psb->id;
                 $this->tahun_ajaran = $this->psb->tahun_ajaran;
                 $this->biaya_pendaftaran = $this->psb->biaya_pendaftaran;
-                $this->biaya_sarana_prasana = $this->psb->biaya_sarana_prasana ?? 300000;
+                $this->biaya_sarana_prasana = $this->psb->biaya_sarana_prasarana ?? 300000;
                 $this->biaya_kuliah_perdana = $this->psb->biaya_kuliah_perdana ?? 250000;
                 $this->biaya_spp_bulanan = $this->psb->biaya_spp_bulanan ?? 250000;
                 $this->status_psb = $this->psb->status_psb;
@@ -75,6 +78,7 @@ class PengaturanPsb extends Component
                 $this->quota_akhwat = $this->psb->quota_akhwat;
                 $this->konten_psb = $this->psb->konten_psb ?? '';
                 $this->poster_images = $this->psb->poster_images ?? [];
+                $this->link_group = $this->psb->link_group ?? '';
             }
         }
     }
@@ -96,6 +100,7 @@ class PengaturanPsb extends Component
             'quota_akhwat' => $this->quota_akhwat ?: null,
             'konten_psb' => $this->konten_psb,
             'poster_images' => $this->poster_images,
+            'link_group' => $this->link_group,
         ];
 
         if ($this->psbId) {

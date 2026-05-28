@@ -19,6 +19,7 @@ class Dashboard extends Component
     public $unreadCount;
     public $biayaPendaftaran;
     public $infoPsb;
+    public $linkGroup;
 
     public function mount()
     {
@@ -34,6 +35,7 @@ class Dashboard extends Component
         $tahunPsb = $this->santri?->tahun_psb ?? InfoPsb::getActiveYear();
         $this->infoPsb = InfoPsb::where('tahun_ajaran', $tahunPsb)->first();
         $this->biayaPendaftaran = $this->infoPsb?->biaya_pendaftaran ?? 150000;
+        $this->linkGroup = $this->infoPsb?->link_group;
     }
 
     public function render()

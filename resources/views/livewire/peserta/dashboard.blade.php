@@ -131,6 +131,31 @@
         </div>
         @endif
 
+        @if($this->santri && $this->santri->status_transfer == 'Valid' && $this->linkGroup)
+        <div class="row">
+            <div class="col-12 mb-3">
+                <div class="card bg-primary bg-opacity-10 border-primary">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar avatar-xl bg-primary rounded-circle me-3">
+                                <i class="ti ti-users" style="font-size: 1.5rem;"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1 text-primary">Bergabung ke Group Komunikasi</h5>
+                                <p class="mb-0 text-muted">Anda sudah diterima! Segera bergabung ke group komunikasi untuk informasi further.</p>
+                            </div>
+                            <div class="ms-auto">
+                                <a href="{{ $this->linkGroup }}" target="_blank" class="btn btn-primary">
+                                    <i class="ti ti-brand-whatsapp me-2"></i> Bergabung Group
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <div class="row">
             <div class="col-lg-6 mb-3">
                 <div class="card">

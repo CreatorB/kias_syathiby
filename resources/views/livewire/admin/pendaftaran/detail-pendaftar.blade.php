@@ -6,13 +6,12 @@
     </x-links.breadcrumb>
 
     <div class="row">
-        <!--Info Ringkas-->
         <div class="col-lg-4 col-12">
-<x-cards.user-detail>
+            <x-cards.user-detail>
                 <x-slot:photo>
                     @php
-                        $photoPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->photo;
-                        $photoExists = file_exists(public_path($photoPath)) && !empty($dataPendanfar->photo);
+                        $photoPath = 'berkas/'.$dataPendaftar->tahun_psb.'/'.$dataPendaftar->photo;
+                        $photoExists = file_exists(public_path($photoPath)) && !empty($dataPendaftar->photo);
                     @endphp
                     @if($photoExists)
                         <img class="img-fluid rounded mt-3 mb-2" src="{{ asset($photoPath) }}" height="210" width="210" />
@@ -35,9 +34,7 @@
                 </x-slot:informasi>
             </x-cards.user-detail>
         </div>
-        <!--Info Ringkas-->
 
-        <!--Detail Profil-->
         <div class="col-lg-8 col-12">
             <x-cards.basic-card>
                 <x-slot:cardHeader>Detail Profil</x-slot:cardHeader>
@@ -61,50 +58,6 @@
                     <div class="col-lg-6 col-md-6 col-12 mb-1">
                         <h5>Pekerjaan</h5>
                         <span>{{ $dataPendaftar->pekerjaan?->nama_pekerjaan }}</span>
-                    </div>
-<div class="col-lg-6 col-md-6 col-12 mb-1">
-                        <h5>Lampiran Photo</h5>
-                        @php
-                            $photoPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->photo;
-                            $photoExists = file_exists(public_path($photoPath)) && !empty($dataPendanfar->photo);
-                        @endphp
-                        @if($photoExists)
-                            <img class="img-fluid rounded" src="{{ asset($photoPath) }}" height="auto" width="300" />
-                        @else
-                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
-                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-12 mb-1">
-                        <h5>Lampiran KTP</h5>
-                        @php
-                            $ktpPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->ktp;
-                            $ktpExists = file_exists(public_path($ktpPath)) && !empty($dataPendanfar->ktp);
-                        @endphp
-                        @if($ktpExists)
-                            <img class="img-fluid rounded" src="{{ asset($ktpPath) }}" height="auto" width="300" />
-                        @else
-                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
-                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-12 mb-1">
-                        <h5>Lampiran Transfer</h5>
-                        @php
-                            $transferPath = 'berkas/'.$dataPendanfar->tahun_psb.'/'.$dataPendanfar->transfer;
-                            $transferExists = file_exists(public_path($transferPath)) && !empty($dataPendanfar->transfer);
-                        @endphp
-                        @if($transferExists)
-                            <img class="img-fluid rounded" src="{{ asset($transferPath) }}" height="auto" width="300" />
-                        @else
-                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 200px; width: 300px;">
-                                <span class="text-muted"><i class="ti ti-photo-off me-1"></i> File tidak ditemukan</span>
-                            </div>
-                        @endif
-                    </div>
-                        @endif
                     </div>
                     <div class="col-lg-6 col-md-6 col-12 mb-1">
                         <h5>Lampiran KTP</h5>
@@ -146,6 +99,5 @@
                 </div>
             </x-cards.basic-card>
         </div>
-        <!--#Detail Profil-->
     </div>
 </div>
