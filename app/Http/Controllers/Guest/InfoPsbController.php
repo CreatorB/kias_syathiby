@@ -49,6 +49,9 @@ class InfoPsbController extends Controller
         $psb = (new InfoPsbService())->psbAktif();
 
         if (!$psb) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Pendaftaran sedang ditutup.'], 400);
+            }
             return redirect()->back()->with('error', 'Pendaftaran sedang ditutup.');
         }
 
@@ -183,7 +186,18 @@ class InfoPsbController extends Controller
 
             auth()->login($user);
 
-            return redirect()->route('peserta::index')->with('success', 'Pendaftaran berhasil! Nomor Peserta Anda: ' . $kodeRegistrasi . '. Silakan tunggu verifikasi pembayaran.');
+            $successMessage = 'Pendaftaran berhasil! Nomor Peserta Anda: ' . $kodeRegistrasi . '. Silakan tunggu verifikasi pembayaran.';
+
+            if ($request->ajax()) {
+                return response()->json([
+                    'success'  => true,
+                    'message'  => $successMessage,
+                    'kode'     => $kodeRegistrasi,
+                    'redirect' => route('peserta::index'),
+                ]);
+            }
+
+            return redirect()->route('peserta::index')->with('success', $successMessage);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -191,6 +205,10 @@ class InfoPsbController extends Controller
             if (isset($registrasiDir) && file_exists($registrasiDir)) {
                 array_map('unlink', glob("$registrasiDir/*"));
                 rmdir($registrasiDir);
+            }
+
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
             }
 
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();

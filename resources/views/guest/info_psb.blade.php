@@ -761,7 +761,7 @@ textarea.form-control {
     <div class="container">
         <div class="section-title">
             <h2>Biaya Pendidikan</h2>
-            <p>Investasi ilmu yang barokah</p>
+            <p>Investasi ilmu yang barokah, inshaAllah</p>
         </div>
 
         <div class="row justify-content-center">
@@ -1160,6 +1160,7 @@ textarea.form-control {
                         <hr class="my-2">
                         <p class="mb-1"><strong>Email Login:</strong> Email yang Anda isi di formulir</p>
                         <p class="mb-0"><strong>Password:</strong> Nomor Peserta (Kode Registrasi) yang akan Anda terima setelah pendaftaran berhasil</p>
+                        <p class="mb-0"><strong>Group WhatsApp:</strong> Peserta diharap segera masuk link group WhatsApp di dashboard yang akan muncul setelah pembayaran dikonfirmasi oleh admin</p>
                     </div>
 
                     <div class="text-center">
@@ -1226,6 +1227,34 @@ textarea.form-control {
         </div>
     </div>
 </section>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;align-items:center;justify-content:center;flex-direction:column;">
+    <div style="text-align:center;color:#fff;">
+        <div class="spinner-border mb-3" style="width:3.5rem;height:3.5rem;color:#8dc794;" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <h5 style="font-weight:700;margin-bottom:8px;">Sedang Memproses Pendaftaran...</h5>
+        <p style="color:rgba(255,255,255,0.75);font-size:0.9rem;margin:0;">Mohon tunggu, jangan tutup halaman ini</p>
+    </div>
+</div>
+
+<!-- Success Modal -->
+<div id="successModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:20px;padding:50px 40px;text-align:center;max-width:480px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+        <div style="width:80px;height:80px;background:linear-gradient(135deg,#28a745,#20c997);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+            <i class="ti ti-check" style="font-size:2.5rem;color:#fff;"></i>
+        </div>
+        <h3 style="color:#1a5252;font-weight:800;margin-bottom:8px;">Pendaftaran Berhasil!</h3>
+        <p style="color:#6c757d;margin-bottom:20px;">Selamat! Data pendaftaran Anda telah berhasil disimpan dan sedang menunggu verifikasi.</p>
+        <div style="background:linear-gradient(135deg,rgba(53,144,144,0.1),rgba(38,112,132,0.1));border-radius:12px;padding:20px;margin-bottom:20px;border:2px solid rgba(53,144,144,0.3);">
+            <p style="color:#6c757d;margin-bottom:6px;font-size:0.85rem;">Nomor Peserta Anda:</p>
+            <div id="kodeRegistrasi" style="color:#1a5252;font-weight:800;font-size:1.9rem;letter-spacing:3px;"></div>
+        </div>
+        <p style="color:#6c757d;font-size:0.85rem;margin-bottom:20px;">Simpan nomor ini — digunakan sebagai <strong>password login</strong> ke dashboard peserta.</p>
+        <p style="color:#adb5bd;font-size:0.82rem;">Mengalihkan ke dashboard dalam <strong id="countdown" style="color:#359090;">5</strong> detik...</p>
+    </div>
+</div>
 @endsection
 
 @push('pageJS')
@@ -1407,9 +1436,95 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        form.submit();
+        // All client-side checks passed — submit via AJAX
+        showLoading();
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function(response) {
+            return response.json().then(function(data) {
+                return { status: response.status, data: data };
+            });
+        })
+        .then(function(result) {
+            hideLoading();
+
+            if (result.status === 200 && result.data.success) {
+                showSuccess(result.data.kode, result.data.redirect);
+                return;
+            }
+
+            // Server-side validation errors (422)
+            if (result.status === 422 && result.data.errors) {
+                clearErrors();
+                const serverErrors = [];
+                Object.keys(result.data.errors).forEach(function(field) {
+                    const input = form.querySelector('[name="' + field + '"]');
+                    if (input) {
+                        addError(input, result.data.errors[field][0]);
+                        serverErrors.push(input);
+                    }
+                });
+                if (serverErrors.length > 0) scrollToElement(serverErrors[0]);
+                return;
+            }
+
+            // Other server errors
+            showServerError(result.data.message || 'Terjadi kesalahan. Silakan coba lagi.');
+        })
+        .catch(function() {
+            hideLoading();
+            showServerError('Koneksi gagal. Silakan periksa koneksi internet Anda dan coba lagi.');
+        });
     });
 });
+
+function showLoading() {
+    const el = document.getElementById('loadingOverlay');
+    el.style.display = 'flex';
+}
+
+function hideLoading() {
+    const el = document.getElementById('loadingOverlay');
+    el.style.display = 'none';
+}
+
+function showSuccess(kode, redirectUrl) {
+    document.getElementById('kodeRegistrasi').textContent = kode;
+    document.getElementById('successModal').style.display = 'flex';
+
+    let count = 5;
+    const countEl = document.getElementById('countdown');
+    const timer = setInterval(function() {
+        count--;
+        countEl.textContent = count;
+        if (count <= 0) {
+            clearInterval(timer);
+            window.location.href = redirectUrl;
+        }
+    }, 1000);
+}
+
+function showServerError(message) {
+    const existing = document.getElementById('server-error-alert');
+    if (existing) existing.remove();
+
+    const alert = document.createElement('div');
+    alert.id = 'server-error-alert';
+    alert.className = 'alert alert-danger alert-dismissible fade show';
+    alert.setAttribute('role', 'alert');
+    alert.innerHTML = '<strong>Gagal!</strong> ' + message +
+        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+    const formSection = document.getElementById('pendaftaran');
+    if (formSection) {
+        formSection.insertAdjacentElement('beforebegin', alert);
+        scrollToElement(alert);
+    }
+}
 
 function addError(input, message) {
     input.classList.add('is-invalid');
@@ -1438,8 +1553,7 @@ function clearErrors() {
 
 function scrollToElement(element) {
     if (!element) return;
-    const headerOffset = 100;
-    const top = element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+    const top = element.getBoundingClientRect().top + window.pageYOffset - 100;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
 }
 </script>
