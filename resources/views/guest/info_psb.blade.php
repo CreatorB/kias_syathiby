@@ -1230,139 +1230,217 @@ textarea.form-control {
 
 @push('pageJS')
 <script>
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Scroll to first server-side error on page load
+    const firstError = document.querySelector('.is-invalid');
+    if (firstError) {
+        scrollToElement(firstError);
+        setTimeout(function() { firstError.focus(); }, 300);
+    }
+
+    const form = document.getElementById('registrationForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+        clearErrors();
+
+        const errorFields = [];
+
+        // Nama
+        const nama = form.querySelector('[name="nama"]');
+        if (!nama.value.trim()) {
+            addError(nama, 'Nama lengkap harus diisi');
+            errorFields.push(nama);
+        } else if (nama.value.trim().length < 3) {
+            addError(nama, 'Nama minimal 3 karakter');
+            errorFields.push(nama);
         }
+
+        // Jenis Kelamin
+        if (!form.querySelector('[name="jenis_kelamin"]:checked')) {
+            const jkWrap = form.querySelector('#jk_l').closest('.d-flex');
+            addErrorAfter(jkWrap, 'Jenis kelamin harus dipilih', 'err_jk');
+            errorFields.push(form.querySelector('#jk_l'));
+        }
+
+        // NIK
+        const nik = form.querySelector('[name="nik"]');
+        if (!nik.value.trim()) {
+            addError(nik, 'NIK harus diisi');
+            errorFields.push(nik);
+        } else if (nik.value.trim().length !== 16) {
+            addError(nik, 'NIK harus tepat 16 digit');
+            errorFields.push(nik);
+        }
+
+        // NISN
+        const nisn = form.querySelector('[name="nisn"]');
+        if (!nisn.value.trim()) {
+            addError(nisn, 'NISN harus diisi');
+            errorFields.push(nisn);
+        } else if (nisn.value.trim().length !== 10) {
+            addError(nisn, 'NISN harus tepat 10 digit');
+            errorFields.push(nisn);
+        }
+
+        // Tempat Lahir
+        const tempatLahir = form.querySelector('[name="tempat_lahir"]');
+        if (!tempatLahir.value.trim()) {
+            addError(tempatLahir, 'Tempat lahir harus diisi');
+            errorFields.push(tempatLahir);
+        }
+
+        // Tanggal Lahir
+        const tanggalLahir = form.querySelector('[name="tanggal_lahir"]');
+        if (!tanggalLahir.value) {
+            addError(tanggalLahir, 'Tanggal lahir harus diisi');
+            errorFields.push(tanggalLahir);
+        } else if (new Date(tanggalLahir.value) >= new Date()) {
+            addError(tanggalLahir, 'Tanggal lahir harus sebelum hari ini');
+            errorFields.push(tanggalLahir);
+        }
+
+        // Alamat
+        const alamat = form.querySelector('[name="alamat"]');
+        if (!alamat.value.trim()) {
+            addError(alamat, 'Alamat lengkap harus diisi');
+            errorFields.push(alamat);
+        } else if (alamat.value.trim().length < 10) {
+            addError(alamat, 'Alamat minimal 10 karakter');
+            errorFields.push(alamat);
+        }
+
+        // Email
+        const email = form.querySelector('[name="email"]');
+        if (!email.value.trim()) {
+            addError(email, 'Email harus diisi');
+            errorFields.push(email);
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+            addError(email, 'Format email tidak valid');
+            errorFields.push(email);
+        }
+
+        // Orang Tua / Wali
+        const namaAyah = form.querySelector('[name="nama_ayah"]').value.trim();
+        const noHpAyah = form.querySelector('[name="no_hp_ayah"]').value.trim();
+        const namaIbu  = form.querySelector('[name="nama_ibu"]').value.trim();
+        const noHpIbu  = form.querySelector('[name="no_hp_ibu"]').value.trim();
+        const namaWali = form.querySelector('[name="nama_wali"]').value.trim();
+        const noHpWali = form.querySelector('[name="no_hp_wali"]').value.trim();
+
+        if (!namaAyah && !namaIbu && !namaWali) {
+            const namaAyahInput = form.querySelector('[name="nama_ayah"]');
+            addError(namaAyahInput, 'Minimal salah satu data orang tua/wali harus diisi');
+            errorFields.push(namaAyahInput);
+        } else {
+            if (namaAyah && !noHpAyah) {
+                const f = form.querySelector('[name="no_hp_ayah"]');
+                addError(f, 'No. HP Ayah harus diisi karena Nama Ayah sudah terisi');
+                errorFields.push(f);
+            }
+            if (namaIbu && !noHpIbu) {
+                const f = form.querySelector('[name="no_hp_ibu"]');
+                addError(f, 'No. HP Ibu harus diisi karena Nama Ibu sudah terisi');
+                errorFields.push(f);
+            }
+            if (namaWali && !noHpWali) {
+                const f = form.querySelector('[name="no_hp_wali"]');
+                addError(f, 'No. HP Wali harus diisi karena Nama Wali sudah terisi');
+                errorFields.push(f);
+            }
+        }
+
+        // Program
+        const programId = form.querySelector('[name="program_id"]');
+        if (!programId.value) {
+            addError(programId, 'Program harus dipilih');
+            errorFields.push(programId);
+        }
+
+        // File uploads
+        const ktp = form.querySelector('[name="ktp"]');
+        if (!ktp.files || !ktp.files.length) {
+            addError(ktp, 'KTP / kartu identitas harus diupload');
+            errorFields.push(ktp);
+        }
+
+        const foto = form.querySelector('[name="foto"]');
+        if (!foto.files || !foto.files.length) {
+            addError(foto, 'Foto harus diupload');
+            errorFields.push(foto);
+        }
+
+        const ijazah = form.querySelector('[name="ijazah"]');
+        if (!ijazah.files || !ijazah.files.length) {
+            addError(ijazah, 'Ijazah harus diupload');
+            errorFields.push(ijazah);
+        }
+
+        const bukti = form.querySelector('[name="bukti_pembayaran"]');
+        if (!bukti.files || !bukti.files.length) {
+            addError(bukti, 'Bukti pembayaran harus diupload');
+            errorFields.push(bukti);
+        }
+
+        // Agreement
+        const agreement = document.getElementById('agreement');
+        if (!agreement.checked) {
+            addErrorAfter(agreement.closest('.agreement-checkbox'), 'Anda harus menyetujui syarat dan ketentuan', 'err_agreement');
+            errorFields.push(agreement);
+        }
+
+        if (errorFields.length > 0) {
+            scrollToElement(errorFields[0]);
+            errorFields[0].focus();
+            return;
+        }
+
+        form.submit();
     });
 });
 
-// Client-side validation for parent/wali fields and agreement
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('registrationForm');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            const agreement = document.getElementById('agreement');
-            if (!agreement.checked) {
-                e.preventDefault();
-                alert('Anda harus menyetujui syarat dan ketentuan');
-                agreement.focus();
-                return;
-            }
-
-            const namaAyah = document.querySelector('input[name="nama_ayah"]').value.trim();
-            const noHpAyah = document.querySelector('input[name="no_hp_ayah"]').value.trim();
-            const namaIbu = document.querySelector('input[name="nama_ibu"]').value.trim();
-            const noHpIbu = document.querySelector('input[name="no_hp_ibu"]').value.trim();
-            const namaWali = document.querySelector('input[name="nama_wali"]').value.trim();
-            const noHpWali = document.querySelector('input[name="no_hp_wali"]').value.trim();
-
-            document.querySelectorAll('.client-error').forEach(el => el.remove());
-            document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
-
-            if (!namaAyah && !namaIbu && !namaWali) {
-                e.preventDefault();
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'text-danger small mt-2 client-error';
-                errorDiv.textContent = 'Minimal salah satu data orang tua/wali harus diisi.';
-                const parentSection = document.querySelector('input[name="nama_ayah"]').closest('.row');
-                parentSection.appendChild(errorDiv);
-                document.querySelector('input[name="nama_ayah"]').classList.add('is-invalid');
-                document.querySelector('input[name="nama_ayah"]').focus();
-                scrollToError(document.querySelector('input[name="nama_ayah"]'));
-                return;
-            }
-
-            if (namaWali && !noHpWali) {
-                e.preventDefault();
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'text-danger small mt-2 client-error';
-                errorDiv.textContent = 'No. HP Wali harus diisi karena Nama Wali sudah terisi.';
-                document.querySelector('input[name="nama_wali"]').closest('.col-md-4').appendChild(errorDiv);
-                document.querySelector('input[name="no_hp_wali"]').classList.add('is-invalid');
-                document.querySelector('input[name="no_hp_wali"]').focus();
-                scrollToError(document.querySelector('input[name="no_hp_wali"]'));
-                return;
-            }
-
-            if (namaAyah && !noHpAyah) {
-                e.preventDefault();
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'text-danger small mt-2 client-error';
-                errorDiv.textContent = 'No. HP Ayah harus diisi karena Nama Ayah sudah terisi.';
-                document.querySelector('input[name="nama_ayah"]').closest('.col-md-4').appendChild(errorDiv);
-                document.querySelector('input[name="no_hp_ayah"]').classList.add('is-invalid');
-                document.querySelector('input[name="no_hp_ayah"]').focus();
-                scrollToError(document.querySelector('input[name="no_hp_ayah"]'));
-                return;
-            }
-
-            if (namaIbu && !noHpIbu) {
-                e.preventDefault();
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'text-danger small mt-2 client-error';
-                errorDiv.textContent = 'No. HP Ibu harus diisi karena Nama Ibu sudah terisi.';
-                document.querySelector('input[name="nama_ibu"]').closest('.col-md-4').appendChild(errorDiv);
-                document.querySelector('input[name="no_hp_ibu"]').classList.add('is-invalid');
-                document.querySelector('input[name="no_hp_ibu"]').focus();
-                scrollToError(document.querySelector('input[name="no_hp_ibu"]'));
-                return;
-            }
-        });
-    }
-});
-
-function scrollToError(element) {
-    if (element) {
-        var headerOffset = 100;
-        var elementPosition = element.getBoundingClientRect().top;
-        var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-        offsetPosition = Math.max(0, offsetPosition);
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-        });
-    }
+function addError(input, message) {
+    input.classList.add('is-invalid');
+    const existing = input.parentElement.querySelector('.client-error');
+    if (existing) existing.remove();
+    const div = document.createElement('div');
+    div.className = 'invalid-feedback client-error d-block';
+    div.textContent = message;
+    input.insertAdjacentElement('afterend', div);
 }
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
+function addErrorAfter(element, message, id) {
+    const existing = document.getElementById(id);
+    if (existing) existing.remove();
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'text-danger small mt-1 client-error';
+    div.textContent = message;
+    element.insertAdjacentElement('afterend', div);
+}
 
-// Scroll to first error on page load (for server-side validation errors)
-document.addEventListener('DOMContentLoaded', function() {
-    var firstError = document.querySelector('.is-invalid');
-    if (firstError) {
-        var headerOffset = 100;
-        var elementPosition = firstError.getBoundingClientRect().top;
-        var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-        offsetPosition = Math.max(0, offsetPosition);
-        
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-        });
-        
-        setTimeout(function() {
-            firstError.focus();
-        }, 500);
-    }
-});
+function clearErrors() {
+    document.querySelectorAll('.client-error').forEach(function(el) { el.remove(); });
+    document.querySelectorAll('.is-invalid').forEach(function(el) { el.classList.remove('is-invalid'); });
+}
+
+function scrollToElement(element) {
+    if (!element) return;
+    const headerOffset = 100;
+    const top = element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+}
 </script>
 @endpush
