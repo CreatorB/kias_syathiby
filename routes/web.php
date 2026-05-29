@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\Guest\InfoPsbController;
+use App\Http\Controllers\Guest\ManualPsbController;
 use App\Http\Controllers\Guest\ProgramController;
 use App\Http\Controllers\Santri\DaftarController;
 use App\Http\Controllers\Santri\CariNamaController;
@@ -44,6 +45,12 @@ Route::get('/program-ulum-syariah', [ProgramController::class, 'ulumSyariah']);
 Route::get('/psb', [InfoPsbController::class, 'index']);
 Route::post('/psb/register', [InfoPsbController::class, 'register'])->name('psb.register');
 Route::get('/download-brosur', [InfoPsbController::class, 'download']);
+
+// Manual PSB (Password Protected)
+Route::get('/psb-manual/password', [ManualPsbController::class, 'showPasswordForm'])->name('psb_manual.password');
+Route::get('/psb-manual', [ManualPsbController::class, 'index'])->name('psb_manual.index');
+Route::post('/psb-manual/verify', [ManualPsbController::class, 'verifyPassword'])->name('psb_manual.verify');
+Route::post('/psb-manual/register', [ManualPsbController::class, 'register'])->name('psb_manual.register');
 
 Route::get('/pilih-program', [DaftarController::class, 'pilihProgram']);
 Route::get('/isi-form/{id}', [DaftarController::class, 'create'])->name('isiForm.create');

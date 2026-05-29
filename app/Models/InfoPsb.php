@@ -15,10 +15,20 @@ class InfoPsb extends Model
     protected $guarded = [];
 
 protected $fillable = [
-        'biaya_sarana_prasarana',
+        'tahun_ajaran',
+        'biaya_pendaftaran',
+        'biaya_sarana_prasana',
         'biaya_kuliah_perdana',
         'biaya_spp_bulanan',
+        'status_psb',
+        'datetime_open',
+        'datetime_closed',
+        'quota_ikhwan',
+        'quota_akhwat',
+        'konten_psb',
+        'poster_images',
         'link_group',
+        'manual_password',
     ];
 
     protected $casts = [
