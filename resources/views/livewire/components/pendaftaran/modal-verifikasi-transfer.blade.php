@@ -17,18 +17,22 @@
                 </div>
                 <div class="col-lg-6 col-12 mb-1">
                     <x-inputs.label>Status Transfer</x-inputs.label>
-                    <x-inputs.select wire:model='statusTransfer'>
+                    <x-inputs.select wire:model='statusTransfer' id="statusTransferSelect">
                         <x-inputs.select-option value="Cek">Cek</x-inputs.select-option>
                         <x-inputs.select-option value="Valid">Valid</x-inputs.select-option>
                         <x-inputs.select-option value="Invalid">Tidak Valid</x-inputs.select-option>
                     </x-inputs.select>
+                </div>
+                <div class="col-12 mb-1" id="alasanContainer">
+                    <x-inputs.label>Alasan Penolakan</x-inputs.label>
+                    <textarea class="form-control" wire:model='alasanPenolakan' id="alasanTextarea" rows="3" placeholder="Jelaskan alasan penolakan transfer..."></textarea>
                 </div>
                 <div class="col-12 mb-1">
                     <x-inputs.label>Bukti Transfer</x-inputs.label>
                     <br/>
                     @if($data?->transfer && $data?->tahun_psb)
                         @php
-                            $transferPath = 'berkas/'.$data->tahun_psb.'/'.$data->transfer;
+                            $transferPath = 'berkas/'.$data->tahun_psb.'/'.$data->kode_registrasi.'/'.$data->transfer;
                             $transferExists = file_exists(public_path($transferPath));
                         @endphp
                         @if($transferExists)
@@ -56,4 +60,24 @@
             </div>
         </form>
     </x-modals.project-modal>
+
+    <script>
+        document.addEventListener('livewire:init', function() {
+            var select = document.getElementById('statusTransferSelect');
+            var container = document.getElementById('alasanContainer');
+
+            if (select && container) {
+                function toggleAlasan() {
+                    if (select.value === 'Invalid') {
+                        container.style.display = 'block';
+                    } else {
+                        container.style.display = 'none';
+                    }
+                }
+
+                select.addEventListener('change', toggleAlasan);
+                toggleAlasan();
+            }
+        });
+    </script>
 </div>

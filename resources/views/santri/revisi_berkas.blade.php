@@ -1,9 +1,9 @@
 @extends('layouts.registrasi.main')
 
 @push('vendorCss')
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/flatpickr/flatpickr.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
-<link rel="stylesheet" href="{{ asset('dashboard/assets/vendor/libs/select2/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+<link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('dashboard-assets/assets/vendor/libs/select2/select2.css') }}" />
 @endpush
 
 @section('content')
@@ -173,7 +173,7 @@
                 </div>
             </div>
             @elseif($santri->status_transfer == 'Valid')
-            <div class="card bg-success bg-opacity-10 border-success">
+            <div class="card bg-opacity-10 border-success">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <i class="ti ti-circle-check text-success me-3" style="font-size: 2rem;"></i>

@@ -191,8 +191,8 @@ class LoginController extends Controller
                 // Admin/Superadmin -> Admin Dashboard
                 return redirect()->route('admin::dashboard');
             } elseif ($roleId == 3) {
-                // Santri -> Home
-                return redirect()->intended(RouteServiceProvider::HOME);
+                // Santri -> Dashboard
+                return redirect()->route('peserta::index');
             } else {
                 // Peserta (role 4) -> Events Dashboard
                 return redirect()->route('peserta::events');
