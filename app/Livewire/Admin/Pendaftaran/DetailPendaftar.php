@@ -6,7 +6,7 @@ use App\Models\Santri;
 use App\Models\User;
 use App\Providers\StatusProvider;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Notification;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 use Livewire\Attributes\Title;
