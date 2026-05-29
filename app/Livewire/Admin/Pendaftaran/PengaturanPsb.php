@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Pendaftaran;
 
 use App\Models\InfoPsb;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Livewire\Attributes\Title;
 
@@ -25,6 +26,7 @@ class PengaturanPsb extends Component
     public $konten_psb = '';
     public $poster_images = [];
     public $link_group = '';
+    public $manual_password = '';
 
     protected function rules()
     {
@@ -41,6 +43,7 @@ class PengaturanPsb extends Component
             'quota_akhwat' => 'nullable|integer|min:0',
             'konten_psb' => 'nullable|string',
             'link_group' => 'nullable|url|max:500',
+            'manual_password' => 'nullable|string|min:4',
         ];
     }
 
@@ -62,6 +65,7 @@ class PengaturanPsb extends Component
             $this->konten_psb = $this->psb->konten_psb ?? '';
             $this->poster_images = $this->psb->poster_images ?? [];
             $this->link_group = $this->psb->link_group ?? '';
+            $this->manual_password = $this->psb->manual_password ?? '';
         } else {
             $this->psb = InfoPsb::orderBy('id', 'desc')->first();
             if ($this->psb) {
@@ -79,6 +83,7 @@ class PengaturanPsb extends Component
                 $this->konten_psb = $this->psb->konten_psb ?? '';
                 $this->poster_images = $this->psb->poster_images ?? [];
                 $this->link_group = $this->psb->link_group ?? '';
+                $this->manual_password = $this->psb->manual_password ?? '';
             }
         }
     }
@@ -101,6 +106,7 @@ class PengaturanPsb extends Component
             'konten_psb' => $this->konten_psb,
             'poster_images' => $this->poster_images,
             'link_group' => $this->link_group,
+            'manual_password' => $this->manual_password ? Hash::make($this->manual_password) : null,
         ];
 
         if ($this->psbId) {

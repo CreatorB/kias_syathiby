@@ -14,7 +14,6 @@
   --kias-gradient: linear-gradient(135deg, #267084 0%, #359090 100%);
 }
 
-/* Navbar Override for PSB Page */
 #site-header.header-2 {
   background: #ffffff !important;
   box-shadow: 0 2px 15px rgba(0,0,0,0.1);
@@ -100,7 +99,6 @@
     margin-top: 20px;
 }
 
-/* Hero Section */
 .hero-section {
     background: linear-gradient(135deg, #1a5252 0%, #267084 50%, #359090 100%);
     position: relative;
@@ -201,7 +199,6 @@
     box-shadow: 0 15px 35px rgba(0,0,0,0.3);
 }
 
-/* Program Cards */
 .program-card {
     background: #fff;
     border-radius: 15px;
@@ -257,7 +254,6 @@
     line-height: 1.6;
 }
 
-/* Biaya Table */
 .biaya-table {
     background: #fff;
     border-radius: 15px;
@@ -303,7 +299,6 @@
     font-size: 1.1rem;
 }
 
-/* Alur Test */
 .alur-step {
     display: flex;
     align-items: flex-start;
@@ -340,7 +335,6 @@
     line-height: 1.5;
 }
 
-/* Form Design */
 .form-section {
     background: #fff;
     border-radius: 15px;
@@ -450,7 +444,6 @@ textarea.form-control {
     font-size: 0.95rem;
 }
 
-/* Payment Section */
 .payment-info {
     background: #fff;
     border-radius: 15px;
@@ -492,7 +485,6 @@ textarea.form-control {
     margin: 8px 0;
 }
 
-/* CTA Section */
 .cta-section {
     background: var(--kias-gradient);
     color: #fff;
@@ -559,7 +551,6 @@ textarea.form-control {
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
 }
 
-/* Info Box */
 .info-box {
     background: linear-gradient(135deg, rgba(53, 144, 144, 0.08) 0%, rgba(38, 112, 132, 0.08) 100%);
     border-left: 5px solid var(--kias-primary);
@@ -585,7 +576,6 @@ textarea.form-control {
     line-height: 1.6;
 }
 
-/* Buttons */
 .btn-primary {
     background: var(--kias-primary);
     border-color: var(--kias-primary);
@@ -606,7 +596,6 @@ textarea.form-control {
     transform: translateY(0);
 }
 
-/* Cards */
 .card {
     border: none;
     border-radius: 15px;
@@ -632,7 +621,6 @@ textarea.form-control {
     background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%) !important;
 }
 
-/* Table */
 .table {
     margin-bottom: 0;
 }
@@ -646,7 +634,6 @@ textarea.form-control {
     background: rgba(53, 144, 144, 0.1);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .hero-section h1 {
         font-size: 2rem;
@@ -696,6 +683,37 @@ textarea.form-control {
 }
 </style>
 
+@if($requires_password)
+<!-- Password Modal -->
+<div id="passwordModal" style="display:flex;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:99999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:20px;padding:45px 40px;text-align:center;max-width:440px;width:92%;box-shadow:0 25px 80px rgba(0,0,0,0.4);">
+        <div style="width:80px;height:80px;background:linear-gradient(135deg,#267084,#359090);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 25px;">
+            <i class="ti ti-lock" style="font-size:2.5rem;color:#fff;"></i>
+        </div>
+        <h3 style="color:#1a5252;font-weight:800;margin-bottom:10px;">Pendaftaran Manual</h3>
+        <p style="color:#6c757d;margin-bottom:25px;font-size:0.95rem;">Masukkan password untuk mengakses halaman pendaftaran manual.</p>
+
+        <div id="passwordError" style="display:none;" class="alert alert-danger mb-3"></div>
+
+        <form id="passwordForm">
+            @csrf
+            <div class="mb-3">
+                <input type="password" id="passwordInput" class="form-control form-control-lg" placeholder="Masukkan password" autocomplete="current-password" style="text-align:center;font-size:1.1rem;">
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2" style="font-size:1rem;">
+                <i class="ti ti-check me-2"></i>Verifikasi Password
+            </button>
+        </form>
+
+        <div class="mt-4 pt-3 border-top">
+            <a href="/psb" class="text-muted small">
+                <i class="ti ti-arrow-left me-1"></i>Kembali ke pendaftaran biasa
+            </a>
+        </div>
+    </div>
+</div>
+@endif
+
 @if(session('error'))
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
     <strong>Error!</strong> {{ session('error') }}
@@ -715,7 +733,7 @@ textarea.form-control {
     <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-lg-10 hero-content">
-                <h1 class="display-4">Penerimaan Santri Baru</h1>
+                <h1 class="display-4">Pendaftaran Manual</h1>
                 <h2>Tahun Ajaran {{ $psb->tahun_ajaran ?? '2026/2027' }}</h2>
                 <p class="lead">Tersedia program <strong>Tajwid Al-Qur'an, Bahasa Arab Reguler, dan Bahasa Arab Takmili</strong></p>
                 @if($psb && $psb_datetime_closed)
@@ -851,7 +869,7 @@ textarea.form-control {
                         </div>
                         <div class="alur-step">
                             <div class="step-number">2</div>
-                            <div class="step-content">Menyerahkan F2 ke Panitia</div>
+                            <div class="step-content">Menyerahkan F2 ke Patria</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">3</div>
@@ -867,15 +885,15 @@ textarea.form-control {
                         </div>
                         <div class="alur-step">
                             <div class="step-number">6</div>
-                            <div class="step-content">Mengambil F2 dari Panitia Tes Lisan & Tulis</div>
+                            <div class="step-content">Mengambil F2 dari Patria Tes Lisan & Tulis</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">7</div>
-                            <div class="step-content">Menyerahkan F2 ke Panitia</div>
+                            <div class="step-content">Menyerahkan F2 ke Patria</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">8</div>
-                            <div class="step-content">Mengambil F2 dari Panitia</div>
+                            <div class="step-content">Mengambil F2 dari Patria</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">9</div>
@@ -970,103 +988,11 @@ textarea.form-control {
             <p>Isi formulir pendaftaran dengan data yang benar</p>
         </div>
 
-        @if(!$psb_is_open)
-            @if($psb_datetime_open && now()->lt($psb_datetime_open))
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card shadow-lg border-0">
-                        <div class="card-body text-center p-5">
-                            <div class="mb-4">
-                                <i class="ti ti-clock" style="font-size: 4rem; color: var(--kias-primary);"></i>
-                            </div>
-                            <h3 class="mb-3" style="color: var(--kias-dark);">Pendaftaran Belum Dibuka</h3>
-                            <p class="text-muted mb-4">Pendaftaran akan dibuka pada:</p>
-                            <p class="mb-2"><strong>{{ TanggalHelper::konversiTanggalPenuh($psb_datetime_open) }}</strong></p>
-                            <div id="countdown" class="d-flex justify-content-center gap-3 mt-4" data-target="{{ $psb_datetime_open->toIso8601String() }}">
-                                <div class="countdown-item">
-                                    <span class="countdown-number" id="countdown-days">00</span>
-                                    <span class="countdown-label">Hari</span>
-                                </div>
-                                <div class="countdown-item">
-                                    <span class="countdown-number" id="countdown-hours">00</span>
-                                    <span class="countdown-label">Jam</span>
-                                </div>
-                                <div class="countdown-item">
-                                    <span class="countdown-number" id="countdown-minutes">00</span>
-                                    <span class="countdown-label">Menit</span>
-                                </div>
-                                <div class="countdown-item">
-                                    <span class="countdown-number" id="countdown-seconds">00</span>
-                                    <span class="countdown-label">Detik</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card shadow-lg border-0">
-                        <div class="card-body text-center p-5">
-                            <div class="mb-4">
-                                <i class="ti ti-x-circle" style="font-size: 4rem; color: #dc3545;"></i>
-                            </div>
-                            <h3 class="mb-3" style="color: var(--kias-dark);">Afwan, Pendaftaran telah ditutup.</h3>
-                            <p class="text-muted mb-0">Terima kasih atas perhatiannya.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-        @else
-        @if($quota_max_ikhwan !== null || $quota_max_akhwat !== null)
-        <div class="row justify-content-center mb-4">
-            <div class="col-lg-10">
-                <div class="d-flex flex-wrap gap-4 justify-content-center">
-                    @if($quota_max_ikhwan !== null)
-                    <div class="card shadow-sm" style="min-width: 200px; flex: 1;">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span><i class="fas fa-male text-primary me-1"></i> <strong>Ikhwan</strong></span>
-                                <span class="text-muted">{{ $quota_ikhwan }} / {{ $quota_max_ikhwan }}</span>
-                            </div>
-                            <div class="progress" style="height: 8px;">
-                                @php $percentIkhwan = min(100, ($quota_ikhwan / $quota_max_ikhwan) * 100); @endphp
-                                <div class="progress-bar {{ $percentIkhwan >= 90 ? 'bg-danger' : ($percentIkhwan >= 70 ? 'bg-warning' : 'bg-success') }}"
-                                    role="progressbar" style="width: {{ $percentIkhwan }}%"></div>
-                            </div>
-                            <small class="text-muted mt-1 d-block">Sisa: {{ $quota_ikhwan_remaining }} kuota</small>
-                        </div>
-                    </div>
-                    @endif
-                    @if($quota_max_akhwat !== null)
-                    <div class="card shadow-sm" style="min-width: 200px; flex: 1;">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span><i class="fas fa-female text-danger me-1"></i> <strong>Akhwat</strong></span>
-                                <span class="text-muted">{{ $quota_akhwat }} / {{ $quota_max_akhwat }}</span>
-                            </div>
-                            <div class="progress" style="height: 8px;">
-                                @php $percentAkhwat = min(100, ($quota_akhwat / $quota_max_akhwat) * 100); @endphp
-                                <div class="progress-bar {{ $percentAkhwat >= 90 ? 'bg-danger' : ($percentAkhwat >= 70 ? 'bg-warning' : 'bg-success') }}"
-                                    role="progressbar" style="width: {{ $percentAkhwat }}%"></div>
-                            </div>
-                            <small class="text-muted mt-1 d-block">Sisa: {{ $quota_akhwat_remaining }} kuota</small>
-                        </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-        @endif
-
         <div class="row justify-content-center">
             <div class="col-lg-10">
-                <form action="{{ route('psb.register') }}" method="POST" enctype="multipart/form-data" id="registrationForm" novalidate>
+                <form action="{{ route('psb_manual.register') }}" method="POST" enctype="multipart/form-data" id="registrationForm" novalidate>
                     @csrf
 
-                    <!-- Data Diri -->
                     <div class="form-section">
                         <h5><i class="ti ti-user me-2"></i>Data Diri</h5>
                         <div class="row">
@@ -1144,7 +1070,6 @@ textarea.form-control {
                         </div>
                     </div>
 
-                    <!-- Data Orang Tua/Wali -->
                     <div class="form-section">
                         <h5><i class="ti ti-users me-2"></i>Data Orang Tua/Wali <small class="text-muted">(Minimal salah satu harus diisi)</small></h5>
                         <div class="row">
@@ -1179,7 +1104,13 @@ textarea.form-control {
                         @error('no_hp_ayah')
                         <div class="text-danger small mt-2">{{ $message }}</div>
                         @enderror
+                        @error('nama_ibu')
+                        <div class="text-danger small mt-2">{{ $message }}</div>
+                        @enderror
                         @error('no_hp_ibu')
+                        <div class="text-danger small mt-2">{{ $message }}</div>
+                        @enderror
+                        @error('nama_wali')
                         <div class="text-danger small mt-2">{{ $message }}</div>
                         @enderror
                         @error('no_hp_wali')
@@ -1187,7 +1118,6 @@ textarea.form-control {
                         @enderror
                     </div>
 
-                    <!-- Program -->
                     <div class="form-section">
                         <h5><i class="ti ti-book me-2"></i>Program Pilihan</h5>
                         <div class="row">
@@ -1217,7 +1147,6 @@ textarea.form-control {
                         </div>
                     </div>
 
-                    <!-- Upload Dokumen -->
                     <div class="form-section">
                         <h5><i class="ti ti-upload me-2"></i>Upload Dokumen</h5>
                         <div class="row">
@@ -1248,7 +1177,6 @@ textarea.form-control {
                         </div>
                     </div>
 
-                    <!-- Persetujuan -->
                     <div class="form-section">
                         <div class="agreement-checkbox">
                             <input type="checkbox" name="agreement" id="agreement" required>
@@ -1268,7 +1196,7 @@ textarea.form-control {
                         <h6 class="alert-heading"><i class="ti ti-info-circle me-2"></i>Informasi Login</h6>
                         <hr class="my-2">
                         <p class="mb-1"><strong>Email Login:</strong> Email yang Anda isi di formulir</p>
-                        <p class="mb-0"><strong>Password:</strong> Nomor Peserta (Kode Registrasi) yang akan Anda terima setelah pendaftaran berhasil</p>
+                        <p class="mb-0"><strong>Password:</strong> nomor Peserta (Kode Registrasi) yang akan Anda terima setelah pendaftaran berhasil</p>
                         <p class="mb-0"><strong>Group WhatsApp:</strong> Peserta diharap segera masuk link group WhatsApp di dashboard yang akan muncul setelah pembayaran dikonfirmasi oleh admin</p>
                     </div>
 
@@ -1280,7 +1208,6 @@ textarea.form-control {
                 </form>
             </div>
         </div>
-        @endif
     </div>
 </section>
 
@@ -1368,37 +1295,94 @@ textarea.form-control {
 @endsection
 
 @push('pageJS')
+@if($requires_password)
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scroll for anchor links
+    var passwordForm = document.getElementById('passwordForm');
+    var passwordInput = document.getElementById('passwordInput');
+    var passwordError = document.getElementById('passwordError');
+
+    if (passwordInput) passwordInput.focus();
+
+    if (passwordForm) {
+        passwordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (passwordError) passwordError.style.display = 'none';
+
+            var password = passwordInput.value;
+            if (!password) {
+                if (passwordError) {
+                    passwordError.textContent = 'Password harus diisi.';
+                    passwordError.style.display = 'block';
+                }
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('password', password);
+            formData.append('_token', '{{ csrf_token() }}');
+
+            fetch('{{ route('psb_manual.verify') }}', {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(function(response) {
+                return response.json().then(function(data) {
+                    return { status: response.status, data: data };
+                });
+            })
+            .then(function(result) {
+                if (result.data.success) {
+                    window.location.reload();
+                } else {
+                    if (passwordError) {
+                        passwordError.textContent = result.data.message || 'Password salah.';
+                        passwordError.style.display = 'block';
+                    }
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            })
+            .catch(function() {
+                if (passwordError) {
+                    passwordError.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
+                    passwordError.style.display = 'block';
+                }
+            });
+        });
+    }
+});
+</script>
+@else
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            var target = document.querySelector(this.getAttribute('href'));
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
 
-    // Scroll to first server-side error on page load
-    const firstError = document.querySelector('.is-invalid');
+    var firstError = document.querySelector('.is-invalid');
     if (firstError) {
         scrollToElement(firstError);
         setTimeout(function() { firstError.focus(); }, 300);
     }
 
-    const form = document.getElementById('registrationForm');
+    var form = document.getElementById('registrationForm');
     if (!form) return;
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         clearErrors();
 
-        const errorFields = [];
+        var errorFields = [];
 
-        // Nama
-        const nama = form.querySelector('[name="nama"]');
+        var nama = form.querySelector('[name="nama"]');
         if (!nama.value.trim()) {
             addError(nama, 'Nama lengkap harus diisi');
             errorFields.push(nama);
@@ -1407,15 +1391,13 @@ document.addEventListener('DOMContentLoaded', function() {
             errorFields.push(nama);
         }
 
-        // Jenis Kelamin
         if (!form.querySelector('[name="jenis_kelamin"]:checked')) {
-            const jkWrap = form.querySelector('#jk_l').closest('.d-flex');
+            var jkWrap = form.querySelector('#jk_l').closest('.d-flex');
             addErrorAfter(jkWrap, 'Jenis kelamin harus dipilih', 'err_jk');
             errorFields.push(form.querySelector('#jk_l'));
         }
 
-        // NIK
-        const nik = form.querySelector('[name="nik"]');
+        var nik = form.querySelector('[name="nik"]');
         if (!nik.value.trim()) {
             addError(nik, 'NIK harus diisi');
             errorFields.push(nik);
@@ -1424,8 +1406,7 @@ document.addEventListener('DOMContentLoaded', function() {
             errorFields.push(nik);
         }
 
-        // NISN
-        const nisn = form.querySelector('[name="nisn"]');
+        var nisn = form.querySelector('[name="nisn"]');
         if (!nisn.value.trim()) {
             addError(nisn, 'NISN harus diisi');
             errorFields.push(nisn);
@@ -1434,15 +1415,13 @@ document.addEventListener('DOMContentLoaded', function() {
             errorFields.push(nisn);
         }
 
-        // Tempat Lahir
-        const tempatLahir = form.querySelector('[name="tempat_lahir"]');
+        var tempatLahir = form.querySelector('[name="tempat_lahir"]');
         if (!tempatLahir.value.trim()) {
             addError(tempatLahir, 'Tempat lahir harus diisi');
             errorFields.push(tempatLahir);
         }
 
-        // Tanggal Lahir
-        const tanggalLahir = form.querySelector('[name="tanggal_lahir"]');
+        var tanggalLahir = form.querySelector('[name="tanggal_lahir"]');
         if (!tanggalLahir.value) {
             addError(tanggalLahir, 'Tanggal lahir harus diisi');
             errorFields.push(tanggalLahir);
@@ -1451,8 +1430,7 @@ document.addEventListener('DOMContentLoaded', function() {
             errorFields.push(tanggalLahir);
         }
 
-        // Alamat
-        const alamat = form.querySelector('[name="alamat"]');
+        var alamat = form.querySelector('[name="alamat"]');
         if (!alamat.value.trim()) {
             addError(alamat, 'Alamat lengkap harus diisi');
             errorFields.push(alamat);
@@ -1461,8 +1439,7 @@ document.addEventListener('DOMContentLoaded', function() {
             errorFields.push(alamat);
         }
 
-        // Email
-        const email = form.querySelector('[name="email"]');
+        var email = form.querySelector('[name="email"]');
         if (!email.value.trim()) {
             addError(email, 'Email harus diisi');
             errorFields.push(email);
@@ -1471,64 +1448,60 @@ document.addEventListener('DOMContentLoaded', function() {
             errorFields.push(email);
         }
 
-        // Orang Tua / Wali
-        const namaAyah = form.querySelector('[name="nama_ayah"]').value.trim();
-        const noHpAyah = form.querySelector('[name="no_hp_ayah"]').value.trim();
-        const namaIbu  = form.querySelector('[name="nama_ibu"]').value.trim();
-        const noHpIbu  = form.querySelector('[name="no_hp_ibu"]').value.trim();
-        const namaWali = form.querySelector('[name="nama_wali"]').value.trim();
-        const noHpWali = form.querySelector('[name="no_hp_wali"]').value.trim();
+        var namaAyah = form.querySelector('[name="nama_ayah"]').value.trim();
+        var noHpAyah = form.querySelector('[name="no_hp_ayah"]').value.trim();
+        var namaIbu  = form.querySelector('[name="nama_ibu"]').value.trim();
+        var noHpIbu  = form.querySelector('[name="no_hp_ibu"]').value.trim();
+        var namaWali = form.querySelector('[name="nama_wali"]').value.trim();
+        var noHpWali = form.querySelector('[name="no_hp_wali"]').value.trim();
 
         if (!namaAyah && !namaIbu && !namaWali) {
-            const namaAyahInput = form.querySelector('[name="nama_ayah"]');
+            var namaAyahInput = form.querySelector('[name="nama_ayah"]');
             addError(namaAyahInput, 'Minimal salah satu data orang tua/wali harus diisi');
             errorFields.push(namaAyahInput);
         } else {
             if (namaAyah && !noHpAyah) {
-                const f = form.querySelector('[name="no_hp_ayah"]');
+                var f = form.querySelector('[name="no_hp_ayah"]');
                 addError(f, 'No. HP Ayah harus diisi karena Nama Ayah sudah terisi');
                 errorFields.push(f);
             }
             if (namaIbu && !noHpIbu) {
-                const f = form.querySelector('[name="no_hp_ibu"]');
+                var f = form.querySelector('[name="no_hp_ibu"]');
                 addError(f, 'No. HP Ibu harus diisi karena Nama Ibu sudah terisi');
                 errorFields.push(f);
             }
             if (namaWali && !noHpWali) {
-                const f = form.querySelector('[name="no_hp_wali"]');
+                var f = form.querySelector('[name="no_hp_wali"]');
                 addError(f, 'No. HP Wali harus diisi karena Nama Wali sudah terisi');
                 errorFields.push(f);
             }
         }
 
-        // Program
-        const programId = form.querySelector('[name="program_id"]');
+        var programId = form.querySelector('[name="program_id"]');
         if (!programId.value) {
             addError(programId, 'Program harus dipilih');
             errorFields.push(programId);
         }
 
-        // File uploads
-        const ktp = form.querySelector('[name="ktp"]');
+        var ktp = form.querySelector('[name="ktp"]');
         if (!ktp.files || !ktp.files.length) {
             addError(ktp, 'KTP / kartu identitas harus diupload');
             errorFields.push(ktp);
         }
 
-        const foto = form.querySelector('[name="foto"]');
+        var foto = form.querySelector('[name="foto"]');
         if (!foto.files || !foto.files.length) {
             addError(foto, 'Foto harus diupload');
             errorFields.push(foto);
         }
 
-        const bukti = form.querySelector('[name="bukti_pembayaran"]');
+        var bukti = form.querySelector('[name="bukti_pembayaran"]');
         if (!bukti.files || !bukti.files.length) {
             addError(bukti, 'Bukti pembayaran harus diupload');
             errorFields.push(bukti);
         }
 
-        // Agreement
-        const agreement = document.getElementById('agreement');
+        var agreement = document.getElementById('agreement');
         if (!agreement.checked) {
             addErrorAfter(agreement.closest('.agreement-checkbox'), 'Anda harus menyetujui syarat dan ketentuan', 'err_agreement');
             errorFields.push(agreement);
@@ -1540,7 +1513,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // All client-side checks passed — submit via AJAX
         showLoading();
 
         fetch(form.action, {
@@ -1561,12 +1533,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Server-side validation errors (422)
             if (result.status === 422 && result.data.errors) {
                 clearErrors();
-                const serverErrors = [];
+                var serverErrors = [];
                 Object.keys(result.data.errors).forEach(function(field) {
-                    const input = form.querySelector('[name="' + field + '"]');
+                    var input = form.querySelector('[name="' + field + '"]');
                     if (input) {
                         addError(input, result.data.errors[field][0]);
                         serverErrors.push(input);
@@ -1576,7 +1547,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Other server errors
             showServerError(result.data.message || 'Terjadi kesalahan. Silakan coba lagi.');
         })
         .catch(function() {
@@ -1587,63 +1557,68 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function showLoading() {
-    const el = document.getElementById('loadingOverlay');
-    el.style.display = 'flex';
+    var el = document.getElementById('loadingOverlay');
+    if (el) el.style.display = 'flex';
 }
 
 function hideLoading() {
-    const el = document.getElementById('loadingOverlay');
-    el.style.display = 'none';
+    var el = document.getElementById('loadingOverlay');
+    if (el) el.style.display = 'none';
 }
 
 function showSuccess(kode, redirectUrl) {
-    document.getElementById('kodeRegistrasi').textContent = kode;
-    document.getElementById('successModal').style.display = 'flex';
+    var kodeEl = document.getElementById('kodeRegistrasi');
+    var modalEl = document.getElementById('successModal');
+    var countEl = document.getElementById('countdown');
 
-    let count = 5;
-    const countEl = document.getElementById('countdown');
-    const timer = setInterval(function() {
-        count--;
-        countEl.textContent = count;
-        if (count <= 0) {
-            clearInterval(timer);
-            window.location.href = redirectUrl;
-        }
-    }, 1000);
+    if (kodeEl) kodeEl.textContent = kode;
+    if (modalEl) modalEl.style.display = 'flex';
+
+    var count = 5;
+    if (countEl) {
+        var timer = setInterval(function() {
+            count--;
+            countEl.textContent = count;
+            if (count <= 0) {
+                clearInterval(timer);
+                window.location.href = redirectUrl;
+            }
+        }, 1000);
+    }
 }
 
 function showServerError(message) {
-    const existing = document.getElementById('server-error-alert');
+    var existing = document.getElementById('server-error-alert');
     if (existing) existing.remove();
 
-    const alert = document.createElement('div');
-    alert.id = 'server-error-alert';
-    alert.className = 'alert alert-danger alert-dismissible fade show';
-    alert.setAttribute('role', 'alert');
-    alert.innerHTML = '<strong>Gagal!</strong> ' + message +
+    var alertDiv = document.createElement('div');
+    alertDiv.id = 'server-error-alert';
+    alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+    alertDiv.setAttribute('role', 'alert');
+    alertDiv.innerHTML = '<strong>Gagal!</strong> ' + message +
         '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
 
-    const formSection = document.getElementById('pendaftaran');
+    var formSection = document.getElementById('pendaftaran');
     if (formSection) {
-        formSection.insertAdjacentElement('beforebegin', alert);
-        scrollToElement(alert);
+        formSection.insertAdjacentElement('beforebegin', alertDiv);
+        scrollToElement(alertDiv);
     }
 }
 
 function addError(input, message) {
     input.classList.add('is-invalid');
-    const existing = input.parentElement.querySelector('.client-error');
+    var existing = input.parentElement.querySelector('.client-error');
     if (existing) existing.remove();
-    const div = document.createElement('div');
+    var div = document.createElement('div');
     div.className = 'invalid-feedback client-error d-block';
     div.textContent = message;
     input.insertAdjacentElement('afterend', div);
 }
 
 function addErrorAfter(element, message, id) {
-    const existing = document.getElementById(id);
+    var existing = document.getElementById(id);
     if (existing) existing.remove();
-    const div = document.createElement('div');
+    var div = document.createElement('div');
     div.id = id;
     div.className = 'text-danger small mt-1 client-error';
     div.textContent = message;
@@ -1657,45 +1632,9 @@ function clearErrors() {
 
 function scrollToElement(element) {
     if (!element) return;
-    const top = element.getBoundingClientRect().top + window.pageYOffset - 100;
+    var top = element.getBoundingClientRect().top + window.pageYOffset - 100;
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
 }
-
-function initCountdown() {
-    const countdownEl = document.getElementById('countdown');
-    if (!countdownEl) return;
-
-    const targetStr = countdownEl.getAttribute('data-target');
-    if (!targetStr) return;
-
-    const target = new Date(targetStr).getTime();
-
-    function update() {
-        const now = new Date().getTime();
-        const diff = target - now;
-
-        if (diff <= 0) {
-            window.location.reload();
-            return;
-        }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
-        document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
-        document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
-    }
-
-    update();
-    setInterval(update, 1000);
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    initCountdown();
-});
 </script>
+@endif
 @endpush

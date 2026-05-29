@@ -84,6 +84,20 @@
                                             Link grup WhatsApp, Telegram, atau Discord untuk komunikasi dengan peserta.
                                         </small>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="manual_password">Password Pendaftaran Manual</label>
+                                        <input type="password" wire:model="manual_password" id="manual_password"
+                                            class="form-control @error('manual_password') is-invalid @enderror"
+                                            placeholder="Minimal 4 karakter (kosongkan untuk nonaktifkan)">
+                                        @error('manual_password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                        <small class="text-muted d-block mt-1">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            Password untuk halaman /psb-manual. Kosongkan untuk menonaktifkan.
+                                        </small>
+                                    </div>
                                 </div>
 
                                 <div class="col-md-6">

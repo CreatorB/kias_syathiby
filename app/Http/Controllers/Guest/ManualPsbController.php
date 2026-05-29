@@ -18,25 +18,43 @@ use App\Models\TeknisDaftar;
 use App\Models\TesMasuk;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
-class InfoPsbController extends Controller
+class ManualPsbController extends Controller
 {
-    public function index(InfoPsbService $infoPsbService) {
+    public function index(InfoPsbService $infoPsbService)
+    {
         $psb = $infoPsbService->psbAktif();
 
-        // Only 3 programs as per TASKS.md: Tajwidul Quran, BA Reguler, BA Takmili
+        if (!$psb) {
+            return redirect()->route('home')->with('error', 'Pendaftaran PSB belum tersedia.');
+        }
+
+        if (empty($psb->manual_password)) {
+            return redirect()->route('home')->with('error', 'Pendaftaran manual sedang tidak aktif.');
+        }
+
+        $passwordVerified = Session::get('psb_manual_verified', false);
+        $verifiedAt = Session::get('psb_manual_verified_at', 0);
+        $timeout = 10 * 60; // 10 minutes in seconds
+
+        if (!$passwordVerified || (now()->timestamp - $verifiedAt) >= $timeout) {
+            return redirect()->route('psb_manual.password');
+        }
+
         $programs = Program::whereIn('jenis_program_id', [1, 2, 4])
             ->where('status_psb', 'Buka')
             ->get();
 
         $data = [
-            'title' => 'Informasi Penerimaan Santri Baru',
+            'title' => 'Pendaftaran Manual',
             'lembaga' => Lembaga::find(1),
             'psb' => $psb,
+            'requires_password' => false,
             'programs' => $programs,
-            'tajwid' => Program::where('jenis_program_id', 1)->where('status_psb','Buka')->get(),
-            'bahasaArab' => Program::where('jenis_program_id', 2)->where('status_psb','Buka')->get(),
-            'takmili' => Program::where('jenis_program_id', 4)->where('status_psb','Buka')->get(),
+            'tajwid' => Program::where('jenis_program_id', 1)->where('status_psb', 'Buka')->get(),
+            'bahasaArab' => Program::where('jenis_program_id', 2)->where('status_psb', 'Buka')->get(),
+            'takmili' => Program::where('jenis_program_id', 4)->where('status_psb', 'Buka')->get(),
             'teknisDaftar' => TeknisDaftar::find(1),
             'tesMasuk' => TesMasuk::with('cabang')->get()->groupBy('cabang_id'),
             'pekerjaan' => Pekerjaan::orderBy('nama_pekerjaan')->get(),
@@ -46,15 +64,55 @@ class InfoPsbController extends Controller
             'quota_akhwat_remaining' => $psb?->remaining_quota_akhwat,
             'quota_max_ikhwan' => $psb?->quota_ikhwan,
             'quota_max_akhwat' => $psb?->quota_akhwat,
-            'psb_is_open' => $psb?->isOpen(),
+            'psb_is_open' => true,
             'psb_datetime_open' => $psb?->datetime_open,
             'psb_datetime_closed' => $psb?->datetime_closed,
         ];
 
-        return view('guest.info_psb', $data);
+        return view('guest.info_psb_manual', $data);
     }
 
-    public function register(Request $request, DaftarService $daftarService) {
+    public function verifyPassword(Request $request)
+    {
+        $psb = (new InfoPsbService())->psbAktif();
+
+        if (!$psb || empty($psb->manual_password)) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Pendaftaran manual tidak aktif.'], 403);
+            }
+            return redirect()->route('psb_manual.password')->with('error', 'Pendaftaran manual tidak aktif.');
+        }
+
+        $password = $request->input('password', '');
+
+        if (!Hash::check($password, $psb->manual_password)) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json(['success' => false, 'message' => 'Password salah.'], 401);
+            }
+            return redirect()->route('psb_manual.password')->with('error', 'Password salah.');
+        }
+
+        Session::put('psb_manual_verified', true);
+        Session::put('psb_manual_verified_at', now()->timestamp);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => 'Password benar.']);
+        }
+
+        return redirect()->route('psb_manual.index');
+    }
+
+    public function showPasswordForm()
+    {
+        $psb = (new InfoPsbService())->psbAktif();
+        return view('guest.psb_manual_password', [
+            'title' => 'Password - Pendaftaran Manual',
+            'lembaga' => Lembaga::find(1),
+        ]);
+    }
+
+    public function register(Request $request, DaftarService $daftarService)
+    {
         $psb = (new InfoPsbService())->psbAktif();
 
         if (!$psb) {
@@ -172,7 +230,7 @@ class InfoPsbController extends Controller
                 'nama' => $request->nama,
                 'email' => $request->email,
                 'password' => Hash::make($kodeRegistrasi),
-                'role_id' => 3, // Santri
+                'role_id' => 3,
                 'phone' => $santri->hp,
                 'is_active' => false,
                 'santri_id' => $santri->id,
@@ -189,6 +247,8 @@ class InfoPsbController extends Controller
             DB::commit();
 
             auth()->login($user);
+
+            Session::forget(['psb_manual_verified', 'psb_manual_verified_at']);
 
             $successMessage = 'Pendaftaran berhasil! Nomor Peserta Anda: ' . $kodeRegistrasi . '. Silakan tunggu verifikasi pembayaran.';
 
@@ -217,11 +277,5 @@ class InfoPsbController extends Controller
 
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();
         }
-    }
-
-    public function download(){
-        $file = public_path('files/PSB-Reguler-Tahun-2025-2026.pdf');
-
-        return response()->download($file);
     }
 }
