@@ -11,7 +11,7 @@ class ModalVerifikasiTransfer extends Component
     #[Reactive]
     public $pid;
     //String
-    public $statusTransfer, $idModal;
+    public $statusTransfer, $idModal, $alasanPenolakan;
     //Collection
     public $data;
 
@@ -27,15 +27,22 @@ class ModalVerifikasiTransfer extends Component
         if ($this->pid) {
             $this->data = Santri::queryDataSantri($this->pid);
             $this->statusTransfer = $this->data ?->status_transfer;
+            $this->alasanPenolakan = $this->data ?->alasan_penolakan;
         }
     }
 
     //Action simpan data
     public function simpanStatus() {
         $santri = Santri::find($this->pid);
-        $santri->update([
-            'status_transfer' => $this->statusTransfer,
-        ]);
+        $updateData = ['status_transfer' => $this->statusTransfer];
+
+        if ($this->statusTransfer === 'Invalid') {
+            $updateData['alasan_penolakan'] = $this->alasanPenolakan;
+        } else {
+            $updateData['alasan_penolakan'] = null;
+        }
+
+        $santri->update($updateData);
 
         if ($this->statusTransfer === 'Valid') {
             \App\Models\User::where('santri_id', $santri->id)

@@ -168,7 +168,7 @@ class InfoPsbController extends Controller
                 'nama' => $request->nama,
                 'email' => $request->email,
                 'password' => Hash::make($kodeRegistrasi),
-                'role_id' => 4,
+                'role_id' => 3, // Santri
                 'phone' => $santri->hp,
                 'is_active' => false,
                 'santri_id' => $santri->id,
