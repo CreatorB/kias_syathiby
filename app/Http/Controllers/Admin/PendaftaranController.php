@@ -134,7 +134,7 @@ class PendaftaranController extends Controller
 
         DB::transaction(function () use ($santri) {
             $tahunPsb = $santri->tahun_psb;
-            $files = [$santri->photo, $santri->ktp, $santri->transfer, $santri->ijazah];
+            $files = [$santri->photo, $santri->ktp, $santri->transfer];
 
             foreach ($files as $file) {
                 if ($file) {

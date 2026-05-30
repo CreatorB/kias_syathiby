@@ -137,14 +137,6 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" for="ijazah">Ijazah SMA/Sederajat <span class="text-danger">*</span></label>
-                                <input type="file" class="form-control @error('ijazah') is-invalid @enderror" id="ijazah" name="ijazah" accept="image/jpeg,image/png,application/pdf" />
-                                <small class="text-muted">Format: JPG, PNG, PDF. Maksimal 5MB</small>
-                                @error('ijazah')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="col-md-6 mb-3">
                                 <label class="form-label" for="bukti_pembayaran">Bukti Pembayaran <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('bukti_pembayaran') is-invalid @enderror" id="bukti_pembayaran" name="bukti_pembayaran" accept="image/jpeg,image/png" />
                                 <small class="text-muted">Format: JPG, PNG. Maksimal 2MB</small>
