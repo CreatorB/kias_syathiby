@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\PendaftaranController;
+use App\Http\Controllers\Admin\MaintenanceController;
 use App\Livewire\Admin\DashboardAdmin;
 use App\Livewire\Admin\Pendaftaran\DataSantri;
 use App\Livewire\Admin\Pendaftaran\PengaturanPsb;
@@ -42,6 +43,25 @@ Route::group(["middleware" => ["auth", "admin"], "as" => "admin::"], function ()
         // Superadmin Only - Settings
         Route::middleware("superadmin")->prefix("settings")->group(function () {
             Route::get("/permissions", PermissionManager::class)->name("settings.permissions");
+        });
+
+        // Maintenance Routes (Password Protected via middleware)
+        Route::middleware(["maintenance"])->prefix("maintenance")->name("maintenance.")->group(function () {
+            Route::get("/migrate", [MaintenanceController::class, "migrate"])->name("migrate");
+            Route::get("/migrate-refresh", [MaintenanceController::class, "migrateRefresh"])->name("migrateRefresh");
+            Route::get("/optimize", [MaintenanceController::class, "optimize"])->name("optimize");
+            Route::get("/queue-restart", [MaintenanceController::class, "queueRestart"])->name("queueRestart");
+            Route::get("/db-backup", [MaintenanceController::class, "dbBackup"])->name("dbBackup");
+        });
+
+        // Maintenance Routes (No Password - Low Risk)
+        Route::prefix("maintenance")->name("maintenance.")->group(function () {
+            Route::get("/clear-all", [MaintenanceController::class, "clearAll"])->name("clearAll");
+            Route::get("/clear-cache", [MaintenanceController::class, "clearCache"])->name("clearCache");
+            Route::get("/clear-view", [MaintenanceController::class, "clearView"])->name("clearView");
+            Route::get("/clear-route", [MaintenanceController::class, "clearRoute"])->name("clearRoute");
+            Route::get("/clear-config", [MaintenanceController::class, "clearConfig"])->name("clearConfig");
+            Route::get("/info", [MaintenanceController::class, "info"])->name("info");
         });
     });
 });
