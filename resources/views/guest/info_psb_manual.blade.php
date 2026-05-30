@@ -838,6 +838,7 @@ textarea.form-control {
                     <h5><i class="ti ti-info-circle me-2"></i>Catatan Biaya</h5>
                     <ul class="mb-0">
                         <li>Biaya Pendaftaran dibayarkan sekali di awal</li>
+                        <li>Biaya Pendaftaran yang sudah dibayarkan tidak bisa dikembalikan</li>
                         <li>Biaya Sarana Prasarana untuk fasilitas belajar</li>
                         <li>Biaya Kuliah Perdana dibayarkan saat mulai kuliah</li>
                         <li>SPP Bulanan dibayarkan setiap bulan</li>
@@ -865,11 +866,11 @@ textarea.form-control {
                     <div class="card-body p-4">
                         <div class="alur-step">
                             <div class="step-number">1</div>
-                            <div class="step-content">Membawa F2 (Formulir Pendaftaran)</div>
+                            <div class="step-content">Membawa F2 (Screenshot nomor peserta di dashboard)</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">2</div>
-                            <div class="step-content">Menyerahkan F2 ke Patria</div>
+                            <div class="step-content">Menyerahkan F2 ke Panitia</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">3</div>
@@ -885,15 +886,15 @@ textarea.form-control {
                         </div>
                         <div class="alur-step">
                             <div class="step-number">6</div>
-                            <div class="step-content">Mengambil F2 dari Patria Tes Lisan & Tulis</div>
+                            <div class="step-content">Mengambil F2 dari Panitia Tes Lisan & Tulis</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">7</div>
-                            <div class="step-content">Menyerahkan F2 ke Patria</div>
+                            <div class="step-content">Menyerahkan F2 ke Panitia</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">8</div>
-                            <div class="step-content">Mengambil F2 dari Patria</div>
+                            <div class="step-content">Mengambil F2 dari Panitia</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">9</div>
@@ -901,7 +902,7 @@ textarea.form-control {
                         </div>
                         <div class="alur-step">
                             <div class="step-number">10</div>
-                            <div class="step-content"><strong>Bayar Daftar Ulang dan SPP - 5 September 2026</strong></div>
+                            <div class="step-content"><strong>Melakukan daftar ulang dengan cara membayar biaya maintenance, sarpras dan spp - 5 September 2026</strong></div>
                         </div>
                     </div>
                 </div>
@@ -935,7 +936,7 @@ textarea.form-control {
                     <div class="card-body p-4">
                         <div class="alur-step">
                             <div class="step-number">1</div>
-                            <div class="step-content">Menukar F2 di Kantor</div>
+                            <div class="step-content">Menunjukkan F2 di Kantor</div>
                         </div>
                         <div class="alur-step">
                             <div class="step-number">2</div>
@@ -1184,7 +1185,8 @@ textarea.form-control {
                                 <strong>Saya menyatakan bahwa:</strong><br>
                                 1. Data yang saya isi adalah benar dan dapat dipertanggungjawabkan.<br>
                                 2. Saya telah membaca dan menyetujui syarat dan ketentuan pendaftaran.<br>
-                                3. Saya memahami bahwa pendaftaran belum pasti diterima sebelum proses verifikasi selesai.
+                                3. Saya memahami bahwa pendaftaran belum pasti diterima sebelum proses verifikasi selesai.<br>
+                                4. Uang pendaftaran yang sudah dibayar tidak bisa dikembalikan.<br>
                             </label>
                         </div>
                         @error('agreement')
