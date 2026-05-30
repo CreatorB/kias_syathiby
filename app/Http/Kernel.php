@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'peserta' => \App\Http\Middleware\Peserta::class,
         'superadmin' => \App\Http\Middleware\Superadmin::class,
+        'maintenance' => \App\Http\Middleware\MaintenancePassword::class,
     ];
 }
