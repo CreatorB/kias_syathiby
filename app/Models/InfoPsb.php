@@ -80,7 +80,6 @@ protected $fillable = [
     {
         return $this->santris()
             ->where('jk', 'Laki-Laki')
-            ->where('status_transfer', StatusProvider::TRANSFER_VALID)
             ->count();
     }
 
@@ -88,7 +87,6 @@ protected $fillable = [
     {
         return $this->santris()
             ->where('jk', 'Perempuan')
-            ->where('status_transfer', StatusProvider::TRANSFER_VALID)
             ->count();
     }
 

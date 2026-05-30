@@ -215,16 +215,6 @@
                     @endif
                 </div>
                 <div class="col-md-3 mb-3">
-                    <p class="mb-1"><small class="text-muted">Ijazah</small></p>
-                    @if($santri->ijazah)
-                        <a href="{{ asset('berkas/' . $santri->tahun_psb . '/' . $santri->kode_registrasi . '/' . $santri->ijazah) }}" target="_blank" class="btn btn-sm btn-outline-primary">
-                            <i class="ti ti-file"></i> Lihat
-                        </a>
-                    @else
-                        <span class="text-muted">-</span>
-                    @endif
-                </div>
-                <div class="col-md-3 mb-3">
                     <p class="mb-1"><small class="text-muted">Bukti Bayar</small></p>
                     @if($santri->transfer)
                         <a href="{{ asset('berkas/' . $santri->tahun_psb . '/' . $santri->kode_registrasi . '/' . $santri->transfer) }}" target="_blank" class="btn btn-sm btn-outline-primary">

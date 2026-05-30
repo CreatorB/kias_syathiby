@@ -55,12 +55,10 @@ class RevisiBerkasController extends Controller
         $validated = $request->validate([
             'foto' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'ktp' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'ijazah' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
             'bukti_pembayaran' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ], [
             'foto.mimes' => 'Foto harus format JPG, JPEG, atau PNG',
             'ktp.mimes' => 'KTP harus format JPG, JPEG, PNG, atau PDF',
-            'ijazah.mimes' => 'Ijazah harus format JPG, JPEG, PNG, atau PDF',
             'bukti_pembayaran.mimes' => 'Bukti pembayaran harus format JPG, JPEG, atau PNG',
         ]);
 
@@ -83,13 +81,6 @@ class RevisiBerkasController extends Controller
             $ktpName = 'ktp.' . $ktpFile->getClientOriginalExtension();
             $ktpFile->move($registrasiDir, $ktpName);
             $updateData['ktp'] = $ktpName;
-        }
-
-        if ($request->hasFile('ijazah')) {
-            $ijazahFile = $request->file('ijazah');
-            $ijazahName = 'ijazah.' . $ijazahFile->getClientOriginalExtension();
-            $ijazahFile->move($registrasiDir, $ijazahName);
-            $updateData['ijazah'] = $ijazahName;
         }
 
         if ($request->hasFile('bukti_pembayaran')) {

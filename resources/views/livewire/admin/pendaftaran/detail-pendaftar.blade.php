@@ -124,22 +124,6 @@
                             </div>
                         @endif
                     </div>
-                    <div class="col-lg-4 col-md-6 col-12 mb-3">
-                        <h6 class="text-muted small mb-1">Ijazah</h6>
-                        @php
-                            $ijazahPath = 'berkas/'.$dataPendaftar->tahun_psb.'/'.$dataPendaftar->kode_registrasi.'/'.$dataPendaftar->ijazah;
-                            $ijazahExists = file_exists(public_path($ijazahPath)) && !empty($dataPendaftar->ijazah);
-                        @endphp
-                        @if($ijazahExists)
-                            <a href="{{ asset($ijazahPath) }}" target="_blank">
-                                <img class="img-fluid rounded" src="{{ asset($ijazahPath) }}" height="auto" width="150" />
-                            </a>
-                        @else
-                            <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 100px; width: 150px;">
-                                <span class="text-muted small"><i class="ti ti-photo-off me-1"></i>Tidak ada</span>
-                            </div>
-                        @endif
-                    </div>
                     <div class="col-lg-6 col-md-6 col-12 mb-3">
                         <h6 class="text-muted small mb-1">Bukti Transfer</h6>
                         @php
