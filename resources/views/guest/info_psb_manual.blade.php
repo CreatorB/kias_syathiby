@@ -826,10 +826,10 @@ textarea.form-control {
                             <td>Sarana Prasarana</td>
                             <td class="biaya-amount">Rp 300.000</td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td>Kuliah Perdana</td>
                             <td class="biaya-amount">Rp 250.000</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <td>SPP Bulanan</td>
                             <td class="biaya-amount">Rp 250.000</td>
@@ -843,7 +843,7 @@ textarea.form-control {
                         <li>Biaya Pendaftaran dibayarkan sekali di awal</li>
                         <li>Biaya Pendaftaran yang sudah dibayarkan tidak bisa dikembalikan</li>
                         <li>Biaya Sarana Prasarana untuk fasilitas belajar</li>
-                        <li>Biaya Kuliah Perdana dibayarkan saat mulai kuliah</li>
+                        {{-- <li>Biaya Kuliah Perdana dibayarkan saat mulai kuliah</li> --}}
                         <li>SPP Bulanan dibayarkan setiap bulan</li>
                     </ul>
                 </div>
@@ -932,7 +932,7 @@ textarea.form-control {
                     </div>
                 </div>
 
-                <div class="card shadow-sm">
+                {{-- <div class="card shadow-sm">
                     <div class="card-header bg-warning text-dark">
                         <h5 class="mb-0" style="color: white;"><i class="ti ti-school me-2"></i>Alur Kuliah Perdana</h5>
                     </div>
@@ -978,7 +978,7 @@ textarea.form-control {
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

@@ -51,7 +51,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         <label class="form-label" for="biaya_kuliah_perdana">Biaya Kuliah Perdana (Rp) <span class="text-danger">*</span></label>
                                         <input type="number" wire:model="biaya_kuliah_perdana" id="biaya_kuliah_perdana"
                                             class="form-control @error('biaya_kuliah_perdana') is-invalid @enderror"
@@ -59,7 +59,7 @@
                                         @error('biaya_kuliah_perdana')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                     <div class="mb-3">
                                         <label class="form-label" for="biaya_spp_bulanan">SPP Bulanan (Rp) <span class="text-danger">*</span></label>
