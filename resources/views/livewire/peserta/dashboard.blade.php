@@ -227,7 +227,7 @@
                                 @endphp
                                 @if($infoPsb)
                                     <p class="mb-1">Sarana Prasarana : <strong>Rp {{ number_format($infoPsb->biaya_sarana_prasana ?? 300000, 0, ',', '.') }}</strong></p>
-                                    <p class="mb-1">Kuliah Perdana : <strong>Rp {{ number_format($infoPsb->biaya_kuliah_perdana ?? 250000, 0, ',', '.') }}</strong></p>
+                                    {{-- <p class="mb-1">Kuliah Perdana : <strong>Rp {{ number_format($infoPsb->biaya_kuliah_perdana ?? 250000, 0, ',', '.') }}</strong></p> --}}
                                     <p class="mb-0">SPP Bulanan : <strong>Rp {{ number_format($infoPsb->biaya_spp_bulanan ?? 250000, 0, ',', '.') }}</strong></p>
                                 @endif
                             @endif
