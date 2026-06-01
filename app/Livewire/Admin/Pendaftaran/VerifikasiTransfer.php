@@ -19,6 +19,7 @@ class VerifikasiTransfer extends Component
 {
     use WithPagination;
     use WithoutUrlPagination;
+
     //String
     public $tahunPsb, $cariSantri = null, $wa, $nama, $program, $url = null, $idPendanfarHapus = null, $showDeleteModal = false;
     //Integer
@@ -111,7 +112,7 @@ class VerifikasiTransfer extends Component
     }
 
     //Set id untuk modal detail verifikasi transfer
-public function setIdPendanfar($id)
+    public function setIdPendanfar($id)
     {
         $this->idPendanfar = $id;
     }
@@ -158,7 +159,36 @@ public function setIdPendanfar($id)
         $this->dispatch('hapus-success');
     }
 
-    //Action kirim notifikasi
+    // ========== METHOD BARU WHATSAPP ==========
+
+    /**
+     * Generate WhatsApp link berdasarkan deteksi perangkat
+     *
+     * @param string $wa Nomor WhatsApp
+     * @param string $text Pesan yang sudah di-encode
+     * @return string URL WhatsApp yang sesuai
+     */
+    private function generateWhatsAppLink($wa, $text)
+    {
+        if ($this->isMobile) {
+            // Untuk HP: pakai deep link whatsapp:// (bisa pilih WA Business)
+            return "whatsapp://send?phone=" . $wa . "&text=" . $text;
+        } else {
+            // Untuk Desktop: pakai wa.me (WhatsApp Web)
+            return "https://wa.me/" . $wa . "?text=" . $text;
+        }
+    }
+
+    /**
+     * Encode teks untuk URL
+     */
+    private function encodeText($text)
+    {
+        // Gunakan urlencode bawaan PHP
+        return urlencode($text);
+    }
+
+    //Action kirim notifikasi (VERSI TERBARU)
     public function kirimNotifikasi($id)
     {
         //Update status notifikasi
@@ -173,17 +203,15 @@ public function setIdPendanfar($id)
         $program = $santri->program->nama_program;
         $statusTransfer = $santri->status_transfer;
 
-//        if ($statusTransfer == StatusProvider::TRANSFER_VALID) {
-//            $this->url = "https://api.whatsapp.com/send?phone=".$wa."&text=*_KONFIRMASI PENDAFTARAN_*%0A%0ASelamat! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0AStatus Transfer: *".$statusTransfer."*%0A%0Atelah berhasil. Selanjutnya silahkan tunggu proses pelaksanaan tes masuk, kami akan menghubungi anda kembali, silahkan masuk group sesuai program yang dipilih : https://docs.google.com/spreadsheets/d/1a1zlNNU29bOoWy3ntPgXNOtl5RfpiQXaPGcesc8uu1w.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
-//        } else {
-//            $this->url = "https://api.whatsapp.com/send?phone=".$wa."&text=*_KONFIRMASI PENDAFTARAN_*%0A%0AMohon maaf! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0A%0Abelum dapat kami terima dengan alasan *Bukti Transfer Tidak Valid*. Mohon untuk mengirimkan ulang lampiran bukti transfer melalui WhatsApp ini.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
-//        }
-
+        // Template pesan (tanpa encode dulu)
         if ($statusTransfer == StatusProvider::TRANSFER_VALID) {
-            $this->url = "https://wa.me/".$wa."?text=*_KONFIRMASI PENDAFTARAN_*%0A%0ASelamat! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0AStatus Transfer: *".$statusTransfer."*%0A%0Atelah berhasil. Selanjutnya silahkan tunggu proses pelaksanaan tes masuk, kami akan menghubungi anda kembali, silahkan masuk group sesuai program yang dipilih : https://docs.google.com/spreadsheets/d/1a1zlNNU29bOoWy3ntPgXNOtl5RfpiQXaPGcesc8uu1w.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
+            $rawText = "*_KONFIRMASI PENDAFTARAN_*%0A%0ASelamat! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *" . $nama . "*%0AProgram: *" . $program . "*%0AStatus Transfer: *" . $statusTransfer . "*%0A%0Atelah berhasil. Selanjutnya silahkan tunggu proses pelaksanaan tes masuk, kami akan menghubungi anda kembali, silahkan masuk group sesuai program yang dipilih : https://docs.google.com/spreadsheets/d/1a1zlNNU29bOoWy3ntPgXNOtl5RfpiQXaPGcesc8uu1w %0A,Terima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
         } else {
-            $this->url = "https://wa.me/".$wa."?text=*_KONFIRMASI PENDAFTARAN_*%0A%0AMohon maaf! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0A%0Abelum dapat kami terima dengan alasan *Bukti Transfer Tidak Valid*. Mohon untuk mengirimkan ulang lampiran bukti transfer melalui WhatsApp ini.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
+            $rawText = "*_KONFIRMASI PENDAFTARAN_*%0A%0AMohon maaf! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *" . $nama . "*%0AProgram: *" . $program . "*%0A%0Abelum dapat kami terima dengan alasan *Bukti Transfer Tidak Valid*. Mohon untuk mengirimkan ulang lampiran bukti transfer melalui WhatsApp ini.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
         }
+
+        // Generate link berdasarkan deteksi perangkat
+        $this->url = $this->generateWhatsAppLink($wa, $rawText);
 
         $this->dispatch('kirim-notifikasi', url: $this->url);
     }
@@ -192,11 +220,13 @@ public function setIdPendanfar($id)
     {
         if ($this->isMobile) {
             return view('livewire.mobile.admin.pendaftaran.verifikasi-transfer', [
-                'url' => $this->url
+                'url' => $this->url,
+                'isMobile' => $this->isMobile
             ])->layout('layouts.app');
         } else {
             return view('livewire.admin.pendaftaran.verifikasi-transfer', [
-                'url' => $this->url
+                'url' => $this->url,
+                'isMobile' => $this->isMobile
             ])->layout('layouts.app');
         }
     }
