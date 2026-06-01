@@ -20,6 +20,7 @@ class Santri extends Model
     protected $fillable = [
         'kode_registrasi',
         'nama',
+        'jk',
         'nik',
         'nisn',
         'tmp_lahir',
