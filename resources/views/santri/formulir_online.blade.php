@@ -45,7 +45,7 @@
       Program : <b>{{ $programPilihan }}</b><br>
       Tanggal Daftar : <b>{{ $tgl }} pukul {{ $jam }}</b><br><br>
 
-      Untuk melihat detail data anda, silahkan klik disini <a href="/cari-nama">Detail Data</a>
+      Untuk melihat detail data anda, silahkan klik disini <a href="/cek">Detail Data</a>
     </p>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>

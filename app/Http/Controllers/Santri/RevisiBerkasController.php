@@ -23,7 +23,7 @@ class RevisiBerkasController extends Controller
             ->first();
 
         if (!$santri) {
-            return redirect('/cari-nama')->with('error', 'Data tidak ditemukan.');
+            return redirect('/cek')->with('error', 'Data tidak ditemukan.');
         }
 
         $data = [
@@ -49,7 +49,7 @@ class RevisiBerkasController extends Controller
             if ($request->ajax()) {
                 return response()->json(['success' => false, 'message' => 'Data tidak ditemukan.'], 404);
             }
-            return redirect('/cari-nama')->with('error', 'Data tidak ditemukan.');
+            return redirect('/cek')->with('error', 'Data tidak ditemukan.');
         }
 
         $validated = $request->validate([

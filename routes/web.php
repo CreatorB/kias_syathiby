@@ -58,7 +58,7 @@ Route::get('isi-form-error', [DaftarController::class, 'errorDaftar'])->name('is
 Route::post('/isi-form/store', [DaftarController::class, 'store']);
 Route::get('/sukses-daftar', [DaftarController::class, 'suksesDaftar'])->name('suksesDaftarSantri');
 
-Route::get('/cari-nama', [CariNamaController::class, 'search']);
+Route::get('/cek', [CariNamaController::class, 'search']);
 Route::get('/revisi-berkas/{kode}', [RevisiBerkasController::class, 'show'])->name('revisi-berkas.show');
 Route::post('/revisi-berkas/{kode}', [RevisiBerkasController::class, 'update'])->name('revisi-berkas.update');
 Route::get('/detail-nama', [CariNamaController::class, 'detail'])->name('detailNamaSantri');

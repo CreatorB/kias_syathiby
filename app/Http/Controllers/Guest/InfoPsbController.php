@@ -68,7 +68,7 @@ class InfoPsbController extends Controller
             'nama' => 'required|string|min:3',
             'jenis_kelamin' => 'required|in:L,P',
             'nik' => 'required|string|size:16',
-            'nisn' => 'required|string|size:10',
+            'nisn' => 'nullable|string|size:10',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date|before:today',
             'alamat' => 'required|string|min:10',
