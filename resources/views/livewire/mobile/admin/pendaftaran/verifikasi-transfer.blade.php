@@ -50,7 +50,7 @@
             <div class="col-12" wire:key='card-{{ $pendaftar->id }}'>
                 <x-cards.apply-job>
                     <x-slot:avatar>
-                        <img src="{{ asset('berkas/'.$pendaftar?->tahun_psb.'/'.$pendaftar?->photo.'') }}" width="42" height="42"/>
+                        <img src="{{ \App\Helpers\FotoHelper::getPathFoto($pendaftar?->tahun_psb, $pendaftar?->kode_registrasi, $pendaftar?->photo) }}" width="42" height="42"/>
                     </x-slot:avatar>
                     <x-slot:title>
                         {{ Str::excerpt($pendaftar->nama,'',[
