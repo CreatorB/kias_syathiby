@@ -9,7 +9,7 @@
 @section('content')
 <h4 class="fw-bold py-1 mb-2">
     <span class="text-muted fw-light">
-        <a href="/cari-nama">
+        <a href="/cek">
         < Kembali
         </a>
     </span>
@@ -150,7 +150,7 @@
                             <button type="submit" class="btn btn-primary" id="btn-submit">
                                 <i class="ti ti-upload me-2"></i> Simpan Perubahan
                             </button>
-                            <a href="/cari-nama" class="btn btn-secondary ms-2">
+                            <a href="/cek" class="btn btn-secondary ms-2">
                                 Batal
                             </a>
                         </div>

@@ -1028,8 +1028,8 @@ textarea.form-control {
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">NISN (10 digit) <span class="text-danger">*</span></label>
-                                <input type="text" name="nisn" class="form-control @error('nisn') is-invalid @enderror" value="{{ old('nisn') }}" maxlength="10" required placeholder="Contoh: 0012345678">
+                                <label class="form-label">NISN (10 digit, opsional)</label>
+                                <input type="text" name="nisn" class="form-control @error('nisn') is-invalid @enderror" value="{{ old('nisn') }}" maxlength="10" placeholder="Contoh: 0012345678">
                                 @error('nisn')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -1409,10 +1409,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         var nisn = form.querySelector('[name="nisn"]');
-        if (!nisn.value.trim()) {
-            addError(nisn, 'NISN harus diisi');
-            errorFields.push(nisn);
-        } else if (nisn.value.trim().length !== 10) {
+        if (nisn.value.trim() && nisn.value.trim().length !== 10) {
             addError(nisn, 'NISN harus tepat 10 digit');
             errorFields.push(nisn);
         }

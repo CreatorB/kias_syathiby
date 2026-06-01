@@ -26,7 +26,7 @@
         <div class="col-12">
             <div class="alert alert-danger" role="alert">
                 <span>Mohon maaf, kami tidak dapat menemukan data yang anda cari.</span>
-                <button class="btn btn-sm btn-primary" onclick="location.href='/cari-nama'">Kembali</button>
+                <button class="btn btn-sm btn-primary" onclick="location.href='/cek'">Kembali</button>
             </div>
         </div>
     </div>

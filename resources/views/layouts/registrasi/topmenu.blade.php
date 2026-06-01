@@ -17,7 +17,7 @@
         </li>
 
         <li class="menu-item">
-            <a href="/cari-nama" class="menu-link">
+            <a href="/cek" class="menu-link">
               <i class="menu-icon tf-icons ti ti-zoom-exclamation"></i>
               <div data-i18n="Dashboards">Cek Data</div>
             </a>
