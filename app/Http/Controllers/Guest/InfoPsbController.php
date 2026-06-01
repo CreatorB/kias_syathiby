@@ -66,7 +66,7 @@ class InfoPsbController extends Controller
 
         $validated = $request->validate([
             'nama' => 'required|string|min:3',
-            'jenis_kelamin' => 'required|in:L,P',
+            'jenis_kelamin' => 'required|in:Laki-Laki,Perempuan',
             'nik' => 'required|string|size:16',
             'nisn' => 'nullable|string|size:10',
             'tempat_lahir' => 'required|string',
@@ -114,7 +114,7 @@ class InfoPsbController extends Controller
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
-        $jk = $request->jenis_kelamin === 'L' ? 'Laki-Laki' : 'Perempuan';
+        $jk = $request->jenis_kelamin;
 
         $kodeRegistrasi = $daftarService->kodeRegistrasi($psb->tahun_ajaran);
 

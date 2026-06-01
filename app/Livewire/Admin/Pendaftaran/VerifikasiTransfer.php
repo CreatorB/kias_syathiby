@@ -173,10 +173,16 @@ public function setIdPendanfar($id)
         $program = $santri->program->nama_program;
         $statusTransfer = $santri->status_transfer;
 
+//        if ($statusTransfer == StatusProvider::TRANSFER_VALID) {
+//            $this->url = "https://api.whatsapp.com/send?phone=".$wa."&text=*_KONFIRMASI PENDAFTARAN_*%0A%0ASelamat! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0AStatus Transfer: *".$statusTransfer."*%0A%0Atelah berhasil. Selanjutnya silahkan tunggu proses pelaksanaan tes masuk, kami akan menghubungi anda kembali, silahkan masuk group sesuai program yang dipilih : https://docs.google.com/spreadsheets/d/1a1zlNNU29bOoWy3ntPgXNOtl5RfpiQXaPGcesc8uu1w.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
+//        } else {
+//            $this->url = "https://api.whatsapp.com/send?phone=".$wa."&text=*_KONFIRMASI PENDAFTARAN_*%0A%0AMohon maaf! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0A%0Abelum dapat kami terima dengan alasan *Bukti Transfer Tidak Valid*. Mohon untuk mengirimkan ulang lampiran bukti transfer melalui WhatsApp ini.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
+//        }
+
         if ($statusTransfer == StatusProvider::TRANSFER_VALID) {
-            $this->url = "https://api.whatsapp.com/send?phone=".$wa."&text=*_KONFIRMASI PENDAFTARAN_*%0A%0ASelamat! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0AStatus Transfer: *".$statusTransfer."*%0A%0Atelah berhasil. Selanjutnya silahkan tunggu proses pelaksanaan tes masuk, kami akan menghubungi anda kembali.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_Lembaga Pendidikan Takhassus Al Barkah_";
+            $this->url = "https://wa.me/".$wa."?text=*_KONFIRMASI PENDAFTARAN_*%0A%0ASelamat! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0AStatus Transfer: *".$statusTransfer."*%0A%0Atelah berhasil. Selanjutnya silahkan tunggu proses pelaksanaan tes masuk, kami akan menghubungi anda kembali, silahkan masuk group sesuai program yang dipilih : https://docs.google.com/spreadsheets/d/1a1zlNNU29bOoWy3ntPgXNOtl5RfpiQXaPGcesc8uu1w.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
         } else {
-            $this->url = "https://api.whatsapp.com/send?phone=".$wa."&text=*_KONFIRMASI PENDAFTARAN_*%0A%0AMohon maaf! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0A%0Abelum dapat kami terima dengan alasan *Bukti Transfer Tidak Valid*. Mohon untuk mengirimkan ulang lampiran bukti transfer melalui WhatsApp ini.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_Lembaga Pendidikan Takhassus Al Barkah_";
+            $this->url = "https://wa.me/".$wa."?text=*_KONFIRMASI PENDAFTARAN_*%0A%0AMohon maaf! Pendaftaran dengan data berikut:%0A%0ANama Lengkap: *".$nama."*%0AProgram: *".$program."*%0A%0Abelum dapat kami terima dengan alasan *Bukti Transfer Tidak Valid*. Mohon untuk mengirimkan ulang lampiran bukti transfer melalui WhatsApp ini.%0ATerima kasih, jazakumullahu khoiron.%0A%0A_Panitia PSB_%0A_https://kias.syathiby.id_";
         }
 
         $this->dispatch('kirim-notifikasi', url: $this->url);

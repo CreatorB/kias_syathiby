@@ -1080,18 +1080,13 @@ textarea.form-control {
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
-                                <div class="d-flex gap-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jk_l" value="L" {{ old('jenis_kelamin') == 'L' ? 'checked' : '' }} required>
-                                        <label class="form-check-label" for="jk_l">Laki-laki (Ikhwan)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jk_p" value="P" {{ old('jenis_kelamin') == 'P' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="jk_p">Perempuan (Akhwat)</label>
-                                    </div>
-                                </div>
+                                <select name="jenis_kelamin" class="form-select @error('jenis_kelamin') is-invalid @enderror" required>
+                                    <option value="">-- Pilih --</option>
+                                    <option value="Laki-Laki" {{ old('jenis_kelamin') == 'Laki-Laki' ? 'selected' : '' }}>Laki-laki (Ikhwan)</option>
+                                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan (Akhwat)</option>
+                                </select>
                                 @error('jenis_kelamin')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6 mb-3">
@@ -1410,10 +1405,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Jenis Kelamin
-        if (!form.querySelector('[name="jenis_kelamin"]:checked')) {
-            const jkWrap = form.querySelector('#jk_l').closest('.d-flex');
-            addErrorAfter(jkWrap, 'Jenis kelamin harus dipilih', 'err_jk');
-            errorFields.push(form.querySelector('#jk_l'));
+        const jk = form.querySelector('[name="jenis_kelamin"]');
+        if (!jk.value) {
+            addError(jk, 'Jenis kelamin harus dipilih');
+            errorFields.push(jk);
         }
 
         // NIK
