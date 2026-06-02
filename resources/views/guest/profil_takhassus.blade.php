@@ -36,17 +36,18 @@
             Merupakan ketaatan yang paling nyata sehingga dengan ilmu itulah kedudukan dan kapasitas seorang muslim menjadi  tinggi di sisi Allah. Allah telah memerintahkan hamba-Nya untuk berilmu, mempelajari dan mengamalkannya dengan penuh keikhlasan mencari Ridho-Nya serta senantiasa ittiba/meneladani Rasulullah dalam mengaplikasikan ilmu tersebut dalam kehidupan sehari-hari.
         </p>
 
-        <h2 class="title z-index-1 mb-2">visi dan Misi</h2>
+        <h2 class="title z-index-1 mb-2">Visi dan Misi</h2>
         <p class="lead mb-3 text-black">
             <b>VISI</b><br>
             Menjadi lembaga pendidikan yang berkualitas serta mampu mengembangkan dan menghasilkan generasi muslim sesuai manhaj salafush shalih.<br><br>
             <b>MISI</b><br>
             Misi lembaga adalah membangun dan menyelenggarakan sistem pendidikan komprehensif yang mampu menyiapkan lulusannya untuk menjadi generasi muslim sesuai manhaj salafush shalih.<br><br>
-            <b>OPERSAIONAL MISI</b><br>
+            <b>OPERASIONAL MISI</b><br>
             Menyelenggarakan Program Pendidikan :<br>
-            1. Tajwid Al-Quran <br>
-            2. Bahasa Arab Reguler/ Unggulan/ Eksekutif/ Takmili <br>
-            3. Ulum As-Syari’ah <br>
+            1. Tajwid Al-Qur’an <br>
+            2. Bahasa Arab <br>
+            3. Takmili (Bahasa Arab Lanjutan) <br>
+            4. Ulum Asy-Syariah — persyaratan mampu berbahasa Arab, daftar di <a href="https://mahadaly.syathiby.id" target="_blank">mahadaly.syathiby.id</a> <br>
         </p>
 
         <h2 class="title z-index-1 mb-2">Tujuan</h2>
@@ -85,19 +86,9 @@
             7. Santri dihargai kemampuannya dan diberi kesempatan untuk mengembangkan potensinya. <br>
         </p>
 
-        <h2 class="title z-index-1 mb-2">Rois Qism</h2>
+        <h2 class="title z-index-1 mb-2">Pembina</h2>
         <p class="lead mb-3 text-black">
-            Berikut ini adalah Rois Qism (Kepala Program) masing-masing :<br>
-            1. Al-Barkah Tajwid Al-Qur'an <br>
-            <b>Ust. Abu Rif'ah Rifky, Lc.</b><br>
-            2. Al-Barkah Bahasa Arab <br>
-            <b>Ust. Zahir Alminangkabawi</b><br>
-            3. Al-Barkah Takmili <br>
-            <b>Ust. Zahir Alminangkabawi</b><br>
-            4. Al-Barkah Ulum Asy-Syariah <br>
-            <b>Ust. Cecep Nurohman, Lc.MA.</b><br>
-            5. Cibinong Tajwid & Bahasa Arab <br>
-            <b>Ust. Zaid Al-Khair</b>
+            <b>{{ $lembaga->mudir }}</b>
         </p>
 
         <ul class="team-icon list-inline mb-4">
@@ -105,7 +96,7 @@
             <a href="mailto:kias.syathiby@gmail.com">kias.syathiby@gmail.com</a>
             </li>
             <li class="list-inline-item mt-3 mt-md-0"> <i class="flaticon-social-media"></i>
-            <a href="https://api.whatsapp.com/send?phone=628111516756">0811-1516-756</a>
+            <a href="https://api.whatsapp.com/send?phone=62{{ ltrim($lembaga->kontak_admin1 ?? '08111516756', '0') }}" target="_blank">{{ $lembaga->kontak_admin1 ?? '0811-1516-756' }}</a>
             </li>
         </ul>
         </div>

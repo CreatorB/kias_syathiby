@@ -47,16 +47,6 @@ class ProgramController extends Controller
     }
 
     public function ulumSyariah() {
-        $data = [
-            'title' => 'Program Ulum Asy-Syari\'ah',
-            'lembaga' => Lembaga::find(1),
-            'program' => Program::where('jenis_program_id', 3)->orderBy('id', 'asc')->get(),
-            'kitab' => Kitab::where('jenis_program_id', 3)
-            ->orderBy('id', 'asc')
-            ->get()
-            ->groupBy('kelas'),
-        ];
-
-        return view('guest.program_ulum_syariah', $data);
+        return redirect()->away('https://mahadaly.syathiby.id');
     }
 }

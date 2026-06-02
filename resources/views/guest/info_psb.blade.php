@@ -717,7 +717,7 @@ textarea.form-control {
             <div class="col-lg-10 hero-content">
                 <h1 class="display-4">Penerimaan Santri Baru</h1>
                 <h2>Tahun Ajaran {{ $psb->tahun_ajaran ?? '2026/2027' }}</h2>
-                <p class="lead">Tersedia program <strong>Tajwid Al-Qur'an, Bahasa Arab Reguler, dan Bahasa Arab Takmili</strong></p>
+                <p class="lead">Tersedia program <strong>Tajwid Al-Qur'an, Bahasa Arab, dan Takmili</strong></p>
                 @if($psb && $psb_datetime_closed)
                 <p class="mb-4"><i class="ti ti-calendar me-2"></i>Batas akhir pendaftaran: <strong>{{ TanggalHelper::konversiTanggalPenuh($psb_datetime_closed) }}</strong></p>
                 @endif
@@ -731,6 +731,75 @@ textarea.form-control {
                     <a href="https://drive.google.com/drive/folders/1LeX10zxT1ZwFvgwU7NQpi18--MdBJI7X" target="_blank" class="btn btn-light btn-hero">
                         <i class="ti ti-download me-2"></i>Download Brosur
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Teknis Pendaftaran Section -->
+<section id="teknis" class="psb-section" style="padding-bottom: 0;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Teknis Pendaftaran</h2>
+            <p>PPDB KIAS Syathiby — Periode {{ $psb->tahun_ajaran ?? '2026/2027' }}</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0" style="color:white;"><i class="ti ti-map-pin me-2"></i>Offline</h5>
+                    </div>
+                    <div class="card-body">
+                        @if($teknisDaftar)
+                        <p class="mb-2"><i class="ti ti-calendar me-2 text-primary"></i><strong>Periode:</strong> {{ $teknisDaftar->periode }}</p>
+                        <p class="mb-2"><i class="ti ti-clock me-2 text-primary"></i><strong>Hari & Jam:</strong> {{ $teknisDaftar->hari }}, {{ $teknisDaftar->waktu }}</p>
+                        <p class="mb-0"><i class="ti ti-building me-2 text-primary"></i><strong>Tempat:</strong> {{ $teknisDaftar->tempat }}</p>
+                        @else
+                        <p class="mb-2"><i class="ti ti-calendar me-2 text-primary"></i><strong>Periode:</strong> 01 Juni – 19 Agustus 2026</p>
+                        <p class="mb-2"><i class="ti ti-clock me-2 text-primary"></i><strong>Hari & Jam:</strong> Sabtu, 07:00 – 13:00 WIB</p>
+                        <p class="mb-0"><i class="ti ti-building me-2 text-primary"></i><strong>Tempat:</strong> Ma'had Imam Syathiby</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0" style="color:white;"><i class="ti ti-world me-2"></i>Online</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2"><i class="ti ti-link me-2 text-success"></i><strong>Website:</strong> <a href="/psb">kias.syathiby.id/psb</a></p>
+                        <p class="mb-2"><i class="ti ti-brand-whatsapp me-2 text-success"></i><strong>Admin:</strong>
+                            <a href="https://api.whatsapp.com/send?phone=62{{ ltrim($lembaga->kontak_admin1 ?? '08111516756', '0') }}" target="_blank">
+                                {{ $lembaga->kontak_admin1 ?? '0811 1516 756' }}
+                            </a>
+                        </p>
+                        @if($psb_datetime_open && $psb_datetime_closed)
+                        <p class="mb-0"><i class="ti ti-calendar me-2 text-success"></i><strong>Periode:</strong>
+                            {{ TanggalHelper::konversiTanggalPenuh($psb_datetime_open) }} – {{ TanggalHelper::konversiTanggalPenuh($psb_datetime_closed) }}
+                        </p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header text-white" style="background: var(--kias-gradient);">
+                        <h5 class="mb-0" style="color:white;"><i class="ti ti-school me-2"></i>Tes & Mulai Belajar</h5>
+                    </div>
+                    <div class="card-body">
+                        @php $tesMasukUtamaInfo = $tesMasuk->first()?->first(); @endphp
+                        @if($tesMasukUtamaInfo)
+                        <p class="mb-2"><i class="ti ti-pencil me-2 text-primary"></i><strong>Tes Masuk:</strong><br>
+                            {{ $tesMasukUtamaInfo->hari }}, {{ $tesMasukUtamaInfo->tanggal }}<br>
+                            <small class="text-muted">{{ $tesMasukUtamaInfo->tempat }}</small>
+                        </p>
+                        @else
+                        <p class="mb-2"><i class="ti ti-pencil me-2 text-primary"></i><strong>Tes Masuk:</strong><br>Sabtu, 22 Agustus 2026</p>
+                        @endif
+                        <p class="mb-0"><i class="ti ti-player-play me-2 text-primary"></i><strong>Mulai Belajar:</strong><br>05 September 2026</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -752,7 +821,9 @@ textarea.form-control {
                 <div class="program-card">
                     <span class="badge badge-tajwid">Tajwid Al-Qur'an</span>
                     <h4>{{ str_replace('Al-Barkah ', '', $program->nama_program) }}</h4>
-                    <p class="mb-0"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Belajar Membaca dan Menulis Al-Qur\'an' }}</p>
+                    <p class="mb-2"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? '-' }}</p>
+                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>1 Tahun</p>
+                    <p class="mb-0 text-muted small"><i class="ti ti-map-pin me-1"></i>Ma'had Syathiby</p>
                 </div>
             </div>
             @endforeach
@@ -762,9 +833,11 @@ textarea.form-control {
             @foreach($bahasaArab as $program)
             <div class="col-md-6 col-lg-4">
                 <div class="program-card">
-                    <span class="badge badge-ba">Bahasa Arab Reguler</span>
+                    <span class="badge badge-ba">Bahasa Arab</span>
                     <h4>{{ str_replace('Al-Barkah ', '', $program->nama_program) }}</h4>
-                    <p class="mb-0"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Program belajar bahasa Arab intensif' }}</p>
+                    <p class="mb-2"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Mampu Baca Tulis Al-Qur\'an' }}</p>
+                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>2 Tahun</p>
+                    <p class="mb-0 text-muted small"><i class="ti ti-map-pin me-1"></i>Ma'had Syathiby</p>
                 </div>
             </div>
             @endforeach
@@ -776,11 +849,14 @@ textarea.form-control {
                 <div class="program-card">
                     <span class="badge badge-takmili">Bahasa Arab Takmili</span>
                     <h4>{{ str_replace('Al-Barkah ', '', $program->nama_program) }}</h4>
-                    <p class="mb-0"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Program pendalaman bahasa Arab' }}</p>
+                    <p class="mb-2"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Memiliki kemampuan bahasa Arab dasar' }}</p>
+                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>2 Tahun</p>
+                    <p class="mb-0 text-muted small"><i class="ti ti-map-pin me-1"></i>Ma'had Syathiby</p>
                 </div>
             </div>
             @endforeach
             @endif
+
         </div>
     </div>
 </section>
@@ -801,20 +877,16 @@ textarea.form-control {
                     </div>
                     <table class="table">
                         <tr>
-                            <td>Biaya Pendaftaran</td>
-                            <td class="biaya-amount">Rp 150.000</td>
+                            <td>Biaya Pendaftaran <small class="text-muted">(per program)</small></td>
+                            <td class="biaya-amount">Rp {{ number_format($psb->biaya_pendaftaran ?? 150000, 0, ',', '.') }}</td>
                         </tr>
                         <tr>
-                            <td>Sarana Prasarana</td>
-                            <td class="biaya-amount">Rp 300.000</td>
+                            <td>Sarpras &amp; Maintenance</td>
+                            <td class="biaya-amount">Rp {{ number_format($psb->biaya_sarana_prasana ?? 300000, 0, ',', '.') }}</td>
                         </tr>
-                        {{-- <tr>
-                            <td>Kuliah Perdana</td>
-                            <td class="biaya-amount">Rp 250.000</td>
-                        </tr> --}}
                         <tr>
                             <td>SPP Bulanan</td>
-                            <td class="biaya-amount">Rp 250.000</td>
+                            <td class="biaya-amount">Rp {{ number_format($psb->biaya_spp_bulanan ?? 250000, 0, ',', '.') }}</td>
                         </tr>
                     </table>
                 </div>
@@ -822,11 +894,11 @@ textarea.form-control {
                 <div class="info-box mt-4">
                     <h5><i class="ti ti-info-circle me-2"></i>Catatan Biaya</h5>
                     <ul class="mb-0">
-                        <li>Biaya Pendaftaran dibayarkan sekali di awal</li>
+                        <li>Biaya Pendaftaran Rp {{ number_format($psb->biaya_pendaftaran ?? 150000, 0, ',', '.') }} dibayarkan sekali di awal (per program)</li>
                         <li>Biaya Pendaftaran yang sudah dibayarkan tidak bisa dikembalikan</li>
-                        <li>Biaya Sarana Prasarana untuk fasilitas belajar</li>
-                        {{-- <li>Biaya Kuliah Perdana dibayarkan saat mulai kuliah</li> --}}
-                        <li>SPP Bulanan dibayarkan setiap bulan</li>
+                        <li>Biaya Sarpras & Maintenance Rp {{ number_format($psb->biaya_sarana_prasana ?? 300000, 0, ',', '.') }} untuk fasilitas belajar, dibayarkan saat mulai belajar</li>
+                        <li>SPP Bulanan Rp {{ number_format($psb->biaya_spp_bulanan ?? 250000, 0, ',', '.') }} dibayarkan setiap bulan</li>
+                        <li>Kuota terbatas</li>
                     </ul>
                 </div>
             </div>
@@ -845,8 +917,13 @@ textarea.form-control {
         <div class="row">
             <div class="col-lg-6">
                 <div class="card shadow-sm mb-4">
+                    @php $tesMasukUtama = $tesMasuk->first()?->first(); @endphp
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0" style="color: white;"><i class="ti ti-calendar me-2"></i>Alur Test - Sabtu, 22 Agustus 2026</h5>
+                        <h5 class="mb-0" style="color: white;"><i class="ti ti-calendar me-2"></i>Alur Test
+                            @if($tesMasukUtama)
+                                - {{ $tesMasukUtama->hari }}, {{ $tesMasukUtama->tanggal }}
+                            @endif
+                        </h5>
                     </div>
                     <div class="card-body p-4">
                         <div class="alur-step">
@@ -1297,7 +1374,7 @@ textarea.form-control {
                 <div class="payment-info">
                     <div class="text-center mb-4">
                         <h4 class="fw-bold text-primary">Biaya Pendaftaran</h4>
-                        <h2 class="text-primary fw-bold display-6">Rp 150.000</h2>
+                        <h2 class="text-primary fw-bold display-6">Rp {{ number_format($psb->biaya_pendaftaran ?? 150000, 0, ',', '.') }}</h2>
                     </div>
 
                     <div class="bank-details">
@@ -1311,7 +1388,7 @@ textarea.form-control {
                         <h6 class="alert-heading"><i class="ti ti-info-circle me-2"></i>Cara Pembayaran</h6>
                         <hr class="my-2">
                         <ol class="mb-0">
-                            <li>Transfer sesuai nominal biaya pendaftaran (<strong>Rp 150.000</strong>)</li>
+                            <li>Transfer sesuai nominal biaya pendaftaran (<strong>Rp {{ number_format($psb->biaya_pendaftaran ?? 150000, 0, ',', '.') }}</strong>)</li>
                             <li>Simpan bukti transfer dengan baik</li>
                             <li>Upload bukti pembayaran di formulir pendaftaran</li>
                             <li>Pendaftaran akan diverifikasi dalam 1x24 jam kerja</li>
