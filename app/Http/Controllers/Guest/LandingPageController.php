@@ -6,16 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\InfoPsb;
 use App\Models\Lembaga;
 use App\Models\Pengajar;
+use App\Models\TeknisDaftar;
+use App\Models\TesMasuk;
+use App\Services\InfoPsbService;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
 {
-    public function index() {
+    public function index(InfoPsbService $infoPsbService) {
         $data = [
             'title' => 'Home',
             'lembaga' => Lembaga::find(1),
-            'psb' => InfoPsb::find(1),
+            'psb' => $infoPsbService->psbAktif(),
             'pengajar' => Pengajar::orderBy('id', 'asc')->limit(5)->get(),
+            'teknisDaftar' => TeknisDaftar::find(1),
+            'tesMasuk' => TesMasuk::where('cabang_id', 1)->first(),
         ];
 
         return view('guest.landing_page', $data);

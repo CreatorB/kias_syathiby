@@ -141,8 +141,8 @@
             <h5>Ulum Asy-Syariah</h5>
             </div>
             <div class="featured-desc">
-            <p>Belajar berbagai macam disiplin ilmu syar'i dengan membaca kitab berbahasa arab</p>
-            <a class="icon-btn mt-4" href="/program-ulum-syariah"> <i class="la la-angle-right"></i>
+            <p>Persyaratan mampu berbahasa Arab. Daftar melalui mahadaly.syathiby.id</p>
+            <a class="icon-btn mt-4" href="https://mahadaly.syathiby.id" target="_blank"> <i class="la la-angle-right"></i>
             </a>
             </div>
         </div>

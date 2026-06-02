@@ -22,7 +22,7 @@
               <img src="{{ asset('landing/images/partners/syathiby.webp') }}" alt="Ma'had Syathiby" class="img-fluid"
                 style="max-height: 45px; opacity: 0.9; transition: all 0.3s ease;">
             </a>
-            <a href="https://syathiby.id" target="_blank" class="partner-logo" title="Ma'had Aly Syathiby">
+            <a href="https://mahadaly.syathiby.id" target="_blank" class="partner-logo" title="Ma'had Aly Syathiby">
               <img src="{{ asset('landing/images/partners/mahadalysyathiby.png') }}" alt="Ma'had Aly Syathiby" class="img-fluid"
                 style="max-height: 45px; opacity: 0.9; transition: all 0.3s ease;">
             </a>
@@ -65,9 +65,11 @@
           </div>
           <!-- Contact Info -->
           <div class="col-lg-4 col-md-12 text-center text-lg-end">
-            <span class="contact-info">
-              <i class="fab fa-whatsapp me-1"></i> 0811-1516-756
-            </span>
+            <a href="https://api.whatsapp.com/send?phone=628111516756" target="_blank" style="text-decoration:none;">
+              <span class="contact-info">
+                <i class="fab fa-whatsapp me-1"></i> 0811-1516-756
+              </span>
+            </a>
           </div>
         </div>
       </div>

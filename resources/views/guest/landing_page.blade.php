@@ -109,7 +109,7 @@
                 </a>
               </div>
               <div class="col-lg-6 col-md-6 mt-4">
-                <a href="/program-ulum-syariah" class="text-secondary">
+                <a href="https://mahadaly.syathiby.id" target="_blank" class="text-secondary">
                   <div class="featured-item style-3">
                     <div class="featured-icon">
                       <i class="la la-school"></i>
@@ -118,7 +118,7 @@
                       <h5>Ulum Asy-Syariah</h5>
                     </div>
                     <div class="featured-desc">
-                      <p>Belajar berbagai disiplin ilmu syar'i dengan membaca kitab berbahasa arab</p>
+                      <p>Persyaratan: mampu berbahasa Arab. Daftar melalui <strong>mahadaly.syathiby.id</strong> <i class="la la-external-link-alt"></i></p>
                     </div>
                   </div>
                 </a>
@@ -184,9 +184,9 @@
             </div>
             <ul class="list-unstyled list-icon">
               <li class="mb-3"><i class="la la-check"></i> Masjid Al Barkah</li>
-              <li class="mb-3"><i class="la la-check"></i> Mushola Ma'had Imam Syathiby</li>
-              <li class="mb-3"><i class="la la-check"></i> Perpustakaan Ma'had Imam Syathiby</li>
-              <li class="mb-3"><i class="la la-check"></i> Ruang Kelas Full AC</li>
+              <li class="mb-3"><i class="la la-check"></i> Musholla Ma'had Syathiby</li>
+              <li class="mb-3"><i class="la la-check"></i> Perpustakaan Ma'had Syathiby</li>
+              <li class="mb-3"><i class="la la-check"></i> Ruang Kelas ber-AC</li>
               <li><i class="la la-check"></i> Area Parkir Luas</li>
             </ul>
           </div>
@@ -211,7 +211,7 @@
             <div class="price-table style-4">
               <div class="price-header">
                 <div class="price-value">
-                  <h2>{{ number_format($psb->biaya_pendaftaran, 0, ',', '.') }}</h2>
+                  <h2>{{ number_format($psb->biaya_pendaftaran ?? 150000, 0, ',', '.') }}</h2>
                   <span>Sekali Bayar</span>
                 </div>
                 <h3 class="price-title">Pendaftaran</h3>
@@ -231,7 +231,7 @@
               <canvas id="canvas"></canvas>
               <div class="price-header">
                 <div class="price-value">
-                  <h2>{{ number_format($psb->biaya_spp, 0, ',', '.') }}</h2>
+                  <h2>{{ number_format($psb->biaya_spp_bulanan ?? 250000, 0, ',', '.') }}</h2>
                   <span>per Bulan</span>
                 </div>
                 <h3 class="price-title">SPP Bulanan</h3>
@@ -250,18 +250,17 @@
             <div class="price-table style-4">
               <div class="price-header">
                 <div class="price-value">
-                  <h2>{{ number_format($psb->biaya_transkrip, 0, ',', '.') }}</h2>
+                  <h2>{{ number_format($psb->biaya_sarana_prasana ?? 300000, 0, ',', '.') }}</h2>
                   <span>Sekali Bayar</span>
                 </div>
-                <h3 class="price-title">Kelulusan</h3>
+                <h3 class="price-title">Sarpras & Maintenance</h3>
               </div>
               <div class="price-list">
                 <ul class="list-unstyled">
-                  <li><i class="la la-check"></i> Biaya Cetak Ijazah dan Transkrip</li>
-                  <li><i class="la la-check"></i> Biaya Mutasi Program : {{ number_format($psb->biaya_mutasi, 0, ',', '.') }}
-                  </li>
-                  <li><i class="la la-check"></i> Dibayarkan Apabila Santri Dinyatakan Lulus</li>
-                  <li><i class="la la-check"></i> Santri Harus Melunasi Seluruh Biaya SPP Terlebih Dahulu</li>
+                  <li><i class="la la-check"></i> Biaya Sarana Prasarana</li>
+                  <li><i class="la la-check"></i> Biaya Perawatan Fasilitas</li>
+                  <li><i class="la la-check"></i> Dibayarkan Saat Mulai Belajar</li>
+                  <li><i class="la la-check"></i> Berlaku Selama 1 Tahun Pelajaran</li>
                 </ul>
               </div>
             </div>
@@ -283,7 +282,7 @@
         </div>
         <div class="row md-mt-0">
           <div class="col-md-12">
-            <div class="owl-carousel" data-dots="true" data-items="3" data-lg-items="3" data-md-items="2"
+            <div class="owl-carousel" data-dots="true" data-items="4" data-lg-items="4" data-md-items="2"
               data-sm-items="1" data-autoplay="true">
               <div class="item">
                 <div class="featured-item style-2">
@@ -292,10 +291,10 @@
                     <span class="rotateme"></span>
                   </div>
                   <div class="featured-title">
-                    <h5>Kurikulum Unik</h5>
+                    <h5>Program Terstruktur &amp; Komprehensif</h5>
                   </div>
                   <div class="featured-desc">
-                    <p>Fokus pada potensi, perkembangan dan kepentingan para santri dan lingkungan nya</p>
+                    <p>Kurikulum yang telah dikembangkan dan mempertimbangkan kemampuan peserta didik</p>
                   </div>
                 </div>
               </div>
@@ -306,10 +305,10 @@
                     <span class="rotateme"></span>
                   </div>
                   <div class="featured-title">
-                    <h5>Untuk Siapa Saja</h5>
+                    <h5>Pengajar Kompeten &amp; Berpengalaman</h5>
                   </div>
                   <div class="featured-desc">
-                    <p>Kami menerima semua santri mulai dari usia SMP sampai usia lanjut</p>
+                    <p>Asatidzah berkompeten dan berkualitas sesuai bidang keilmuannya</p>
                   </div>
                 </div>
               </div>
@@ -320,15 +319,35 @@
                     <span class="rotateme"></span>
                   </div>
                   <div class="featured-title">
-                    <h5>Lingkungan Sunnah</h5>
+                    <h5>Lingkungan Islami &amp; Kondusif</h5>
                   </div>
                   <div class="featured-desc">
-                    <p>Pendidikan yang bersifat tashfiyah dan tarbiyah, suasana yang saling menerima dan akrab sesuai
-                      sunnah</p>
+                    <p>Suasana belajar yang islami, kondusif, dan mendukung perkembangan ilmu santri</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="featured-item style-2">
+                  <div class="featured-icon">
+                    <i class="flaticon-study"></i>
+                    <span class="rotateme"></span>
+                  </div>
+                  <div class="featured-title">
+                    <h5>Fokus Pada Ilmu &amp; Akhlak</h5>
+                  </div>
+                  <div class="featured-desc">
+                    <p>Pendidikan yang menyeimbangkan ilmu syar'i dan pembinaan akhlak mulia</p>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-12 text-center">
+            <blockquote class="blockquote">
+              <p class="h5 fst-italic text-theme">"Memahami Ilmu Syar'i Untuk Membangun Generasi Umat Islam yang Terbaik"</p>
+            </blockquote>
           </div>
         </div>
       </div>
@@ -374,8 +393,8 @@
             </div>
           </div>
           <div class="col-lg-4 col-md-6 mt-5 mt-lg-0">
-            <a href="https://api.whatsapp.com/send?phone=628111516756">
-              <div class="contact-media"> <i class="flaticon-social-media"></i><span>Whatsapp</span>0811-1516-756
+            <a href="https://api.whatsapp.com/send?phone=62{{ ltrim($lembaga->kontak_admin1 ?? '08111516756', '0') }}" target="_blank">
+              <div class="contact-media"> <i class="flaticon-social-media"></i><span>Whatsapp</span>{{ $lembaga->kontak_admin1 ?? '0811-1516-756' }}
               </div>
             </a>
           </div>
