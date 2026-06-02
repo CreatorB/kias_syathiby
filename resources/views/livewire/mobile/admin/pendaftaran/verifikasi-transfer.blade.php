@@ -23,12 +23,28 @@
         </div>
         <div class="row mb-1">
             <div class="col-12">
-                <x-badges.basic color="primary">Total : {{ $this->jmlPendaftar }}</x-badges.basic>
-                <x-badges.basic color="success">Valid : {{ $this->jmlValid }}</x-badges.basic>
-                <x-badges.basic color="warning">Proses : {{ $this->jmlCek }}</x-badges.basic>
-                <x-badges.basic color="danger">Tidak Valid : {{ $this->jmlInvalid }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="resetFilter" :color="$filterJk || $filterStatus ? 'secondary' : 'primary'">Total : {{ $this->jmlPendaftar }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterStatus('{{ \App\Providers\StatusProvider::TRANSFER_VALID }}')" color="success">Valid : {{ $this->jmlValid }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterStatus('{{ \App\Providers\StatusProvider::TRANSFER_PROSES }}')" color="warning">Proses : {{ $this->jmlCek }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterStatus('{{ \App\Providers\StatusProvider::TRANSFER_INVALID }}')" color="danger">Tidak Valid : {{ $this->jmlInvalid }}</x-badges.basic>
             </div>
         </div>
+        <div class="row mb-1">
+            <div class="col-12">
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterJk('Laki-Laki')" color="success">Ikhwan : {{ $this->jmlIkhwan }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterJk('Perempuan')" color="danger">Akhwat : {{ $this->jmlAkhwat }}</x-badges.basic>
+            </div>
+        </div>
+        @if ($filterJk || $filterStatus)
+        <div class="row mb-1">
+            <div class="col-12">
+                <a wire:click="resetFilter" class="text-danger cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    Reset Filter
+                </a>
+            </div>
+        </div>
+        @endif
         <div class="col-12">
             <x-buttons.dropdown-outline color='primary'>
                 <x-slot name="buttonName">
@@ -45,8 +61,8 @@
     <!--#Filter Data-->
 
     <!--Card List Santri-->
-    <div class="row @if($this->dataPendaftar->count() >=4) scroller5 @endif">
-        @forelse ($this->dataPendaftar as $pendaftar)
+    <div class="row @if($this->dataPaginator->count() >=4) scroller5 @endif">
+        @forelse ($this->dataPaginator as $pendaftar)
             <div class="col-12" wire:key='card-{{ $pendaftar->id }}'>
                 <x-cards.apply-job>
                     <x-slot:avatar>
@@ -128,7 +144,7 @@
             </div>
         @endforelse
 
-        @if ($this->dataPendaftar->hasMorePages())
+        @if ($this->dataPaginator->hasMorePages())
             <livewire:components.load-more-button :$tambahData/>
         @endif
     </div>

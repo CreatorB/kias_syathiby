@@ -99,6 +99,9 @@ public function pekerjaan(): BelongsTo
             ->when($filterData != null && isset($filterData['jk']), function ($q) use ($filterData) {
                 return $q->where('jk', $filterData['jk']);
             })
+            ->when($filterData != null && isset($filterData['status']), function ($q) use ($filterData) {
+                return $q->where('status_transfer', $filterData['status']);
+            })
             ->where('tahun_psb', $tahunPsb);
     }
 
