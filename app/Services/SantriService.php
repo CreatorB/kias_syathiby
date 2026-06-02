@@ -21,14 +21,14 @@ class SantriService
         ->count();
     }
 
-    //Hitung total santri transfer valid
+    //Hitung total Santi transfer valid
     public function totalTransferValid($tahunPsb) {
         return Santri::queryPendaftaran($tahunPsb)
         ->where('status_transfer', StatusProvider::TRANSFER_VALID)
         ->count();
     }
 
-    //Hitung total santri transfer valid
+    //Hitung total Santi transfer valid
     public function totalTransferInvalid($tahunPsb) {
         return Santri::queryPendaftaran($tahunPsb)
         ->where('status_transfer', StatusProvider::TRANSFER_INVALID)
@@ -42,7 +42,7 @@ class SantriService
         ->paginate($limitData);
     }
 
-    //Tampilkan semua santri yang sudah lunas pembayaran
+    //Tampilkan semua Santi yang sudah lunas pembayaran
     public function paginateSantriInduk($tahunPsb, $limitData, $filterData = null) {
         return Santri::queryPendaftaran($tahunPsb, $filterData)
         ->where('status_transfer', StatusProvider::TRANSFER_VALID)
@@ -50,14 +50,14 @@ class SantriService
         ->paginate($limitData);
     }
 
-    //Hitung total santri transfer valid
+    //Hitung total Santi transfer valid
     public function totalSantriInduk($tahunPsb, $filterData = null) {
         return Santri::queryPendaftaran($tahunPsb, $filterData)
         ->where('status_transfer', StatusProvider::TRANSFER_VALID)
         ->count();
     }
 
-    //Hitung total santri ikhwan transfer valid
+    //Hitung total Santi ikhwan transfer valid
     public function totalSantriIkhwan($tahunPsb, $filterData = null) {
         return Santri::queryPendaftaran($tahunPsb, $filterData)
         ->where('status_transfer', StatusProvider::TRANSFER_VALID)
@@ -65,11 +65,33 @@ class SantriService
         ->count();
     }
 
-    //Hitung total santri akhwat transfer valid
+    //Hitung total Santi akhwat transfer valid
     public function totalSantriAkhwat($tahunPsb, $filterData = null) {
         return Santri::queryPendaftaran($tahunPsb, $filterData)
         ->where('status_transfer', StatusProvider::TRANSFER_VALID)
         ->where('jk', 'Perempuan')
+        ->count();
+    }
+
+    //Hitung total bukti transfer by jk
+    public function totalTransferByJk($tahunPsb, $jk) {
+        return Santri::queryPendaftaran($tahunPsb)
+        ->where('jk', $jk)
+        ->count();
+    }
+
+    //Hitung total bukti transfer by status
+    public function totalTransferByStatus($tahunPsb, $status) {
+        return Santri::queryPendaftaran($tahunPsb)
+        ->where('status_transfer', $status)
+        ->count();
+    }
+
+    //Hitung bukti transfer by jk and status
+    public function totalTransferByJkAndStatus($tahunPsb, $jk, $status) {
+        return Santri::queryPendaftaran($tahunPsb)
+        ->where('jk', $jk)
+        ->where('status_transfer', $status)
         ->count();
     }
 

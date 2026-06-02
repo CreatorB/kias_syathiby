@@ -83,25 +83,42 @@ class LoginController extends Controller
 
     /**
      * Find user by email or phone number.
+     * Supports:
+     * - Email
+     * - Phone number (peserta's no_hp)
+     * - Phone number (wali's no_hp_ayah via related Santri)
      */
     protected function findUserByIdentifier(string $identifier): ?User
     {
         $identifier = trim($identifier);
 
-        // First, try to find by email (case-insensitive)
         $user = User::whereRaw('LOWER(email) = ?', [strtolower($identifier)])->first();
 
         if ($user) {
             return $user;
         }
 
-        // If not found by email, try phone number with all variants
         $phoneVariants = $this->normalizePhone($identifier);
 
-        return User::where(function ($query) use ($phoneVariants) {
+        $userByPhone = User::where(function ($query) use ($phoneVariants) {
             foreach ($phoneVariants as $phone) {
                 $query->orWhere('phone', $phone);
             }
+        })->first();
+
+        if ($userByPhone) {
+            return $userByPhone;
+        }
+
+        $normalizedInput = ltrim($identifier, '+');
+        if (str_starts_with($normalizedInput, '62')) {
+            $localInput = '0' . substr($normalizedInput, 2);
+        } else {
+            $localInput = $identifier;
+        }
+
+        return User::whereHas('santri', function ($query) use ($localInput) {
+            $query->where('no_hp_ayah', $localInput);
         })->first();
     }
 
@@ -143,6 +160,10 @@ class LoginController extends Controller
             return redirect()->route('login')->with('flash_message_error', 'User tidak ditemukan dengan email/No.HP: ' . $inputIdentifier);
         }
 
+        if (!$user->is_active && $user->role_id === 4) {
+            return redirect()->route('login')->with('flash_message_error', 'Akun anda belum diaktifkan. Mohon tunggu konfirmasi pembayaran dari admin.');
+        }
+
         $authenticated = false;
 
         // If password provided, try normal authentication
@@ -170,11 +191,11 @@ class LoginController extends Controller
                 // Admin/Superadmin -> Admin Dashboard
                 return redirect()->route('admin::dashboard');
             } elseif ($roleId == 3) {
-                // Santri -> Home
-                return redirect()->intended(RouteServiceProvider::HOME);
+                // Santri -> Dashboard
+                return redirect()->route('peserta::index');
             } else {
                 // Peserta (role 4) -> Events Dashboard
-                return redirect()->route('dashboard::events');
+                return redirect()->route('peserta::events');
             }
         } else {
             return redirect()->route('login')->with('flash_message_error', 'Password salah untuk akun: ' . $user->email);

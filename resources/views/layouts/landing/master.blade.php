@@ -149,11 +149,11 @@
                           <a class="btn btn-theme btn-sm flex-fill" href="{{ route('admin::dashboard') }}">
                             <i class="fas fa-tachometer-alt me-1"></i> Dashboard
                           </a>
-                        @else
-                          <a class="btn btn-theme btn-sm flex-fill" href="{{ route('dashboard::events') }}">
-                            <i class="fas fa-user me-1"></i> Akun Saya
-                          </a>
-                        @endif
+@else
+                      <a class="btn btn-theme btn-sm flex-fill" href="{{ route('peserta::events') }}">
+                        <i class="fas fa-user me-1"></i> Akun Saya
+                      </a>
+                    @endif
                       @else
                         <a class="btn btn-theme btn-sm flex-fill" href="{{ route('login') }}">
                           <i class="fas fa-sign-in-alt me-1"></i> Login
@@ -173,7 +173,7 @@
                         <span>D</span><span>a</span><span>s</span><span>h</span><span>b</span><span>o</span><span>a</span><span>r</span><span>d</span>
                       </a>
                     @else
-                      <a class="btn btn-theme btn-sm" href="{{ route('dashboard::events') }}" data-text="Akun">
+                      <a class="btn btn-theme btn-sm" href="{{ route('peserta::events') }}" data-text="Akun">
                         <span>A</span><span>k</span><span>u</span><span>n</span>
                       </a>
                     @endif

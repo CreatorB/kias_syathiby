@@ -1,5 +1,7 @@
 # KIAS (Kursus Ilmu Bahasa Arab dan Syar'i) Syathiby
 
+[KIAS.SYATHIBY.ID](https://kias.syathiby.id)
+
 A web-based information system designed to manage the process for **KIAS (Kursus Ilmu Bahasa Arab dan Syar'i)**.
 
 > **Note:** This project is a rebranding and evolution of the **[Takhassus Al Barkah](https://github.com/alendiasetiawan/takhassus-albarkah)** system.
@@ -309,6 +311,8 @@ New-Item -ItemType Directory -Force -Path "public\berkas\bukti_transfer"
 php artisan migrate --force
 ```
 
+Or use the maintenance route (see Maintenance Routes section below).
+
 Migrations to be run (latest updates):
 - `2024_01_01_000001_create_roles_table` — Roles table
 - `2024_01_01_000002_add_role_id_to_users_table` — User role relation
@@ -329,6 +333,7 @@ php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 php artisan route:clear
+php artisan optimize
 
 # Optimize for production
 php artisan config:cache
@@ -336,10 +341,67 @@ php artisan route:cache
 php artisan view:cache
 ```
 
+Or use the maintenance routes (see section below).
+
 ### 6. Restart Queue Worker (if applicable)
 ```bash
 php artisan queue:restart
 ```
+
+---
+
+## Maintenance Routes
+
+Admin maintenance routes for managing the application without SSH access. All routes require admin authentication.
+
+### Password Protected Routes
+
+These routes require password verification via the `MAINTENANCE_PASSWORD` environment variable. Session lasts for 10 minutes.
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/admin/maintenance/migrate` | GET | Run `php artisan migrate --force` |
+| `/admin/maintenance/migrate-refresh` | GET | Rollback and re-run all migrations |
+| `/admin/maintenance/optimize` | GET | Run `php artisan optimize` |
+| `/admin/maintenance/queue-restart` | GET | Restart queue workers (`queue:restart`) |
+| `/admin/maintenance/db-backup` | GET | Download database backup (mysqldump) |
+
+**Setup:**
+1. Edit `.env` on production server
+2. Set `MAINTENANCE_PASSWORD=your_secure_password_here` (plain text, will be hashed automatically)
+3. Access the URL with password:
+   ```
+   https://yourdomain.com/admin/maintenance/migrate?password=your_secure_password_here
+   ```
+4. Returns JSON response with command output
+
+**Note:** The password in `.env` should be stored as a bcrypt hash (same format as `APP_KEY`). You can generate a hash using:
+```bash
+php artisan tinker --execute="echo Hash::make('your_password');"
+```
+
+### Public Routes (No Password Required)
+
+These routes perform safe operations that don't modify data.
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/admin/maintenance/clear-all` | GET | Clear cache + config + route + view + optimize |
+| `/admin/maintenance/clear-cache` | GET | Clear application cache |
+| `/admin/maintenance/clear-view` | GET | Clear compiled views |
+| `/admin/maintenance/clear-route` | GET | Clear route cache |
+| `/admin/maintenance/clear-config` | GET | Clear config cache |
+| `/admin/maintenance/info` | GET | Display system information (PHP, Laravel, DB, etc.) |
+
+### Example: Running Migrations via Browser
+
+1. Ensure you are logged in as admin
+2. Set `MAINTENANCE_PASSWORD=your_secure_password` in your `.env` file
+3. Access the URL with password:
+   ```
+   https://yourdomain.com/admin/maintenance/migrate?password=your_secure_password
+   ```
+4. Returns JSON response with command output
 
 ---
 

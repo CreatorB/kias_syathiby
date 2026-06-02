@@ -8,27 +8,28 @@ use Illuminate\Support\Facades\DB;
 class InfoPsbService {
 
     public function tahunPsb() {
-        //Cek apakah ada PSB yang buka
-        $cekBuka = InfoPsb::where('status_psb', 'Buka')->count();
-        if ($cekBuka == 0) {
-            $query = InfoPsb::orderBy('id', 'desc')->limit(1)->first();
-        } else {
-            $query = InfoPsb::where('status_psb', 'Buka')->first();
-        }
-
-        $tahunPsb = $query->tahun_ajaran;
-
-        return $tahunPsb;
+        $psb = $this->psbAktif();
+        return $psb ? $psb->tahun_ajaran : null;
     }
 
     public function psbAktif() {
-        $cekBuka = InfoPsb::where('status_psb', 'Buka')->count();
-        if ($cekBuka == 0) {
-            $query = InfoPsb::orderBy('id', 'desc')->limit(1)->first();
-        } else {
-            $query = InfoPsb::where('status_psb', 'Buka')->first();
+        $now = now();
+
+        $psb = InfoPsb::where(function($query) use ($now) {
+            $query->whereNotNull('datetime_open')
+                  ->whereNotNull('datetime_closed')
+                  ->where('datetime_open', '<=', $now)
+                  ->where('datetime_closed', '>=', $now);
+        })->first();
+
+        if (!$psb) {
+            $psb = InfoPsb::where('status_psb', 'Buka')->first();
         }
 
-        return $query;
+        if (!$psb) {
+            $psb = InfoPsb::orderBy('id', 'desc')->first();
+        }
+
+        return $psb;
     }
 }

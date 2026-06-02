@@ -27,9 +27,9 @@
 
         <!--Mobile Screen-->
         <ul class="nav navbar-nav align-items-center d-lg-none d-xl-none">
-            @if ($title != "Dashboard Pengampu" && $title != "Dashboard Admin Tahfizh")
+            @if (($title ?? '') != "Dashboard Pengampu" && ($title ?? '') != "Dashboard Admin Tahfizh")
                 <li class="nav-item nav-search">
-                    @if ($title == 'Statistik Ziyadah Pekanan Santri')
+                    @if (($title ?? '') == 'Statistik Ziyadah Pekanan Santri')
                         <a href="/santri/statistik-hafalan">
                             <i class="ficon d-md-none d-lg-none d-xl-none" data-feather="arrow-left"></i>
                         </a>
@@ -44,12 +44,11 @@
                     <!--#Back Home-->
 
                     <!--BACK BUTTON-->
-                    @if (
-                            $title == 'Detail Riwayat Ziyadah Santri' || $title == 'Riwayat Ziyadah Santri Di Halaqoh' ||
-                            $title == 'Detail Riwayat Murojaah Santri' || $title == 'Riwayat Murojaah Santri Di Halaqoh' || $title == 'Revisi Detail Ujian Sketsa Ziyadah'
-                            || $title == 'Revisi Detail Ujian Sketsa Murojaah' || $title == 'Santri Lulus Ujian Robtuz Ziyadah' || $title == 'Santri Belum Ujian Robtuz Ziyadah'
-                            || $title == 'Santri Tidak Lulus Ujian Robtuz Ziyadah' || $title == 'Santri Lulus Ujian Robtul Manzil' || $title == 'Santri Belum Ujian Robtul Manzil'
-                            || $title == 'Santri Tidak Lulus Ujian Robtul Manzil' || $title == 'Detail Riwayat Ujian Kenaikan Juz Santri'
+                    @if (($title ?? '') == 'Detail Riwayat Ziyadah Santri' || ($title ?? '') == 'Riwayat Ziyadah Santri Di Halaqoh' ||
+                            ($title ?? '') == 'Detail Riwayat Murojaah Santri' || ($title ?? '') == 'Riwayat Murojaah Santri Di Halaqoh' || ($title ?? '') == 'Revisi Detail Ujian Sketsa Ziyadah'
+                            || ($title ?? '') == 'Revisi Detail Ujian Sketsa Murojaah' || ($title ?? '') == 'Santri Lulus Ujian Robtuz Ziyadah' || ($title ?? '') == 'Santri Belum Ujian Robtuz Ziyadah'
+                            || ($title ?? '') == 'Santri Tidak Lulus Ujian Robtuz Ziyadah' || ($title ?? '') == 'Santri Lulus Ujian Robtul Manzil' || ($title ?? '') == 'Santri Belum Ujian Robtul Manzil'
+                            || ($title ?? '') == 'Santri Tidak Lulus Ujian Robtul Manzil' || ($title ?? '') == 'Detail Riwayat Ujian Kenaikan Juz Santri'
                         )
                         <a href="#" onclick="history.back()">
                             <i class="ficon d-md-none d-lg-none d-xl-none" data-feather="arrow-left"></i>

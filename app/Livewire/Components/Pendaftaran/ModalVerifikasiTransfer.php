@@ -9,23 +9,46 @@ use Livewire\Attributes\Reactive;
 class ModalVerifikasiTransfer extends Component
 {
     #[Reactive]
-    public $idPendaftar;
+    public $pid;
     //String
-    public $statusTransfer, $idModal;
+    public $statusTransfer, $idModal, $alasanPenolakan;
     //Collection
-    public $dataPendaftar;
+    public $data;
 
     public function boot() {
-        $this->dataPendaftar = Santri::queryDataSantri($this->idPendaftar);
-        $this->statusTransfer = $this->dataPendaftar?->status_transfer;
+        $this->load();
+    }
+
+    public function updatedPid($value) {
+        $this->load();
+    }
+
+    private function load() {
+        if ($this->pid) {
+            $this->data = Santri::queryDataSantri($this->pid);
+            $this->statusTransfer = $this->data ?->status_transfer;
+            $this->alasanPenolakan = $this->data ?->alasan_penolakan;
+        }
     }
 
     //Action simpan data
     public function simpanStatus() {
-        Santri::where('id', $this->idPendaftar)
-        ->update([
-            'status_transfer' => $this->statusTransfer,
-        ]);
+        $santri = Santri::find($this->pid);
+        $updateData = ['status_transfer' => $this->statusTransfer];
+
+        if ($this->statusTransfer === 'Invalid') {
+            $updateData['alasan_penolakan'] = $this->alasanPenolakan;
+        } else {
+            $updateData['alasan_penolakan'] = null;
+        }
+
+        $santri->update($updateData);
+
+        if ($this->statusTransfer === 'Valid') {
+            \App\Models\User::where('santri_id', $santri->id)
+                ->update(['is_active' => true]);
+        }
+
         $this->dispatch('simpan-status');
     }
 

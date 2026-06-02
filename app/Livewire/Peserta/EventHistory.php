@@ -105,6 +105,6 @@ class EventHistory extends Component
     public function render()
     {
         return view('livewire.peserta.event-history')
-            ->layout('layouts.app', ['title' => 'Riwayat Event']);
+            ->layout('layouts.peserta.sidebar-layout', ['title' => 'Riwayat Event']);
     }
 }

@@ -23,12 +23,28 @@
         </div>
         <div class="row mb-1">
             <div class="col-12">
-                <x-badges.basic color="primary">Total : {{ $this->jmlPendaftar }}</x-badges.basic>
-                <x-badges.basic color="success">Valid : {{ $this->jmlValid }}</x-badges.basic>
-                <x-badges.basic color="warning">Proses : {{ $this->jmlCek }}</x-badges.basic>
-                <x-badges.basic color="danger">Tidak Valid : {{ $this->jmlInvalid }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="resetFilter" :color="$filterJk || $filterStatus ? 'secondary' : 'primary'">Total : {{ $this->jmlPendaftar }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterStatus('{{ \App\Providers\StatusProvider::TRANSFER_VALID }}')" color="success">Valid : {{ $this->jmlValid }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterStatus('{{ \App\Providers\StatusProvider::TRANSFER_PROSES }}')" color="warning">Proses : {{ $this->jmlCek }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterStatus('{{ \App\Providers\StatusProvider::TRANSFER_INVALID }}')" color="danger">Tidak Valid : {{ $this->jmlInvalid }}</x-badges.basic>
             </div>
         </div>
+        <div class="row mb-1">
+            <div class="col-12">
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterJk('Laki-Laki')" color="success">Ikhwan : {{ $this->jmlIkhwan }}</x-badges.basic>
+                <x-badges.basic class="cursor-pointer" wire:click="setFilterJk('Perempuan')" color="danger">Akhwat : {{ $this->jmlAkhwat }}</x-badges.basic>
+            </div>
+        </div>
+        @if ($filterJk || $filterStatus)
+        <div class="row mb-1">
+            <div class="col-12">
+                <a wire:click="resetFilter" class="text-danger cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    Reset Filter
+                </a>
+            </div>
+        </div>
+        @endif
         <div class="col-12">
             <x-buttons.dropdown-outline color='primary'>
                 <x-slot name="buttonName">
@@ -45,12 +61,12 @@
     <!--#Filter Data-->
 
     <!--Card List Santri-->
-    <div class="row @if($this->dataPendaftar->count() >=4) scroller5 @endif">
-        @forelse ($this->dataPendaftar as $pendaftar)
+    <div class="row @if($this->dataPaginator->count() >=4) scroller5 @endif">
+        @forelse ($this->dataPaginator as $pendaftar)
             <div class="col-12" wire:key='card-{{ $pendaftar->id }}'>
                 <x-cards.apply-job>
                     <x-slot:avatar>
-                        <img src="{{ asset('berkas/'.$pendaftar?->tahun_psb.'/'.$pendaftar?->photo.'') }}" width="42" height="42"/>
+                        <img src="{{ \App\Helpers\FotoHelper::getPathFoto($pendaftar?->tahun_psb, $pendaftar?->kode_registrasi, $pendaftar?->photo) }}" width="42" height="42"/>
                     </x-slot:avatar>
                     <x-slot:title>
                         {{ Str::excerpt($pendaftar->nama,'',[
@@ -82,7 +98,7 @@
 
                     <!--Action Button-->
                     <div class="d-grid d-flex justify-content-between">
-                        <x-buttons.basic-primary class="w-100 me-25" data-bs-toggle="modal" data-bs-target="#modalVerifikasi" wire:click='setIdPendaftar({{ $pendaftar->id }})'>
+                        <x-buttons.basic-primary class="w-100 me-25" data-bs-toggle="modal" data-bs-target="#modalVerifikasi" wire:click='setIdPendanfar({{ $pendaftar->id }})'>
                             Verifikasi
                         </x-buttons.basic-primary>
                         <div class="dropup">
@@ -108,6 +124,12 @@
                                         <span>Notifikasi</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center text-danger" wire:click='setIdPendanfarHapus({{ $pendaftar->id }})'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 me-50"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                        <span>Hapus</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -122,14 +144,28 @@
             </div>
         @endforelse
 
-        @if ($this->dataPendaftar->hasMorePages())
+        @if ($this->dataPaginator->hasMorePages())
             <livewire:components.load-more-button :$tambahData/>
         @endif
     </div>
 
-    <!--Modal Verifikasi Transfer-->
-    <livewire:components.pendaftaran.modal-verifikasi-transfer idModal="modalVerifikasi" :$idPendaftar />
+<!--Modal Verifikasi Transfer-->
+    <livewire:components.pendaftaran.modal-verifikasi-transfer idModal="modalVerifikasi" :pid="$idPendanfar" />
     <!--#Modal Verifikasi Transfer-->
+
+    <!--Modal Hapus Pendaftar-->
+    @if ($showDeleteModal)
+    <x-modals.project-modal id="modalHapus" wire:ignore.self>
+        <x-slot:title>Konfirmasi Hapus Pendaftar</x-slot:title>
+        <p>Yakin ingin menghapus pendaftar <strong>{{ $dataPendanfarHapus?->nama }}</strong>?</p>
+        <p class="text-danger">Tindakan ini tidak dapat dibatalkan.</p>
+        <div class="d-flex gap-2">
+            <x-buttons.basic color="danger" wire:click='hapusPendanfar'>Hapus</x-buttons.basic>
+            <x-buttons.outline color="dark" data-bs-dismiss="modal" wire:click='closeDeleteModal'>Batal</x-buttons.outline>
+        </div>
+    </x-modals.project-modal>
+    @endif
+    <!--#Modal Hapus Pendaftar-->
     <!--#Card List Santri-->
 
     @push('vendorJS')
@@ -143,6 +179,12 @@
     <script data-navigate-once>
         window.addEventListener('simpan-status', event => {
             $('#modalVerifikasi').modal('hide');
+        });
+        window.addEventListener('hapus-success', event => {
+            $('#modalHapus').modal('hide');
+        });
+        window.addEventListener('buka-modal-hapus', event => {
+            $('#modalHapus').modal('show');
         });
     </script>
 

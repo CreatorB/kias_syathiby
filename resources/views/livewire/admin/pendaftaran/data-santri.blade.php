@@ -69,7 +69,7 @@
                 <div class="col-lg-4 col-md-6 col-12" wire:key='card-{{ $santri->id }}'>
                     <x-cards.apply-job>
                         <x-slot:avatar>
-                            <img src="{{ asset('berkas/' . $santri?->tahun_psb . '/' . $santri?->photo . '') }}" width="42"
+                            <img src="{{ \App\Helpers\FotoHelper::getPathFoto($santri?->tahun_psb, $santri?->kode_registrasi, $santri?->photo) }}" width="42"
                                 height="42" />
                         </x-slot:avatar>
                         <x-slot:title>

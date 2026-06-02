@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,17 +12,57 @@ class Santri extends Model
 {
     use HasFactory;
 
+    const STATUS_MENUNGGU = 'Menunggu';
+    const STATUS_DITERIMA = 'Diterima';
+    const STATUS_DITOLAK = 'Ditolak';
+
     protected $table = 'santri';
-    protected $guarded = [];
+    protected $fillable = [
+        'kode_registrasi',
+        'nama',
+        'jk',
+        'nik',
+        'nisn',
+        'tmp_lahir',
+        'tgl_lahir',
+        'alamat',
+        'nama_ayah',
+        'no_hp_ayah',
+        'nama_ibu',
+        'no_hp_ibu',
+        'nama_wali',
+        'no_hp_wali',
+        'email',
+        'hp',
+        'kode_negara',
+        'no_hp',
+        'tahun_psb',
+        'status_pendaftaran',
+        'status_transfer',
+        'program_id',
+        'pekerjaan_id',
+        'photo',
+        'ktp',
+        'transfer',
+        'nominal_transfer',
+        'alasan_penolakan',
+        'tgl_verifikasi',
+        'user_id',
+    ];
 
     public function program(): BelongsTo
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
-    public function pekerjaan(): BelongsTo
+public function pekerjaan(): BelongsTo
     {
-        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id', 'id');
+        return $this->belongsTo(Pekerjaan::class, 'pekerjaan_id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'santri_id');
     }
 
     public static function cariNama($tahunPsb, $dataSearch)
@@ -57,6 +98,9 @@ class Santri extends Model
             })
             ->when($filterData != null && isset($filterData['jk']), function ($q) use ($filterData) {
                 return $q->where('jk', $filterData['jk']);
+            })
+            ->when($filterData != null && isset($filterData['status']), function ($q) use ($filterData) {
+                return $q->where('status_transfer', $filterData['status']);
             })
             ->where('tahun_psb', $tahunPsb);
     }
