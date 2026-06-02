@@ -21,7 +21,7 @@ class VerifikasiTransfer extends Component
     use WithoutUrlPagination;
 
     //String
-    public $tahunPsb, $cariSantri = null, $wa, $nama, $program, $url = null, $idPendanfarHapus = null, $showDeleteModal = false;
+    public $tahunPsb, $cariSantri = null, $wa, $nama, $program, $url = null, $idPendanfarHapus = null, $showDeleteModal = false, $filterJk = null, $filterStatus = null;
     //Integer
     public $limitData = 10, $idPendanfar, $tambahData = 10;
     //Collection
@@ -34,28 +34,61 @@ class VerifikasiTransfer extends Component
     #[Title('Verifikasi Transfer Pendaftaran')]
 
     #[Computed]
-    public function dataPendaftar() {
+    public function dataPaginator() {
+        $this->ambilFilterData();
         return $this->santriService->paginateVerifikasiTransfer($this->tahunPsb, $this->limitData, $this->filterData);
     }
 
     #[Computed]
     public function jmlPendaftar() {
-        return Santri::queryPendaftaran($this->tahunPsb)->count();
+        $this->ambilFilterData();
+        return Santri::queryPendaftaran($this->tahunPsb, $this->filterData)->count();
     }
 
     #[Computed]
     public function jmlValid() {
-        return $this->santriService->totalTransferValid($this->tahunPsb);
+        return $this->santriService->totalTransferByStatus($this->tahunPsb, StatusProvider::TRANSFER_VALID);
     }
 
     #[Computed]
     public function jmlCek() {
-        return $this->santriService->verifikasiTransfer($this->tahunPsb);
+        return $this->santriService->totalTransferByStatus($this->tahunPsb, StatusProvider::TRANSFER_PROSES);
     }
 
     #[Computed]
     public function jmlInvalid() {
-        return $this->santriService->totalTransferInvalid($this->tahunPsb);
+        return $this->santriService->totalTransferByStatus($this->tahunPsb, StatusProvider::TRANSFER_INVALID);
+    }
+
+    #[Computed]
+    public function jmlIkhwan() {
+        return $this->santriService->totalTransferByJk($this->tahunPsb, 'Laki-Laki');
+    }
+
+    #[Computed]
+    public function jmlAkhwat() {
+        return $this->santriService->totalTransferByJk($this->tahunPsb, 'Perempuan');
+    }
+
+    public function setFilterJk($jk) {
+        $this->filterJk = $jk;
+        $this->filterStatus = null;
+        $this->resetPage();
+        $this->ambilFilterData();
+    }
+
+    public function setFilterStatus($status) {
+        $this->filterStatus = $status;
+        $this->filterJk = null;
+        $this->resetPage();
+        $this->ambilFilterData();
+    }
+
+    public function resetFilter() {
+        $this->filterJk = null;
+        $this->filterStatus = null;
+        $this->resetPage();
+        $this->ambilFilterData();
     }
 
     #[On('simpan-status')]
@@ -93,7 +126,9 @@ class VerifikasiTransfer extends Component
     public function ambilFilterData() {
         $this->filterData = collect([
             'namaSantri' => $this->cariSantri,
-            'tahunPsb' => $this->tahunPsb
+            'tahunPsb' => $this->tahunPsb,
+            'jk' => $this->filterJk,
+            'status' => $this->filterStatus
         ]);
     }
 
