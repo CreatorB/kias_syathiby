@@ -61,7 +61,7 @@
             </ol>
         </p>
 
-        <h2 class="title z-index-1 mb-2">Program Yang Tersedia</h2>
+        <!-- <h2 class="title z-index-1 mb-2">Program Yang Tersedia</h2>
         <div class="accordion ms-lg-5 mt-3" id="accordion">
             @foreach ($program as $item)
                 <div class="accordion-item border-0 mb-4">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             @endforeach
-        </div>
+        </div> -->
         </div>
     </div>
     </div>
