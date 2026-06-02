@@ -728,7 +728,7 @@ textarea.form-control {
                     <a href="#pendaftaran" class="btn btn-outline-light btn-hero" style="color: white !important; border-color: white !important;">
                         <i class="ti ti-edit me-2"></i>Daftar Sekarang
                     </a>
-                    <a href="https://drive.google.com/file/d/1kfbFIxj1y50wZHyDTWPBUs_SzpCOtCMT" target="_blank" class="btn btn-light btn-hero">
+                    <a href="https://drive.google.com/drive/folders/1LeX10zxT1ZwFvgwU7NQpi18--MdBJI7X" target="_blank" class="btn btn-light btn-hero">
                         <i class="ti ti-download me-2"></i>Download Brosur
                     </a>
                 </div>
