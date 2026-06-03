@@ -850,7 +850,7 @@ textarea.form-control {
                     <span class="badge badge-takmili">Bahasa Arab Takmili</span>
                     <h4>{{ str_replace('Al-Barkah ', '', $program->nama_program) }}</h4>
                     <p class="mb-2"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Memiliki kemampuan bahasa Arab dasar' }}</p>
-                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>2 Tahun</p>
+                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>1 Tahun</p>
                     <p class="mb-0 text-muted small"><i class="ti ti-map-pin me-1"></i>Ma'had Syathiby</p>
                 </div>
             </div>
