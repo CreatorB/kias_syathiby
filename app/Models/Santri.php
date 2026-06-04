@@ -41,6 +41,8 @@ class Santri extends Model
         'status_transfer',
         'program_id',
         'pekerjaan_id',
+        'pendidikan',
+        'pekerjaan',
         'photo',
         'ktp',
         'transfer',

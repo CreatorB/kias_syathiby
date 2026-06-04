@@ -138,6 +138,8 @@ class ManualPsbController extends Controller
             'no_hp_ayah' => 'nullable',
             'no_hp_ibu' => 'nullable',
             'no_hp_wali' => 'nullable',
+            'pendidikan' => 'nullable|string|max:50',
+            'pekerjaan' => 'nullable|string|max:100',
             'program_id' => 'required|exists:program,id',
             'ktp' => 'required|file|mimes:jpg,jpeg,png|max:2048',
             'foto' => 'required|file|mimes:jpg,jpeg,png|max:2048',
@@ -224,6 +226,8 @@ class ManualPsbController extends Controller
                 'nominal_transfer' => $psb->biaya_pendaftaran,
                 'status_transfer' => StatusProvider::TRANSFER_PROSES,
                 'status_pendaftaran' => Santri::STATUS_MENUNGGU,
+                'pendidikan' => $request->pendidikan,
+                'pekerjaan' => $request->pekerjaan,
             ]);
 
             $user = User::create([

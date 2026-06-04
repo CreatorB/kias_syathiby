@@ -33,11 +33,7 @@ class CariNamaController extends Controller
     public function detail(Request $request) {
         $kodeRegistrasi = $request->kodeRegistrasi;
 
-        $santri = Santri::join('program', 'santri.program_id', 'program.id')
-        ->join('pekerjaan', 'santri.pekerjaan_id', 'pekerjaan.id')
-        ->where('kode_registrasi', $kodeRegistrasi)
-        ->select('santri.*', 'program.nama_program', 'pekerjaan.nama_pekerjaan')
-        ->first();
+        $santri = Santri::with('program')->where('kode_registrasi', $kodeRegistrasi)->first();
         $tanggal = $santri->created_at;
         $tgl_parse = Carbon::parse($tanggal);
         $tanggalIndo = $tgl_parse->isoFormat('D MMMM Y');
@@ -49,7 +45,6 @@ class CariNamaController extends Controller
             'santri' => $santri,
             'tanggalIndo' => $tanggalIndo,
             'tahunPsb' => $this->InfoPsbService->tahunPsb(),
-            'pekerjaan' => Pekerjaan::all(),
             'kodeNegara' => KodeNegara::all(),
         ];
 
@@ -57,15 +52,12 @@ class CariNamaController extends Controller
     }
 
     public function edit($kode) {
+        $santri = Santri::with('program')->where('kode_registrasi', $kode)->first();
+
         $data = [
             'title' => 'Edit Biodata Santri',
             'lembaga' => Lembaga::find(1),
-            'santri' => Santri::join('program', 'santri.program_id', 'program.id')
-            ->join('pekerjaan', 'santri.pekerjaan_id', 'pekerjaan.id')
-            ->where('kode_registrasi', $kode)
-            ->select('santri.*', 'program.nama_program', 'pekerjaan.nama_pekerjaan')
-            ->first(),
-            'pekerjaan' => Pekerjaan::all(),
+            'santri' => $santri,
             'kodeNegara' => KodeNegara::all(),
             'program' => Program::all(),
         ];
