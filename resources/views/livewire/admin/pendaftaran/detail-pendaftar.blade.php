@@ -33,12 +33,14 @@
                     <li class="mb-1">Tahun Ajaran : {{ $dataPendaftar->tahun_psb }}</li>
                     <li class="mb-1">NIK : {{ $dataPendaftar->nik }}</li>
                     <li class="mb-1">NISN : {{ $dataPendaftar->nisn }}</li>
+                    <li class="mb-1">Pendidikan Terakhir : {{ $dataPendaftar->pendidikan ?: '-' }}</li>
+                    <li class="mb-1">Pekerjaan : {{ $dataPendaftar->pekerjaan ?: ($dataPendaftar->pekerjaan->nama_pekerjaan ?? '-') }}</li>
                 </x-slot:informasi>
             </x-cards.user-detail>
         </div>
 
         <div class="col-lg-8 col-12">
-            <!-- Data Diri -->
+<!-- Data Diri -->
             <x-cards.basic-card>
                 <x-slot:cardHeader>Data Diri</x-slot:cardHeader>
                 <div class="row">
@@ -53,6 +55,21 @@
                     <div class="col-12 mb-2">
                         <h6 class="text-muted small mb-1">Alamat Lengkap</h6>
                         <span>{{ $dataPendaftar->alamat }}</span>
+                    </div>
+                </div>
+            </x-cards.basic-card>
+
+            <!-- Pendidikan & Pekerjaan -->
+            <x-cards.basic-card>
+                <x-slot:cardHeader>Pendidikan & Pekerjaan</x-slot:cardHeader>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-12 mb-2">
+                        <h6 class="text-muted small mb-1">Pendidikan Terakhir</h6>
+                        <span>{{ $dataPendaftar->pendidikan ?: '-' }}</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-12 mb-2">
+                        <h6 class="text-muted small mb-1">Pekerjaan</h6>
+                        <span>{{ $dataPendaftar->pekerjaan ?: ($dataPendaftar->pekerjaan->nama_pekerjaan ?? '-') }}</span>
                     </div>
                 </div>
             </x-cards.basic-card>
