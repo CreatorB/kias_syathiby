@@ -6,20 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_active')->default(false)->after('password');
-            $table->unsignedBigInteger('santri_id')->nullable()->after('is_active');
+            if (!Schema::hasColumn('users', 'is_active')) {
+                $table->boolean('is_active')->default(false)->after('password');
+            }
+            if (!Schema::hasColumn('users', 'santri_id')) {
+                $table->unsignedBigInteger('santri_id')->nullable()->after('is_active');
+            }
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {

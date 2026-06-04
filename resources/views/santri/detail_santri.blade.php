@@ -119,7 +119,7 @@
                     <dd class="col-sm-8">{{ $santri->pendidikan }}</dd>
 
                     <dt class="col-sm-4 mb-2 fw-semibold text-nowrap">Pekerjaan :</dt>
-                    <dd class="col-sm-8">{{ $santri->nama_pekerjaan }}</dd>
+                    <dd class="col-sm-8">{{ $santri->pekerjaan ?: ($santri->pekerjaan->nama_pekerjaan ?? '-') }}</dd>
 
                     <dt class="col-sm-4 mb-2 fw-semibold text-nowrap">Email :</dt>
                     <dd class="col-sm-8">{{ $santri->email }}</dd>

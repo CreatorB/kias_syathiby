@@ -25,7 +25,7 @@ class CariNamaService {
             'tgl_lahir' => $request->tglLahir,
             'alamat' => $request->alamat,
             'pendidikan' => $request->pendidikan,
-            'pekerjaan_id' => $request->pekerjaanId,
+            'pekerjaan' => $request->pekerjaan,
             'email' => $request->email,
             'kode_negara' => $request->kodeNegara,
             'no_hp' => $noHp,

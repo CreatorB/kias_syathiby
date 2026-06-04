@@ -139,42 +139,28 @@
                             <label for="pilihPendidikan" class="form-label">Pendidikan Terakhir</label>
                             <select id="pilihPendidikan" class="form-select"
                             name="pendidikan"
-                            required
-                            oninvalid="this.setCustomValidity('Wajib diisi!')"
-                            oninput="this.setCustomValidity('')"
                             >
-                            <option>{{ $santri->pendidikan }}</option>
-                            <option {{ old('pendidikan')=="Tidak Ada" ? 'selected' : '' }}>Tidak Ada</option>
-                            <option {{ old('pendidikan')=="SD/MI" ? 'selected' : '' }}>SD/MI</option>
-                            <option {{ old('pendidikan')=="SMP/Mts" ? 'selected' : '' }}>SMP/Mts</option>
-                            <option {{ old('pendidikan')=="SMA/SMK/MA" ? 'selected' : '' }}>SMA/SMK/MA</option>
-                            <option {{ old('pendidikan')=="Akademi" ? 'selected' : '' }}>Akademi</option>
-                            <option {{ old('pendidikan')=="D1" ? 'selected' : '' }}>D1</option>
-                            <option {{ old('pendidikan')=="D2" ? 'selected' : '' }}>D2</option>
-                            <option {{ old('pendidikan')=="D3" ? 'selected' : '' }}>D3</option>
-                            <option {{ old('pendidikan')=="Sarjana (S1)" ? 'selected' : '' }}>Sarjana (S1)</option>
-                            <option {{ old('pendidikan')=="Magister (S2)" ? 'selected' : '' }}>Magister (S2)</option>
-                            <option {{ old('pendidikan')=="Doktor (S3)" ? 'selected' : '' }}>Doktor (S3)</option>
+                            <option value="">-- Pilih --</option>
+                            <option {{ $santri->pendidikan == 'Tidak Ada' ? 'selected' : '' }} value="Tidak Ada">Tidak Ada</option>
+                            <option {{ $santri->pendidikan == 'SD/MI' ? 'selected' : '' }} value="SD/MI">SD/MI</option>
+                            <option {{ $santri->pendidikan == 'SMP/MTS' ? 'selected' : '' }} value="SMP/MTS">SMP/MTS</option>
+                            <option {{ $santri->pendidikan == 'SMA/SMK/MA' ? 'selected' : '' }} value="SMA/SMK/MA">SMA/SMK/MA</option>
+                            <option {{ $santri->pendidikan == 'Akademi' ? 'selected' : '' }} value="Akademi">Akademi</option>
+                            <option {{ $santri->pendidikan == 'D1' ? 'selected' : '' }} value="D1">D1</option>
+                            <option {{ $santri->pendidikan == 'D2' ? 'selected' : '' }} value="D2">D2</option>
+                            <option {{ $santri->pendidikan == 'D3' ? 'selected' : '' }} value="D3">D3</option>
+                            <option {{ $santri->pendidikan == 'Sarjana (S1)' ? 'selected' : '' }} value="Sarjana (S1)">Sarjana (S1)</option>
+                            <option {{ $santri->pendidikan == 'Magister (S2)' ? 'selected' : '' }} value="Magister (S2)">Magister (S2)</option>
+                            <option {{ $santri->pendidikan == 'Doktor (S3)' ? 'selected' : '' }} value="Doktor (S3)">Doktor (S3)</option>
                             </select>
                         </div>
 
                         <div class="col-lg-6 mb-3">
-                            <label for="select2Basic" class="form-label">Pekerjaan</label>
-                            <select id="select2Basic"
-                            class="form-select"
-                            data-allow-clear="true"
-                            name="pekerjaanId"
-                            required
-                            oninvalid="this.setCustomValidity('Apa pekerjaan anda?')"
-                            oninput="this.setCustomValidity('')"
-                            >
-                            <option value="{{ $santri->pekerjaan_id }}">{{ $santri->nama_pekerjaan }}</option>
-                            @foreach ($pekerjaan as $item)
-                                @if ($item->id != $santri->pekerjaan_id)
-                                    <option value="{{ $item->id }}">{{ $item->nama_pekerjaan }}</option>
-                                @endif
-                            @endforeach
-                            </select>
+                            <label class="form-label">Pekerjaan</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="ti ti-briefcase"></i></span>
+                                <input type="text" class="form-control" name="pekerjaan" value="{{ $santri->pekerjaan ?? '' }}" placeholder="Contoh: Pelajar, Mahasiswa, Guru, dll">
+                            </div>
                         </div>
                     </div>
 

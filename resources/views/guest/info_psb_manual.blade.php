@@ -1066,6 +1066,27 @@ textarea.form-control {
                                 <input type="tel" name="no_hp" class="form-control" value="{{ old('no_hp') }}" placeholder="08xxxxxxxxxx">
                                 <small class="text-muted d-block mt-1">Contoh: 089619060672</small>
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Pendidikan Terakhir</label>
+                                <select name="pendidikan" class="form-select">
+                                    <option value="">-- Pilih --</option>
+                                    <option value="Tidak Ada" {{ old('pendidikan') == 'Tidak Ada' ? 'selected' : '' }}>Tidak Ada</option>
+                                    <option value="SD/MI" {{ old('pendidikan') == 'SD/MI' ? 'selected' : '' }}>SD/MI</option>
+                                    <option value="SMP/MTS" {{ old('pendidikan') == 'SMP/MTS' ? 'selected' : '' }}>SMP/MTS</option>
+                                    <option value="SMA/SMK/MA" {{ old('pendidikan') == 'SMA/SMK/MA' ? 'selected' : '' }}>SMA/SMK/MA</option>
+                                    <option value="Akademi" {{ old('pendidikan') == 'Akademi' ? 'selected' : '' }}>Akademi</option>
+                                    <option value="D1" {{ old('pendidikan') == 'D1' ? 'selected' : '' }}>D1</option>
+                                    <option value="D2" {{ old('pendidikan') == 'D2' ? 'selected' : '' }}>D2</option>
+                                    <option value="D3" {{ old('pendidikan') == 'D3' ? 'selected' : '' }}>D3</option>
+                                    <option value="Sarjana (S1)" {{ old('pendidikan') == 'Sarjana (S1)' ? 'selected' : '' }}>Sarjana (S1)</option>
+                                    <option value="Magister (S2)" {{ old('pendidikan') == 'Magister (S2)' ? 'selected' : '' }}>Magister (S2)</option>
+                                    <option value="Doktor (S3)" {{ old('pendidikan') == 'Doktor (S3)' ? 'selected' : '' }}>Doktor (S3)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Pekerjaan</label>
+                                <input type="text" name="pekerjaan" class="form-control" value="{{ old('pekerjaan') }}" placeholder="Contoh: Pelajar, Mahasiswa, Guru, dll">
+                            </div>
                         </div>
                     </div>
 
