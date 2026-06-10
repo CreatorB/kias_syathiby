@@ -21,7 +21,7 @@
               <span class="fw-bold text-uppercase">Ilmu Syar'i</span> Sesuai Manhaj Salafusholih
             </h1>
             <p class="lead mb-4 wow fadeInUp" data-wow-duration="2s" data-wow-delay="0.3s">Bersama Asatidzah Berkompeten
-              Dengan Mudir 'Aam : <b>{{ $lembaga->mudir }}</b></p>
+              Dengan pembina : <b>{{ $lembaga->mudir }}</b></p>
             <a class="btn btn-theme wow fadeInUp" data-wow-duration="3s" data-wow-delay="0.5s" href="/psb"
               data-text="Daftar"> <span>S</span><span>a</span><span>n</span><span>t</span><span>r</span><span>i</span>
               <span> </span><span>B</span><span>a</span><span>r</span><span>u</span>
