@@ -11,7 +11,7 @@
   <title>{{ $title ?? 'Dashboard' }} - PSB Online | KIAS (Kursus Ilmu bahasa Arab & Syar'i)</title>
 
   <meta name="description"
-    content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan mudir 'Aam : Ust. Badru Salam, Lc." />
+    content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan pembina : Ust. Badru Salam, Lc." />
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ asset('dashboard-assets/assets/img/favicon/takhassus-icon.ico') }}" />

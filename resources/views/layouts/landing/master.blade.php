@@ -6,20 +6,20 @@
   <!-- meta tags -->
   <meta charset="utf-8">
   <meta name="keywords" content="kias, kursus bahasa arab, belajar ilmu syar'i, manhaj salaf, ma'had syathiby, tahsin, tajwid" />
-  <meta name="description" content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan mudir 'Aam : Ust. Badru Salam, Lc." />
+  <meta name="description" content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan pembina : Ust. Badru Salam, Lc." />
   <meta name="author" content="IT Syathiby" />
 
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kias.syathiby.id/" />
   <meta property="og:title" content="KIAS - Kursus Ilmu bahasa Arab & Syar'i" />
-  <meta property="og:description" content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan mudir 'Aam : Ust. Badru Salam, Lc." />
+  <meta property="og:description" content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan pembina : Ust. Badru Salam, Lc." />
   <meta property="og:image" content="{{ asset('landing/images/logo/takhassus-logo.webp') }}" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="KIAS - Kursus Ilmu bahasa Arab & Syar'i" />
-  <meta name="twitter:description" content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan mudir 'Aam : Ust. Badru Salam, Lc." />
+  <meta name="twitter:description" content="Belajar ilmu bahasa arab & syar'i sesuai manhaj salafusholih, bersama asatidzah kompeten dengan pembina : Ust. Badru Salam, Lc." />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Title -->
