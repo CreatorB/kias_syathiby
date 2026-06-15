@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\PendaftaranController;
 use App\Http\Controllers\Admin\MaintenanceController;
+use App\Http\Controllers\Admin\UserController;
 use App\Livewire\Admin\DashboardAdmin;
 use App\Livewire\Admin\Pendaftaran\DataSantri;
 use App\Livewire\Admin\Pendaftaran\PengaturanPsb;
@@ -13,6 +14,7 @@ use App\Livewire\Admin\Events\EventForm;
 use App\Livewire\Admin\Events\EventParticipants;
 use App\Livewire\Admin\Events\EventAttendance;
 use App\Livewire\Admin\Settings\PermissionManager;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::group(["middleware" => ["auth", "admin"], "as" => "admin::"], function () {
@@ -27,6 +29,16 @@ Route::group(["middleware" => ["auth", "admin"], "as" => "admin::"], function ()
         Route::get("/detail-pendaftar/{kodeRegistrasi}", DetailPendaftar::class)->name("detail_pendaftar");
         Route::get("/data-santri", DataSantri::class)->name("data_santri");
         Route::get("/pengaturan-psb", PengaturanPsb::class)->name("pengaturan_psb");
+
+        // User Management
+        Route::get("/users", \App\Livewire\Admin\User\UserManagement::class)->name("users.index");
+
+        // User Ban/Unban
+        Route::get("/users/{id}/toggle-ban", function ($id) {
+            $user = User::findOrFail($id);
+            $user->toggleBan();
+            return redirect()->back()->with('success', $user->isBanned() ? 'User berhasil diblokir.' : 'User berhasil di-unblokir.');
+        })->name("users.toggle_ban");
 
         // Events Management
         Route::prefix("events")->group(function () {

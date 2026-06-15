@@ -32,6 +32,7 @@ class User extends Authenticatable
         'occupation',
         'is_active',
         'santri_id',
+        'banned_at',
     ];
 
     /**
@@ -54,6 +55,7 @@ class User extends Authenticatable
         'birth_date' => 'date',
         'role_id' => 'integer',
         'is_active' => 'boolean',
+        'banned_at' => 'datetime',
     ];
 
     /**
@@ -170,5 +172,29 @@ class User extends Authenticatable
     public function canViewUserPhotos(): bool
     {
         return $this->hasPermission('view_user_photos');
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->banned_at !== null;
+    }
+
+    public function ban(): void
+    {
+        $this->update(['banned_at' => now()]);
+    }
+
+    public function unban(): void
+    {
+        $this->update(['banned_at' => null]);
+    }
+
+    public function toggleBan(): void
+    {
+        if ($this->isBanned()) {
+            $this->unban();
+        } else {
+            $this->ban();
+        }
     }
 }

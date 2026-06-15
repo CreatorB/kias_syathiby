@@ -160,11 +160,8 @@ class LoginController extends Controller
             return redirect()->route('login')->with('flash_message_error', 'User tidak ditemukan dengan email/No.HP: ' . $inputIdentifier);
         }
 
-        // Allow role_id 3 (Santri) and 4 (Peserta) to login even if is_active is false
-        // They need to see their dashboard status
-        // Admin/Superadmin (role 1,2) should always be able to login with correct password
-        if (!$user->is_active && !in_array($user->role_id, [1, 2])) {
-            return redirect()->route('login')->with('flash_message_error', 'Akun anda belum diaktifkan. Mohon tunggu konfirmasi pembayaran dari admin.');
+        if ($user->isBanned()) {
+            return redirect()->route('login')->with('flash_message_error', 'Akun Anda diblokir. Hubungi admin untuk informasi lebih lanjut.');
         }
 
         $authenticated = false;

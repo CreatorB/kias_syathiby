@@ -10,11 +10,37 @@
             <div data-i18n="Dashboard">Dashboard</div>
             </a>
         </li>
-        <li class="menu-item {{ Route::is('admin::verifikasi_transfer') || Route::is('admin::data_santri') || Route::is('admin::pengaturan_psb') ? 'active' : '' }}">
+        <li class="menu-item {{ Route::is('admin::verifikasi_transfer') || Route::is('admin::data_santri') || Route::is('admin::pengaturan_psb') || Route::is('admin::users.index') ? 'active' : '' }}">
             <a class="menu-link" wire:navigate href="{{ route('admin::verifikasi_transfer') }}">
             <i class="menu-icon tf-icons ti ti-user-check"></i>
             <div data-i18n="Pendaftaran">Pendaftaran</div>
             </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('admin::verifikasi_transfer') ? 'active' : '' }}">
+                    <a class="menu-link" wire:navigate href="{{ route('admin::verifikasi_transfer') }}">
+                    <i class="menu-icon tf-icons ti ti-credit-card"></i>
+                    <div data-i18n="Verifikasi Transfer">Verifikasi Transfer</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('admin::data_santri') ? 'active' : '' }}">
+                    <a class="menu-link" wire:navigate href="{{ route('admin::data_santri') }}">
+                    <i class="menu-icon tf-icons ti ti-users"></i>
+                    <div data-i18n="Data Santri">Data Santri</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('admin::users.index') ? 'active' : '' }}">
+                    <a class="menu-link" wire:navigate href="{{ route('admin::users.index') }}">
+                    <i class="menu-icon tf-icons ti ti-user"></i>
+                    <div data-i18n="Data Akun">Data Akun</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('admin::pengaturan_psb') ? 'active' : '' }}">
+                    <a class="menu-link" wire:navigate href="{{ route('admin::pengaturan_psb') }}">
+                    <i class="menu-icon tf-icons ti ti-settings"></i>
+                    <div data-i18n="Pengaturan PSB">Pengaturan PSB</div>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li class="menu-item {{ Route::is('admin::events.*') ? 'active' : '' }}">
             <a class="menu-link" wire:navigate href="{{ route('admin::events.index') }}">
