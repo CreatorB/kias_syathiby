@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            @if($santri->status_transfer == 'Invalid' || $santri->status_transfer == 'Cek')
+            @if(($santri->status_transfer == 'Invalid' || $santri->status_transfer == 'Cek') && $canRevisi)
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">
@@ -123,7 +123,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="foto">Foto 4x6 <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" accept="image/jpeg,image/png" />
-                                <small class="text-muted">Format: JPG, PNG. Maksimal 2MB</small>
+                                <small class="text-muted">Format: JPG, PNG. Maksimal 500KB, akan dikompres otomatis</small>
                                 @error('foto')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -131,7 +131,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="ktp">KTP/Kartu Identitas <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('ktp') is-invalid @enderror" id="ktp" name="ktp" accept="image/jpeg,image/png,application/pdf" />
-                                <small class="text-muted">Format: JPG, PNG, PDF. Maksimal 2MB</small>
+                                <small class="text-muted">Format: JPG, PNG, PDF. Maksimal 500KB, akan dikompres otomatis</small>
                                 @error('ktp')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -139,7 +139,7 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label" for="bukti_pembayaran">Bukti Pembayaran <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control @error('bukti_pembayaran') is-invalid @enderror" id="bukti_pembayaran" name="bukti_pembayaran" accept="image/jpeg,image/png" />
-                                <small class="text-muted">Format: JPG, PNG. Maksimal 2MB</small>
+                                <small class="text-muted">Format: JPG, PNG. Maksimal 500KB, akan dikompres otomatis</small>
                                 @error('bukti_pembayaran')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -164,7 +164,7 @@
                     @endif
                 </div>
             </div>
-            @elseif($santri->status_transfer == 'Valid')
+            @elseif($santri->status_transfer == 'Valid' || ($canRevisi === false && $santri->status_pendaftaran == 'Diterima'))
             <div class="card bg-opacity-10 border-success">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
@@ -207,16 +207,50 @@
 @endpush
 
 @push('pageScript')
-<script>
-    document.getElementById('form-revisi').addEventListener('submit', function(event) {
-        var submitBtn = document.getElementById('btn-submit');
-        if (submitBtn.classList.contains('submitted')) {
-            event.preventDefault();
-        } else {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Memproses...';
-            submitBtn.classList.add('submitted');
-        }
-    });
+<script type="module">
+import imageCompression from 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/+esm';
+
+window.compressImage = async function(file, maxSizeMB = 0.5) {
+    const options = { maxSizeMB: maxSizeMB, maxWidthOrHeight: 1200, useWebWorker: true, fileType: 'image/jpeg', initialQuality: 0.6 };
+    try { return await imageCompression(file, options); } catch (e) { console.warn('Image compression failed:', e); return file; }
+};
+
+document.getElementById("form-revisi").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    var submitBtn = document.getElementById("btn-submit");
+    if (submitBtn.classList.contains("submitted")) { return; }
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "<span class='spinner-border spinner-border-sm me-2' role='status' aria-hidden='true'></span> Mengkompres gambar...";
+
+    try {
+        const form = this;
+        const ktpFile = form.querySelector("[name='ktp']").files[0];
+        const fotoFile = form.querySelector("[name='foto']").files[0];
+        const buktiFile = form.querySelector("[name='bukti_pembayaran']").files[0];
+
+        const [ktpCompressed, fotoCompressed, buktiCompressed] = await Promise.all([
+            ktpFile ? compressImage(ktpFile) : Promise.resolve(null),
+            fotoFile ? compressImage(fotoFile) : Promise.resolve(null),
+            buktiFile ? compressImage(buktiFile) : Promise.resolve(null)
+        ]);
+
+        const formData = new FormData(form);
+        if (ktpCompressed) formData.set("ktp", ktpCompressed, ktpCompressed.name);
+        if (fotoCompressed) formData.set("foto", fotoCompressed, fotoCompressed.name);
+        if (buktiCompressed) formData.set("bukti_pembayaran", buktiCompressed, buktiCompressed.name);
+
+        submitBtn.innerHTML = "<span class='spinner-border spinner-border-sm me-2' role='status' aria-hidden='true'></span> Mengupload...";
+
+        fetch(form.action, {
+            method: "POST",
+            body: formData,
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        }).then(function(response) {
+            if (response.redirected) { window.location.href = response.url(); }
+            else { window.location.reload(); }
+        }).catch(function() { window.location.reload(); });
+    } catch (e) { window.location.reload(); }
+});
 </script>
 @endpush

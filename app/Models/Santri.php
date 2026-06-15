@@ -127,4 +127,23 @@ public function pekerjaan(): BelongsTo
             ->firstOrFail();
     }
 
+    protected static function booted(): void
+    {
+        static::deleting(function (Santri $santri) {
+            $basePath = public_path("berkas/{$santri->tahun_psb}/{$santri->kode_registrasi}");
+            $files = array_filter([$santri->photo, $santri->ktp, $santri->transfer]);
+
+            foreach ($files as $file) {
+                $filePath = $basePath . '/' . $file;
+                if ($file && file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+
+            if (is_dir($basePath)) {
+                @rmdir($basePath);
+            }
+        });
+    }
+
 }

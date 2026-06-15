@@ -26,12 +26,15 @@ class RevisiBerkasController extends Controller
             return redirect('/cek')->with('error', 'Data tidak ditemukan.');
         }
 
+        $canRevisi = !($santri->status_pendaftaran === Santri::STATUS_DITERIMA && $santri->status_transfer === 'Valid');
+
         $data = [
             'title' => 'Revisi Berkas',
             'lembaga' => Lembaga::find(1),
             'santri' => $santri,
             'tahunPsb' => $tahunPsb,
             'linkGroup' => $this->infoPsbService->psbAktif()?->link_group,
+            'canRevisi' => $canRevisi,
         ];
 
         return view('santri.revisi_berkas', $data);
@@ -52,6 +55,13 @@ class RevisiBerkasController extends Controller
             return redirect('/cek')->with('error', 'Data tidak ditemukan.');
         }
 
+        if ($santri->status_pendaftaran === Santri::STATUS_DITERIMA && $santri->status_transfer === 'Valid') {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'message' => 'Revisi berkas tidak dapat dilakukan karena pendaftaran dan pembayaran sudah diterima.'], 403);
+            }
+            return redirect('/cek')->with('error', 'Revisi berkas tidak dapat dilakukan karena pendaftaran dan pembayaran sudah diterima.');
+        }
+
         $validated = $request->validate([
             'foto' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
             'ktp' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -70,6 +80,10 @@ class RevisiBerkasController extends Controller
         $updateData = [];
 
         if ($request->hasFile('foto')) {
+            if ($santri->photo) {
+                $oldPath = $registrasiDir . '/' . $santri->photo;
+                if (file_exists($oldPath)) unlink($oldPath);
+            }
             $fotoFile = $request->file('foto');
             $fotoName = 'foto.' . $fotoFile->getClientOriginalExtension();
             $fotoFile->move($registrasiDir, $fotoName);
@@ -77,6 +91,10 @@ class RevisiBerkasController extends Controller
         }
 
         if ($request->hasFile('ktp')) {
+            if ($santri->ktp) {
+                $oldPath = $registrasiDir . '/' . $santri->ktp;
+                if (file_exists($oldPath)) unlink($oldPath);
+            }
             $ktpFile = $request->file('ktp');
             $ktpName = 'ktp.' . $ktpFile->getClientOriginalExtension();
             $ktpFile->move($registrasiDir, $ktpName);
@@ -84,6 +102,10 @@ class RevisiBerkasController extends Controller
         }
 
         if ($request->hasFile('bukti_pembayaran')) {
+            if ($santri->transfer) {
+                $oldPath = $registrasiDir . '/' . $santri->transfer;
+                if (file_exists($oldPath)) unlink($oldPath);
+            }
             $buktiFile = $request->file('bukti_pembayaran');
             $buktiName = 'bukti_bayar.' . $buktiFile->getClientOriginalExtension();
             $buktiFile->move($registrasiDir, $buktiName);

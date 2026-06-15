@@ -742,7 +742,7 @@ textarea.form-control {
     <div class="container">
         <div class="section-title">
             <h2>Teknis Pendaftaran</h2>
-            <p>PPDB KIAS Syathiby — Periode {{ $psb->tahun_ajaran ?? '2026/2027' }}</p>
+            <p>PPDB KIAS Syathiby â€” Periode {{ $psb->tahun_ajaran ?? '2026/2027' }}</p>
         </div>
         <div class="row g-4 justify-content-center">
             <div class="col-md-6 col-lg-4">
@@ -756,8 +756,8 @@ textarea.form-control {
                         <p class="mb-2"><i class="ti ti-clock me-2 text-primary"></i><strong>Hari & Jam:</strong> {{ $teknisDaftar->hari }}, {{ $teknisDaftar->waktu }}</p>
                         <p class="mb-0"><i class="ti ti-building me-2 text-primary"></i><strong>Tempat:</strong> {{ $teknisDaftar->tempat }}</p>
                         @else
-                        <p class="mb-2"><i class="ti ti-calendar me-2 text-primary"></i><strong>Periode:</strong> 01 Juni – 19 Agustus 2026</p>
-                        <p class="mb-2"><i class="ti ti-clock me-2 text-primary"></i><strong>Hari & Jam:</strong> Sabtu, 07:00 – 13:00 WIB</p>
+                        <p class="mb-2"><i class="ti ti-calendar me-2 text-primary"></i><strong>Periode:</strong> 01 Juni â€“ 19 Agustus 2026</p>
+                        <p class="mb-2"><i class="ti ti-clock me-2 text-primary"></i><strong>Hari & Jam:</strong> Sabtu, 07:00 â€“ 13:00 WIB</p>
                         <p class="mb-0"><i class="ti ti-building me-2 text-primary"></i><strong>Tempat:</strong> Ma'had Imam Syathiby</p>
                         @endif
                     </div>
@@ -777,7 +777,7 @@ textarea.form-control {
                         </p>
                         @if($psb_datetime_open && $psb_datetime_closed)
                         <p class="mb-0"><i class="ti ti-calendar me-2 text-success"></i><strong>Periode:</strong>
-                            {{ TanggalHelper::konversiTanggalPenuh($psb_datetime_open) }} – {{ TanggalHelper::konversiTanggalPenuh($psb_datetime_closed) }}
+                            {{ TanggalHelper::konversiTanggalPenuh($psb_datetime_open) }} â€“ {{ TanggalHelper::konversiTanggalPenuh($psb_datetime_closed) }}
                         </p>
                         @endif
                     </div>
@@ -822,7 +822,7 @@ textarea.form-control {
                     <span class="badge badge-tajwid">Tajwid Al-Qur'an</span>
                     <h4>{{ str_replace('Al-Barkah ', '', $program->nama_program) }}</h4>
                     <p class="mb-2"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? '-' }}</p>
-                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>1 Tahun</p>
+                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 â€“ 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>1 Tahun</p>
                     <p class="mb-0 text-muted small"><i class="ti ti-map-pin me-1"></i>Ma'had Syathiby</p>
                 </div>
             </div>
@@ -836,7 +836,7 @@ textarea.form-control {
                     <span class="badge badge-ba">Bahasa Arab</span>
                     <h4>{{ str_replace('Al-Barkah ', '', $program->nama_program) }}</h4>
                     <p class="mb-2"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Mampu Baca Tulis Al-Qur\'an' }}</p>
-                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>2 Tahun</p>
+                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 â€“ 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>2 Tahun</p>
                     <p class="mb-0 text-muted small"><i class="ti ti-map-pin me-1"></i>Ma'had Syathiby</p>
                 </div>
             </div>
@@ -850,7 +850,7 @@ textarea.form-control {
                     <span class="badge badge-takmili">Bahasa Arab Takmili</span>
                     <h4>{{ str_replace('Al-Barkah ', '', $program->nama_program) }}</h4>
                     <p class="mb-2"><strong>Persyaratan:</strong><br>{{ $program->persyaratan ?? 'Memiliki kemampuan bahasa Arab dasar' }}</p>
-                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 – 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>1 Tahun</p>
+                    <p class="mb-2 text-muted small"><i class="ti ti-calendar me-1"></i>Sabtu, 07:30 â€“ 11:45 WIB &nbsp;|&nbsp; <i class="ti ti-clock me-1"></i>1 Tahun</p>
                     <p class="mb-0 text-muted small"><i class="ti ti-map-pin me-1"></i>Ma'had Syathiby</p>
                 </div>
             </div>
@@ -1459,14 +1459,21 @@ textarea.form-control {
             <p style="color:#6c757d;margin-bottom:6px;font-size:0.85rem;">Nomor Peserta Anda:</p>
             <div id="kodeRegistrasi" style="color:#1a5252;font-weight:800;font-size:1.9rem;letter-spacing:3px;"></div>
         </div>
-        <p style="color:#6c757d;font-size:0.85rem;margin-bottom:20px;">Simpan nomor ini — digunakan sebagai <strong>password login</strong> ke dashboard peserta.</p>
+        <p style="color:#6c757d;font-size:0.85rem;margin-bottom:20px;">Simpan nomor ini â€” digunakan sebagai <strong>password login</strong> ke dashboard peserta.</p>
         <p style="color:#adb5bd;font-size:0.82rem;">Mengalihkan ke dashboard dalam <strong id="countdown" style="color:#359090;">5</strong> detik...</p>
     </div>
 </div>
 @endsection
 
 @push('pageJS')
-<script>
+<script type="module">
+import imageCompression from 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/+esm';
+
+window.compressImage = async function(file, maxSizeMB = 0.5) {
+    const options = { maxSizeMB: maxSizeMB, maxWidthOrHeight: 1200, useWebWorker: true, fileType: 'image/jpeg', initialQuality: 0.6 };
+    try { return await imageCompression(file, options); } catch (e) { console.warn('Image compression failed:', e); return file; }
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
@@ -1635,49 +1642,58 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // All client-side checks passed — submit via AJAX
+        // All client-side checks passed â€” submit via AJAX
         showLoading();
 
-        fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-        .then(function(response) {
-            return response.json().then(function(data) {
-                return { status: response.status, data: data };
-            });
-        })
-        .then(function(result) {
-            hideLoading();
+        async function submitWithCompression() {
+            const ktpFile = form.querySelector('[name="ktp"]').files[0];
+            const fotoFile = form.querySelector('[name="foto"]').files[0];
+            const buktiFile = form.querySelector('[name="bukti_pembayaran"]').files[0];
 
-            if (result.status === 200 && result.data.success) {
-                showSuccess(result.data.kode, result.data.redirect);
-                return;
-            }
+            const [ktpCompressed, fotoCompressed, buktiCompressed] = await Promise.all([
+                ktpFile ? compressImage(ktpFile) : Promise.resolve(null),
+                fotoFile ? compressImage(fotoFile) : Promise.resolve(null),
+                buktiFile ? compressImage(buktiFile) : Promise.resolve(null)
+            ]);
 
-            // Server-side validation errors (422)
-            if (result.status === 422 && result.data.errors) {
-                clearErrors();
-                const serverErrors = [];
-                Object.keys(result.data.errors).forEach(function(field) {
-                    const input = form.querySelector('[name="' + field + '"]');
-                    if (input) {
-                        addError(input, result.data.errors[field][0]);
-                        serverErrors.push(input);
-                    }
+            const formData = new FormData(form);
+            if (ktpCompressed) formData.set('ktp', ktpCompressed, ktpCompressed.name);
+            if (fotoCompressed) formData.set('foto', fotoCompressed, fotoCompressed.name);
+            if (buktiCompressed) formData.set('bukti_pembayaran', buktiCompressed, buktiCompressed.name);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function(response) {
+                return response.json().then(function(data) {
+                    return { status: response.status, data: data };
                 });
-                if (serverErrors.length > 0) scrollToElement(serverErrors[0]);
-                return;
-            }
+            }).then(function(result) {
+                hideLoading();
+                if (result.status === 200 && result.data.success) {
+                    showSuccess(result.data.kode, result.data.redirect);
+                    return;
+                }
+                if (result.status === 422 && result.data.errors) {
+                    clearErrors();
+                    const serverErrors = [];
+                    Object.keys(result.data.errors).forEach(function(field) {
+                        const input = form.querySelector('[name="' + field + '"]');
+                        if (input) { addError(input, result.data.errors[field][0]); serverErrors.push(input); }
+                    });
+                    if (serverErrors.length > 0) scrollToElement(serverErrors[0]);
+                    return;
+                }
+                showServerError(result.data.message || 'Terjadi kesalahan. Silakan coba lagi.');
+            }).catch(function() {
+                hideLoading();
+                showServerError('Koneksi gagal. Silakan periksa koneksi internet Anda dan coba lagi.');
+            });
+        }
 
-            // Other server errors
-            showServerError(result.data.message || 'Terjadi kesalahan. Silakan coba lagi.');
-        })
-        .catch(function() {
-            hideLoading();
-            showServerError('Koneksi gagal. Silakan periksa koneksi internet Anda dan coba lagi.');
-        });
+        submitWithCompression();
+        return;
     });
 });
 

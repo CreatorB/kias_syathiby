@@ -93,12 +93,12 @@ class VerifikasiTransfer extends Component
 
     #[On('simpan-status')]
     public function fetchDataPendaftar() {
-        $this->dataPendaftar();
+        $this->ambilFilterData();
     }
 
     #[On('hapus-success')]
     public function onHapusSuccess() {
-        $this->dataPendaftar();
+        $this->ambilFilterData();
         $this->idPendanfarHapus = null;
         $this->showDeleteModal = false;
     }
@@ -179,12 +179,17 @@ class VerifikasiTransfer extends Component
 
             foreach ($files as $file) {
                 if ($file) {
-                    $filePath = public_path("berkas/{$tahunPsb}/{$file}");
+                    $filePath = public_path("berkas/{$tahunPsb}/{$santri->kode_registrasi}/{$file}");
 
                     if (file_exists($filePath)) {
                         unlink($filePath);
                     }
                 }
+            }
+
+            $dirPath = public_path("berkas/{$tahunPsb}/{$santri->kode_registrasi}");
+            if (is_dir($dirPath)) {
+                @rmdir($dirPath);
             }
 
             $santri->delete();

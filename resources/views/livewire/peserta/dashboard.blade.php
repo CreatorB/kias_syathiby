@@ -121,8 +121,19 @@
                             @elseif($this->santri->status_transfer == 'Cek')
                                 <span class="badge bg-warning mb-2">SEDANG DIVERIFIKASI</span>
                                 <p class="mb-0 text-muted">Nominal: Rp {{ number_format($this->santri->nominal_transfer ?? 0, 0, ',', '.') }}</p>
+                            @elseif($this->santri->status_transfer == 'Invalid')
+                                <span class="badge bg-danger mb-2">TIDAK VALID</span>
+                                <p class="mb-0 text-muted">Total: Rp {{ number_format($this->biayaPendaftaran, 0, ',', '.') }}</p>
+                                @if($this->santri->alasan_penolakan)
+                                <div class="alert alert-danger py-2 mt-2 mb-0">
+                                    <small><strong>Catatan:</strong> {{ $this->santri->alasan_penolakan }}</small>
+                                </div>
+                                @endif
+                                <a href="{{ route('revisi-berkas.show', $this->santri->kode_registrasi) }}" class="btn btn-warning btn-sm mt-2">
+                                    <i class="ti ti-upload me-1"></i> Revisi Berkas
+                                </a>
                             @else
-                                <span class="badge bg-danger mb-2">BELUM/TIDAK VALID</span>
+                                <span class="badge bg-secondary mb-2">BELUM UPLOAD</span>
                                 <p class="mb-0 text-muted">Total: Rp {{ number_format($this->biayaPendaftaran, 0, ',', '.') }}</p>
                             @endif
                         @else

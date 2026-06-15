@@ -1317,7 +1317,15 @@ textarea.form-control {
 
 @push('pageJS')
 @if($requires_password)
-<script>
+<script type="module">
+import imageCompression from 'https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/+esm';
+
+window.compressImage = async function(file, maxSizeMB = 0.5) {
+    
+    const options = { maxSizeMB: maxSizeMB, maxWidthOrHeight: 1200, useWebWorker: true, fileType: 'image/jpeg', initialQuality: 0.6 };
+    try { return await imageCompression(file, options); } catch (e) { console.warn('Image compression failed:', e); return file; }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     var passwordForm = document.getElementById('passwordForm');
     var passwordInput = document.getElementById('passwordInput');
@@ -1533,44 +1541,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
         showLoading();
 
-        fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'X-Requested-With': 'XMLHttpRequest' }
-        })
-        .then(function(response) {
-            return response.json().then(function(data) {
-                return { status: response.status, data: data };
-            });
-        })
-        .then(function(result) {
-            hideLoading();
+        async function submitWithCompression() {
+            const ktpFile = form.querySelector('[name="ktp"]').files[0];
+            const fotoFile = form.querySelector('[name="foto"]').files[0];
+            const buktiFile = form.querySelector('[name="bukti_pembayaran"]').files[0];
 
-            if (result.status === 200 && result.data.success) {
-                showSuccess(result.data.kode, result.data.redirect);
-                return;
-            }
+            const [ktpCompressed, fotoCompressed, buktiCompressed] = await Promise.all([
+                ktpFile ? compressImage(ktpFile) : Promise.resolve(null),
+                fotoFile ? compressImage(fotoFile) : Promise.resolve(null),
+                buktiFile ? compressImage(buktiFile) : Promise.resolve(null)
+            ]);
 
-            if (result.status === 422 && result.data.errors) {
-                clearErrors();
-                var serverErrors = [];
-                Object.keys(result.data.errors).forEach(function(field) {
-                    var input = form.querySelector('[name="' + field + '"]');
-                    if (input) {
-                        addError(input, result.data.errors[field][0]);
-                        serverErrors.push(input);
-                    }
+            const formData = new FormData(form);
+            if (ktpCompressed) formData.set('ktp', ktpCompressed, ktpCompressed.name);
+            if (fotoCompressed) formData.set('foto', fotoCompressed, fotoCompressed.name);
+            if (buktiCompressed) formData.set('bukti_pembayaran', buktiCompressed, buktiCompressed.name);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            }).then(function(response) {
+                return response.json().then(function(data) {
+                    return { status: response.status, data: data };
                 });
-                if (serverErrors.length > 0) scrollToElement(serverErrors[0]);
-                return;
-            }
+            }).then(function(result) {
+                hideLoading();
+                if (result.status === 200 && result.data.success) {
+                    showSuccess(result.data.kode, result.data.redirect);
+                    return;
+                }
+                if (result.status === 422 && result.data.errors) {
+                    clearErrors();
+                    const serverErrors = [];
+                    Object.keys(result.data.errors).forEach(function(field) {
+                        const input = form.querySelector('[name="' + field + '"]');
+                        if (input) { addError(input, result.data.errors[field][0]); serverErrors.push(input); }
+                    });
+                    if (serverErrors.length > 0) scrollToElement(serverErrors[0]);
+                    return;
+                }
+                showServerError(result.data.message || 'Terjadi kesalahan. Silakan coba lagi.');
+            }).catch(function() {
+                hideLoading();
+                showServerError('Koneksi gagal. Silakan periksa koneksi internet Anda dan coba lagi.');
+            });
+        }
 
-            showServerError(result.data.message || 'Terjadi kesalahan. Silakan coba lagi.');
-        })
-        .catch(function() {
-            hideLoading();
-            showServerError('Koneksi gagal. Silakan periksa koneksi internet Anda dan coba lagi.');
-        });
+        submitWithCompression();
+        return;
     });
 });
 
