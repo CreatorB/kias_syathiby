@@ -150,7 +150,9 @@ class PendaftaranController extends Controller
                 rmdir($dirPath);
             }
 
-            User::where('santri_id', $santri->id)->delete();
+            User::where('santri_id', $santri->id)
+                ->whereIn('role_id', [3, 4])
+                ->delete();
             Notification::where('santri_id', $santri->id)->delete();
             $santri->delete();
         });

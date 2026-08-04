@@ -171,7 +171,9 @@ class VerifikasiTransfer extends Component
     {
         $santri = Santri::find($this->idPendanfarHapus);
 
-        \App\Models\User::where('santri_id', $this->idPendanfarHapus)->delete();
+        \App\Models\User::where('santri_id', $this->idPendanfarHapus)
+            ->whereIn('role_id', [3, 4])
+            ->delete();
 
         if ($santri) {
             $tahunPsb = $santri->tahun_psb;
