@@ -47,7 +47,7 @@ class SantriExportController extends Controller
                 $noHp = trim(($s->kode_negara ?? '') . ($s->no_hp ?? ''));
                 $ttl = $s->tmp_lahir ? $s->tmp_lahir : '';
                 if ($s->tgl_lahir) {
-                    $tglStr = is_string($s->tgl_lahir) ? $s->tgl_lahir : $s->tgl_lahir->format('Y-m-d');
+                    $tglStr = $this->formatDate($s->tgl_lahir, 'Y-m-d');
                     $ttl .= ($ttl ? ', ' : '') . $tglStr;
                 }
                 fputcsv($file, [
@@ -58,7 +58,7 @@ class SantriExportController extends Controller
                     $s->nisn,
                     $s->jk,
                     $s->tmp_lahir,
-                    $s->tgl_lahir ? (is_string($s->tgl_lahir) ? $s->tgl_lahir : $s->tgl_lahir->format('Y-m-d')) : '',
+                    $this->formatDate($s->tgl_lahir, 'Y-m-d'),
                     $noHp,
                     $s->email,
                     $s->alamat,
@@ -76,12 +76,12 @@ class SantriExportController extends Controller
                     $s->status_transfer,
                     $s->alasan_penolakan_transfer,
                     $s->nominal_transfer,
-                    $s->tgl_verifikasi ? $s->tgl_verifikasi->format('Y-m-d H:i:s') : '',
+                    $this->formatDate($s->tgl_verifikasi, 'Y-m-d H:i:s'),
                     $s->photo ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->photo) : '',
                     $s->ktp ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->ktp) : '',
                     $s->ijazah ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->ijazah) : '',
                     $s->transfer ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->transfer) : '',
-                    $s->created_at ? $s->created_at->format('Y-m-d H:i:s') : '',
+                    $this->formatDate($s->created_at, 'Y-m-d H:i:s'),
                 ], ';');
             }
 
@@ -121,7 +121,7 @@ class SantriExportController extends Controller
                 $s->nisn,
                 $s->jk,
                 $s->tmp_lahir,
-                $s->tgl_lahir ? (is_string($s->tgl_lahir) ? $s->tgl_lahir : $s->tgl_lahir->format('Y-m-d')) : '',
+                $this->formatDate($s->tgl_lahir, 'Y-m-d'),
                 $noHp,
                 $s->email,
                 $s->alamat,
@@ -139,12 +139,12 @@ class SantriExportController extends Controller
                 $s->status_transfer,
                 $s->alasan_penolakan_transfer,
                 $s->nominal_transfer,
-                $s->tgl_verifikasi ? $s->tgl_verifikasi->format('Y-m-d H:i:s') : '',
+                $this->formatDate($s->tgl_verifikasi, 'Y-m-d H:i:s'),
                 $s->photo ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->photo) : '',
                 $s->ktp ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->ktp) : '',
                 $s->ijazah ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->ijazah) : '',
                 $s->transfer ? url('uploads/' . $s->tahun_psb . '/' . $s->kode_registrasi . '/' . $s->transfer) : '',
-                $s->created_at ? $s->created_at->format('Y-m-d H:i:s') : '',
+                $this->formatDate($s->created_at, 'Y-m-d H:i:s'),
             ], null, 'A' . $rowIndex);
             $rowIndex++;
         }
@@ -219,7 +219,7 @@ class SantriExportController extends Controller
             $card .= "ORG:" . $this->esc($org) . "\r\n";
             $card .= "NICKNAME:" . $this->esc($programShort . ' [' . ($s->kode_registrasi ?? '') . ']') . "\r\n";
             if ($s->tgl_lahir) {
-                $tgl = is_string($s->tgl_lahir) ? $s->tgl_lahir : $s->tgl_lahir->format('Y-m-d');
+                $tgl = $this->formatDate($s->tgl_lahir, 'Y-m-d');
                 $card .= "BDAY:" . str_replace('-', '', $tgl) . "\r\n";
             }
             if ($s->email) {
@@ -267,6 +267,13 @@ class SantriExportController extends Controller
     private function esc(string $v): string
     {
         return str_replace(["\\", "\n", "\r", ',', ';'], ['\\\\', '\\n', '', '\\,', '\\;'], $v);
+    }
+
+    private function formatDate($v, string $format = 'Y-m-d H:i:s'): string
+    {
+        if (!$v) return '';
+        if (is_string($v)) return $v;
+        return $v->format($format);
     }
 
     /**

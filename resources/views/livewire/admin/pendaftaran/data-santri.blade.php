@@ -59,17 +59,17 @@
                 {{ $this->jumlahIkhwan }}</x-badges.basic>
             <x-badges.basic class="cursor-pointer" wire:click="setFilterJk('Perempuan')" color="danger">Akhwat :
                 {{ $this->jumlahAkhwat }}</x-badges.basic>
-            <a href="{{ route('admin::data_santri.export_csv', request()->only(['tahun', 'program', 'jk', 'search'])) }}"
+            <a href="{{ route('admin::data_santri.export_csv', array_merge(request()->only(['tahun', 'program', 'jk', 'search']), ['filterTahun' => $filterTahun, 'filterProgram' => $filterProgram, 'filterJk' => $filterJk, 'cariSantri' => $cariSantri])) }}"
                 style="background:#28a745;color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;margin-right:6px;text-decoration:none"
                 class="cursor-pointer" title="Download CSV">
                 <i class="fa fa-file-csv"></i> Export CSV
             </a>
-            <a href="{{ route('admin::data_santri.export_excel', request()->only(['tahun', 'program', 'jk', 'search'])) }}"
+            <a href="{{ route('admin::data_santri.export_excel', array_merge(request()->only(['tahun', 'program', 'jk', 'search']), ['filterTahun' => $filterTahun, 'filterProgram' => $filterProgram, 'filterJk' => $filterJk, 'cariSantri' => $cariSantri])) }}"
                 style="background:#17a2b8;color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;margin-right:6px;text-decoration:none"
                 class="cursor-pointer" title="Download Excel">
                 <i class="fa fa-file-excel"></i> Export Excel
             </a>
-            <a href="{{ route('admin::data_santri.export_vcf', request()->only(['tahun', 'program', 'jk', 'search'])) }}"
+            <a href="{{ route('admin::data_santri.export_vcf', array_merge(request()->only(['tahun', 'program', 'jk', 'search']), ['filterTahun' => $filterTahun, 'filterProgram' => $filterProgram, 'filterJk' => $filterJk, 'cariSantri' => $cariSantri])) }}"
                 style="background:#ffc107;color:#212529;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;margin-right:6px;text-decoration:none"
                 class="cursor-pointer" title="Download kontak semua Mahasantri (vCard)">
                 <i class="fa fa-address-book"></i> Export Kontak (.vcf)
