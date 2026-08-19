@@ -34,6 +34,10 @@ class ManualPsbController extends Controller
             return redirect()->route('home')->with('error', 'Pendaftaran manual sedang tidak aktif.');
         }
 
+        if (!$psb->isOpen()) {
+            return redirect()->route('home')->with('error', 'Pendaftaran sudah ditutup.');
+        }
+
         $passwordVerified = Session::get('psb_manual_verified', false);
         $verifiedAt = Session::get('psb_manual_verified_at', 0);
         $timeout = 10 * 60; // 10 minutes in seconds
@@ -64,7 +68,7 @@ class ManualPsbController extends Controller
             'quota_akhwat_remaining' => $psb?->remaining_quota_akhwat,
             'quota_max_ikhwan' => $psb?->quota_ikhwan,
             'quota_max_akhwat' => $psb?->quota_akhwat,
-            'psb_is_open' => true,
+            'psb_is_open' => $psb?->isOpen() ?? false,
             'psb_datetime_open' => $psb?->datetime_open,
             'psb_datetime_closed' => $psb?->datetime_closed,
         ];
@@ -115,11 +119,11 @@ class ManualPsbController extends Controller
     {
         $psb = (new InfoPsbService())->psbAktif();
 
-        if (!$psb) {
+        if (!$psb || !$psb->isOpen()) {
             if ($request->ajax()) {
-                return response()->json(['success' => false, 'message' => 'Pendaftaran sedang ditutup.'], 400);
+                return response()->json(['success' => false, 'message' => 'Pendaftaran sudah ditutup.'], 400);
             }
-            return redirect()->back()->with('error', 'Pendaftaran sedang ditutup.');
+            return redirect()->back()->with('error', 'Pendaftaran sudah ditutup.');
         }
 
         $validated = $request->validate([

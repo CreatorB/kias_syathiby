@@ -742,7 +742,7 @@ textarea.form-control {
     <div class="container">
         <div class="section-title">
             <h2>Teknis Pendaftaran</h2>
-            <p>PPDB KIAS Syathiby â€” Periode {{ $psb->tahun_ajaran ?? '2026/2027' }}</p>
+            <p>PPDB KIAS Syathiby — Periode {{ $psb->tahun_ajaran ?? '2026/2027' }}</p>
         </div>
         <div class="row g-4 justify-content-center">
             <div class="col-md-6 col-lg-4">
@@ -1459,7 +1459,7 @@ textarea.form-control {
             <p style="color:#6c757d;margin-bottom:6px;font-size:0.85rem;">Nomor Peserta Anda:</p>
             <div id="kodeRegistrasi" style="color:#1a5252;font-weight:800;font-size:1.9rem;letter-spacing:3px;"></div>
         </div>
-        <p style="color:#6c757d;font-size:0.85rem;margin-bottom:20px;">Simpan nomor ini â€” digunakan sebagai <strong>password login</strong> ke dashboard peserta.</p>
+        <p style="color:#6c757d;font-size:0.85rem;margin-bottom:20px;">Simpan nomor ini — digunakan sebagai <strong>password login</strong> ke dashboard peserta.</p>
         <p style="color:#adb5bd;font-size:0.82rem;">Mengalihkan ke dashboard dalam <strong id="countdown" style="color:#359090;">5</strong> detik...</p>
     </div>
 </div>
@@ -1642,7 +1642,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // All client-side checks passed â€” submit via AJAX
+        // All client-side checks passed — submit via AJAX
         showLoading();
 
         async function submitWithCompression() {

@@ -57,11 +57,11 @@ class InfoPsbController extends Controller
     public function register(Request $request, DaftarService $daftarService) {
         $psb = (new InfoPsbService())->psbAktif();
 
-        if (!$psb) {
+        if (!$psb || !$psb->isOpen()) {
             if ($request->ajax()) {
-                return response()->json(['success' => false, 'message' => 'Pendaftaran sedang ditutup.'], 400);
+                return response()->json(['success' => false, 'message' => 'Pendaftaran sudah ditutup.'], 400);
             }
-            return redirect()->back()->with('error', 'Pendaftaran sedang ditutup.');
+            return redirect()->back()->with('error', 'Pendaftaran sudah ditutup.');
         }
 
         $validated = $request->validate([

@@ -28,6 +28,9 @@ Route::group(["middleware" => ["auth", "admin"], "as" => "admin::"], function ()
         Route::get("/verifikasi-transfer", VerifikasiTransfer::class)->name("verifikasi_transfer");
         Route::get("/detail-pendaftar/{kodeRegistrasi}", DetailPendaftar::class)->name("detail_pendaftar");
         Route::get("/data-santri", DataSantri::class)->name("data_santri");
+        Route::get("/data-santri/export-csv", [\App\Http\Controllers\Admin\SantriExportController::class, "exportCsv"])->name("data_santri.export_csv");
+        Route::get("/data-santri/export-excel", [\App\Http\Controllers\Admin\SantriExportController::class, "exportExcel"])->name("data_santri.export_excel");
+        Route::get("/data-santri/export-vcf", [\App\Http\Controllers\Admin\SantriExportController::class, "exportVcf"])->name("data_santri.export_vcf");
         Route::get("/pengaturan-psb", PengaturanPsb::class)->name("pengaturan_psb");
 
         // User Management
