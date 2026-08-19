@@ -60,19 +60,23 @@
             <x-badges.basic class="cursor-pointer" wire:click="setFilterJk('Perempuan')" color="danger">Akhwat :
                 {{ $this->jumlahAkhwat }}</x-badges.basic>
             <a href="{{ route('admin::data_santri.export_csv', request()->only(['tahun', 'program', 'jk', 'search'])) }}"
-                class="badge badge-success cursor-pointer" title="Download CSV">
+                style="background:#28a745;color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;margin-right:6px;text-decoration:none"
+                class="cursor-pointer" title="Download CSV">
                 <i class="fa fa-file-csv"></i> Export CSV
             </a>
             <a href="{{ route('admin::data_santri.export_excel', request()->only(['tahun', 'program', 'jk', 'search'])) }}"
-                class="badge badge-info cursor-pointer" title="Download Excel">
+                style="background:#17a2b8;color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;margin-right:6px;text-decoration:none"
+                class="cursor-pointer" title="Download Excel">
                 <i class="fa fa-file-excel"></i> Export Excel
             </a>
             <a href="{{ route('admin::data_santri.export_vcf', request()->only(['tahun', 'program', 'jk', 'search'])) }}"
-                class="badge badge-warning cursor-pointer" title="Download kontak semua Mahasantri (vCard)">
+                style="background:#ffc107;color:#212529;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;margin-right:6px;text-decoration:none"
+                class="cursor-pointer" title="Download kontak semua Mahasantri (vCard)">
                 <i class="fa fa-address-book"></i> Export Kontak (.vcf)
             </a>
             <a href="{{ route('admin::pendaftaran.create') }}"
-                class="badge badge-primary cursor-pointer" title="Tambah Pendaftaran Susulan (bypass PSB tutup)">
+                style="background:#007bff;color:#fff;padding:8px 14px;border-radius:6px;font-weight:600;display:inline-block;margin-right:6px;text-decoration:none"
+                class="cursor-pointer" title="Tambah Pendaftaran Susulan (bypass PSB tutup)">
                 <i class="fa fa-user-plus"></i> Tambah Pendaftaran
             </a>
         </div>
