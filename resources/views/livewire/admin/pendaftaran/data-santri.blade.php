@@ -71,6 +71,10 @@
                 class="badge badge-warning cursor-pointer" title="Download kontak semua Mahasantri (vCard)">
                 <i class="fa fa-address-book"></i> Export Kontak (.vcf)
             </a>
+            <a href="{{ route('admin::pendaftaran.create') }}"
+                class="badge badge-primary cursor-pointer" title="Tambah Pendaftaran Susulan (bypass PSB tutup)">
+                <i class="fa fa-user-plus"></i> Tambah Pendaftaran
+            </a>
         </div>
     </div>
     <!--#Counter Santri-->

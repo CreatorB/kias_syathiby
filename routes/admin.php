@@ -21,6 +21,8 @@ Route::group(["middleware" => ["auth", "admin"], "as" => "admin::"], function ()
     Route::prefix("admin")->group(function () {
         Route::get("/dashboard", DashboardAdmin::class)->name("dashboard");
         Route::get("/pendaftaran", [PendaftaranController::class, "index"])->name("pendaftaran.index");
+        Route::get("/pendaftaran/create", [PendaftaranController::class, "create"])->name("pendaftaran.create");
+        Route::post("/pendaftaran/create", [PendaftaranController::class, "store"])->name("pendaftaran.store");
         Route::get("/pendaftaran/{kode}", [PendaftaranController::class, "show"])->name("pendaftaran.show");
         Route::post("/pendaftaran/{kode}/approve", [PendaftaranController::class, "approve"])->name("pendaftaran.approve");
         Route::post("/pendaftaran/{kode}/reject", [PendaftaranController::class, "reject"])->name("pendaftaran.reject");

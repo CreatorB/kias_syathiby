@@ -21,7 +21,12 @@
             <x-slot:cardHeader>
                 <div class="d-flex justify-content-between align-items-center">
                     <span>Data Pendaftaran PSB</span>
-                    <span class="badge bg-primary">{{ $stats['total'] }} Total</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="{{ route('admin::pendaftaran.create') }}" class="btn btn-sm btn-primary">
+                            <i class="ti ti-user-plus"></i> Tambah Pendaftaran Susulan
+                        </a>
+                        <span class="badge bg-primary">{{ $stats['total'] }} Total</span>
+                    </div>
                 </div>
             </x-slot:cardHeader>
 
