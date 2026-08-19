@@ -200,13 +200,18 @@ class PendaftaranController extends Controller
         $psb = InfoPsb::orderBy('id', 'desc')->first();
         $tahunAjaran = $psb ? $psb->tahun_ajaran : date('Y') . '/' . (date('Y') + 1);
 
-        $lastNumeric = (int) Santri::where('tahun_psb', $tahunAjaran)
-            ->where('kode_registrasi', 'like', '%-%')
+        // KIAS uses 8-digit INT for kode_registrasi: YYMMDDNNN (e.g. 26580026)
+        $lastKode = (int) Santri::where('tahun_psb', $tahunAjaran)
             ->orderBy('id', 'desc')
-            ->value(DB::raw("CAST(SUBSTRING_INDEX(kode_registrasi, '-', -1) AS UNSIGNED)")) ?? 0;
-        $nextNumber = $lastNumeric + 1;
-        $shortYear = substr(explode('/', $tahunAjaran)[0] ?? date('Y'), -2);
-        $kodeRegistrasi = 'KIAS-' . $tahunAjaran . '-' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+            ->value('kode_registrasi') ?? 0;
+        $today = date('ymd');
+        $todayPrefix = (int)($today . '000');
+        if ($lastKode >= $todayPrefix && $lastKode < $todayPrefix + 1000) {
+            $nextNumber = $lastKode + 1;
+        } else {
+            $nextNumber = $todayPrefix + random_int(1, 99);
+        }
+        $kodeRegistrasi = $nextNumber;
 
         $kodeNegara = $request->input('kode_negara', '62');
         $noHp = ltrim($request->no_hp, '0');
