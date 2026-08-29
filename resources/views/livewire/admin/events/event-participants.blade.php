@@ -133,7 +133,7 @@
                         <div class="d-flex gap-1">
                             <button type="button"
                                 wire:click="bulkResetPassword"
-                                wire:confirm="Yakin ingin mereset password SEMUA peserta di event ini ke '[REDACTED-LEGACY-PASSWORD]'?"
+                                wire:confirm="Yakin ingin mereset password SEMUA peserta di event ini?"
                                 class="btn btn-outline-warning"
                                 wire:loading.attr="disabled">
                                 <span wire:loading.remove wire:target="bulkResetPassword">
@@ -257,7 +257,7 @@
                                                 <i data-feather="edit-2" style="width: 14px;"></i>
                                             </button>
                                             <button wire:click="resetPassword({{ $registration->id }})"
-                                                wire:confirm="Reset password ke '[REDACTED-LEGACY-PASSWORD]'?"
+                                                wire:confirm="Reset password peserta ini?"
                                                 class="btn btn-sm btn-outline-secondary" title="Reset Password">
                                                 <i data-feather="key" style="width: 14px;"></i>
                                             </button>
@@ -338,7 +338,7 @@
                                             <i data-feather="edit-2" style="width: 14px;"></i>
                                         </button>
                                         <button wire:click="resetPassword({{ $registration->id }})"
-                                            wire:confirm="Reset password ke '[REDACTED-LEGACY-PASSWORD]'?"
+                                            wire:confirm="Reset password peserta ini?"
                                             class="btn btn-sm btn-outline-secondary">
                                             <i data-feather="key" style="width: 14px;"></i>
                                         </button>
@@ -546,12 +546,12 @@
                         </div>
                         <div class="mb-1">
                             <label class="form-label">Password</label>
-                            <input type="password" wire:model="manualPassword" class="form-control" value="[REDACTED-LEGACY-PASSWORD]">
+                            <input type="password" wire:model="manualPassword" class="form-control" value="">
                             @error('manualPassword') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-1">
                             <label class="form-label">Konfirmasi Password</label>
-                            <input type="password" wire:model="manualPasswordConfirmation" class="form-control" value="[REDACTED-LEGACY-PASSWORD]">
+                            <input type="password" wire:model="manualPasswordConfirmation" class="form-control" value="">
                             @error('manualPasswordConfirmation') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
                         <div class="d-flex justify-content-end mt-2">

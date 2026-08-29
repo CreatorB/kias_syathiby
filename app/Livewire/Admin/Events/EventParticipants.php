@@ -42,8 +42,8 @@ class EventParticipants extends Component
     public $manualPhone;
     public $manualGender = 'Laki-Laki';
     public $manualAddress;
-    public $manualPassword = '[REDACTED-LEGACY-PASSWORD]';
-    public $manualPasswordConfirmation = '[REDACTED-LEGACY-PASSWORD]';
+    public $manualPassword = '';
+    public $manualPasswordConfirmation = '';
 
     public $selectedParticipantId;
     public $editName;
@@ -225,7 +225,7 @@ class EventParticipants extends Component
     }
 
     /**
-     * Bulk Reset Password - reset all participants' passwords to '[REDACTED-LEGACY-PASSWORD]'
+     * Bulk Reset Password - reset all participants' passwords to a random generated one
      */
     public function bulkResetPassword()
     {
@@ -233,16 +233,17 @@ class EventParticipants extends Component
             ->whereNotNull('user_id')
             ->get();
 
+        $newPassword = \Illuminate\Support\Str::random(10);
         $count = 0;
         foreach ($registrations as $registration) {
             $user = \App\Models\User::find($registration->user_id);
             if ($user) {
-                $user->update(['password' => bcrypt('[REDACTED-LEGACY-PASSWORD]')]);
+                $user->update(['password' => bcrypt($newPassword)]);
                 $count++;
             }
         }
 
-        $this->dispatch('bulk-password-reset', "Password $count peserta berhasil direset ke \"[REDACTED-LEGACY-PASSWORD]\"!");
+        $this->dispatch('bulk-password-reset', "Password $count peserta berhasil direset. Password baru: \"$newPassword\"");
     }
 
     /**
@@ -254,10 +255,11 @@ class EventParticipants extends Component
         if ($participant->user_id) {
             $user = \App\Models\User::find($participant->user_id);
             if ($user) {
+                $newPassword = \Illuminate\Support\Str::random(10);
                 $user->update([
-                    'password' => bcrypt('[REDACTED-LEGACY-PASSWORD]'),
+                    'password' => bcrypt($newPassword),
                 ]);
-                $this->dispatch('password-reset', 'Password berhasil direset ke "[REDACTED-LEGACY-PASSWORD]"!');
+                $this->dispatch('password-reset', "Password berhasil direset. Password baru: \"$newPassword\"");
             } else {
                 $this->dispatch('error', 'User tidak ditemukan.');
             }

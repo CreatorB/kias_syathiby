@@ -96,8 +96,8 @@ All authenticated users can manage their own account:
 ### Admin Participant Management
 - **Manual Add Participant** — Admin can manually add participants to an event (auto-confirmed, increments quota).
 - **Edit Participant** — Update name, email, phone, gender, address per participant.
-- **Reset Password (Individual)** — Reset a single participant's password to `[REDACTED-LEGACY-PASSWORD]`.
-- **Bulk Reset Password** — Reset ALL participants' passwords in an event to `[REDACTED-LEGACY-PASSWORD]` with a single click and confirmation dialog.
+- **Reset Password (Individual)** — Reset a single participant's password to a new random password (displayed to admin after reset so they can communicate it to the participant).
+- **Bulk Reset Password** — Reset ALL participants' passwords in an event to a new common random password with a single click and confirmation dialog.
 - **Confirm/Reject Payment** — Approve or reject payment for pending registrations.
 - **Delete Participant** — Remove a participant from the event.
 - **Filtering** — Filter participants by search query, payment status, and gender.
