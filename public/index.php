@@ -5,6 +5,28 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// STAGING: auto-set staging_key cookie when ?key=bismillah is present
+// so user can navigate freely after first visit (mahadaly pattern).
+// Only active when APP_ENV=staging OR APP_URL contains 'tes' subdomain.
+if ((isset($_SERVER['APP_ENV']) && $_SERVER['APP_ENV'] === 'staging')
+    || (getenv('APP_ENV') === 'staging')
+    || (isset($_SERVER['APP_URL']) && str_contains($_SERVER['APP_URL'], 'tes'))
+    || (getenv('APP_URL') && str_contains(getenv('APP_URL'), 'tes'))) {
+    if (isset($_GET['key']) && $_GET['key'] === 'bismillah'
+        && (!isset($_COOKIE['staging_key']) || $_COOKIE['staging_key'] !== 'bismillah')) {
+        $cookieDomain = preg_replace('#^https?://([^/]+).*$#', '$1', $_SERVER['APP_URL'] ?? 'teskias.syathiby.id');
+        setcookie('staging_key', 'bismillah', [
+            'expires' => time() + 86400 * 30,
+            'path' => '/',
+            'domain' => '.' . $cookieDomain,
+            'secure' => true,
+            'httponly' => false,
+            'samesite' => 'Lax',
+        ]);
+        $_COOKIE['staging_key'] = 'bismillah';
+    }
+}
+
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance

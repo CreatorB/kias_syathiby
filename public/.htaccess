@@ -9,6 +9,19 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # STAGING LOCKDOWN: require ?key=bismillah OR staging_key cookie
+    # Skip when not on staging (APP_URL contains 'tes').
+    # Pattern mirrors tesmahadaly (Next.js). On prod (kias.syathiby.id), no effect.
+    RewriteCond %{HTTP:X-Forwarded-Host} !^teskias\.syathiby\.id$ [NC]
+    RewriteCond %{HTTP:X-Forwarded-Host} !^tesmahadaly\.syathiby\.id$ [NC]
+    RewriteCond %{REQUEST_URI} !^/_next/ [NC]
+    RewriteCond %{REQUEST_URI} !^/robots\.txt$ [NC]
+    RewriteRule .* - [S=1]
+
+    RewriteCond %{QUERY_STRING} !(^|&)key=bismillah($|&) [NC]
+    RewriteCond %{HTTP_COOKIE} !staging_key=bismillah [NC]
+    RewriteRule .* - [F,L]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
@@ -19,3 +32,12 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+<IfModule mod_headers.c>
+    # STAGING ONLY: noindex headers (activated only when X-Forwarded-Host starts with 'tes')
+    Header always setifempty X-Robots-Tag "noindex, noarchive, nofollow, nosnippet, noimageindex" env=STAGING
+    Header always setifempty Cache-Control "no-store, no-cache, must-revalidate, private" env=STAGING
+</IfModule>
+
+SetEnvIfNoCase X-Forwarded-Host "^teskias\.syathiby\.id$" STAGING=1
+SetEnvIfNoCase X-Forwarded-Host "^tesmahadaly\.syathiby\.id$" STAGING=1
