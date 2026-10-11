@@ -95,3 +95,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'peserta/dashboard', 'as' =>
 
 require __DIR__ . '/admin.php';
 
+
+// Berkas pendaftar (KTP, foto, bukti transfer) hanya untuk admin / pemiliknya — lihat BerkasController.
+Route::get('/berkas/{path}', [\App\Http\Controllers\BerkasController::class, 'show'])->where('path', '.*')->name('berkas.show');
